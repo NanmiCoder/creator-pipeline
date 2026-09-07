@@ -3,6 +3,10 @@
 <p align="center"><b>Your script. Your voice. A presentation that moves with it.</b><br>
 <a href="README.md">中文</a> · English</p>
 
+<p align="center"><a href="https://creator-pipeline-alpha.vercel.app/"><b>▶ Watch the live demo</b></a> · <a href="https://creator-pipeline-alpha.vercel.app/?review=1&amp;t=0&amp;steps=1">Explore all 21 action beats</a></p>
+
+No installation needed: click to play **25 seconds of MiniMax cloned narration, a real SRT timeline and continuous 16:9 animation**. The creator has authorized the sample narration for this public demo.
+
 Creator Pipeline combines two AI Agent skills: clone narration from your own reference recording, produce audio and an SRT timeline, then build an autoplaying web presentation with continuous diagrams, cards and motion graphics.
 
 The default is **MiniMax speech-2.8-hd**, using your own registered voice and speech-capable account. For free local inference, explicitly choose `--provider local`: Qwen3-TTS via MLX on Apple Silicon or official PyTorch elsewhere. Installing the skills installs instructions, scripts and templates; model weights download when you first use the local voice backend.
@@ -30,7 +34,7 @@ Voice generation requires Python 3.12, uv and FFmpeg. The skill's setup script c
 | [voice-clone-tts](skills/voice-clone-tts/SKILL.md) | WAV, MP3, SRT and a verified `voiceover.json` handoff |
 | [web-video-presentation](skills/web-video-presentation/SKILL.md) | A Vite + React + TypeScript presentation, driven by the final audio clock |
 
-<img src="assets/demo.png" alt="Step review: audio and subtitle tracks align; controls stay outside the 16:9 frame" width="100%">
+<a href="https://creator-pipeline-alpha.vercel.app/"><img src="assets/demo.png" alt="Watch the live demo; screenshot shows audio and subtitle tracks aligning across 21 action beats" width="100%"></a>
 
 The example contains **21 editorial action beats within six original SRT cues**, with forward, back and replay controls. See the [runnable example](examples/first-video/README.md) and [same-audio comparison](docs/VALIDATION.md).
 

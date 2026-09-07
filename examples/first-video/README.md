@@ -1,5 +1,7 @@
 # 跑通第一支网页演示
 
+[在线体验最终有声效果](https://creator-pipeline-alpha.vercel.app/) · [逐拍查看动画](https://creator-pipeline-alpha.vercel.app/?review=1&t=0&steps=1)。点击开始播放即可体验，无需先配置模型或账号。
+
 这里有六句公开文案、连续声音与画面场景，以及一个组装脚本。你提供自己的参考录音，脚本使用**实际生成的六条 SRT**填入动画时间，并从最终 PCM 提取振幅概览。不附带任何私人声音。
 
 从仓库根目录执行，先安装 uv、FFmpeg、Node.js/npm：

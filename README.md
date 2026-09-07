@@ -9,6 +9,10 @@
 <p align="center"><b>文案 + 你的声音 → 配音与 SRT → 会自动播放的网页 PPT</b><br>
 中文 · <a href="README.en.md">English</a></p>
 
+<p align="center"><a href="https://creator-pipeline-alpha.vercel.app/"><b>▶ 在线体验有声演示</b></a> · <a href="https://creator-pipeline-alpha.vercel.app/?review=1&amp;t=0&amp;steps=1">逐拍查看 21 个动作</a></p>
+
+无需安装即可预览：点击页面开始播放，体验 **25 秒 MiniMax 克隆配音 + 真实 SRT 时间轴 + 16:9 连续动画**。在线样片使用作者授权的示例配音。
+
 Creator Pipeline 是一组可以配合使用的 AI Agent skills。先用自己的录音克隆配音，得到真实音频时间轴；再让 Agent 把内容做成卡片、图解与连续 MG 场景，让画面跟着声音展开。
 
 默认使用 **MiniMax speech-2.8-hd** 与你自己的克隆音色，需要可用的 MiniMax 凭据和额度。无云账号时可显式选 `--provider local`，用免费的 **Qwen3-TTS**：Apple Silicon 走 MLX，其他平台走官方 PyTorch。**安装的是脚本、模板与制作方法；本地模型在首次使用时下载，个人声音不会随技能分发。**
@@ -48,7 +52,7 @@ npx skills add NanmiCoder/creator-pipeline --list
 
 网页中的 step 表示口播焦点，scene 表示连续空间。几个句子可以共用一个场景：卡片转成窗口，连线显示关系，游标推进时间；每句口播无需重新换一张文字页。
 
-<p><img src="assets/demo.png" alt="逐步演示截图：21 个动作拍中的声轨与字幕对齐，控制条在 16:9 画面外" width="100%"></p>
+<p><a href="https://creator-pipeline-alpha.vercel.app/"><img src="assets/demo.png" alt="点击体验有声演示；截图展示 21 个动作拍中的声轨与字幕对齐" width="100%"></a></p>
 
 **这版现已成为默认模板**，随 `npx skills add` 一起安装。新建项目首页即可逐拍体验，无需生成配音；自动播放提供明确标注的无声演示。它在六段口播内设计了 **21 个动作拍**，支持逐步播放、回退与重播；从波形拆分、时间标记到卡片关系持续推进。见[默认模板用法](skills/web-video-presentation/templates/STARTER.md)、[真实配音示例](examples/first-video/README.md)和[同配音对照记录](docs/VALIDATION.md)。
 
