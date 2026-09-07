@@ -3,9 +3,9 @@
 <p align="center"><b>Your script. Your voice. A presentation that moves with it.</b><br>
 <a href="README.md">中文</a> · English</p>
 
-<p align="center"><a href="https://creator-pipeline-alpha.vercel.app/"><b>▶ Watch the live demo</b></a> · <a href="https://creator-pipeline-alpha.vercel.app/?review=1&amp;t=0&amp;steps=1">Explore all 21 action beats</a></p>
+<p align="center"><a href="https://nanmicoder.github.io/creator-pipeline/"><b>▶ Watch the live demo</b></a> · <a href="https://nanmicoder.github.io/creator-pipeline/?review=1&amp;t=0&amp;steps=1">Explore all 21 action beats</a></p>
 
-No installation needed: click to play **25 seconds of MiniMax cloned narration, a real SRT timeline and continuous 16:9 animation**. The creator has authorized the sample narration for this public demo.
+No installation needed: click to play **25 seconds of MiniMax cloned narration, a real SRT timeline and continuous 16:9 animation**. The creator has authorized the sample narration for this public demo. GitHub Pages is the primary preview; a [Vercel backup](https://creator-pipeline-alpha.vercel.app/) is also available.
 
 The complete demo source and published narration are versioned in [examples/live-demo](examples/live-demo/README.md). To edit or present it locally, use Node.js 22 LTS:
 
@@ -15,7 +15,7 @@ npm ci
 npm run dev
 ```
 
-No TTS account is needed to run the bundled demo. After linking your own Vercel project, `npm run deploy` checks, builds and publishes it. Git pushes and deployments are separate operations.
+No TTS account is needed to run the bundled demo. Editing the source requires a new build and deployment. See the [demo maintenance guide](examples/live-demo/README.md) for the GitHub Pages and Vercel publishing setup.
 
 Creator Pipeline combines two AI Agent skills: clone narration from your own reference recording, produce audio and an SRT timeline, then build an autoplaying web presentation with continuous diagrams, cards and motion graphics.
 
@@ -44,7 +44,7 @@ Voice generation requires Python 3.12, uv and FFmpeg. The skill's setup script c
 | [voice-clone-tts](skills/voice-clone-tts/SKILL.md) | WAV, MP3, SRT and a verified `voiceover.json` handoff |
 | [web-video-presentation](skills/web-video-presentation/SKILL.md) | A Vite + React + TypeScript presentation, driven by the final audio clock |
 
-<a href="https://creator-pipeline-alpha.vercel.app/"><img src="assets/demo.png" alt="Watch the live demo; screenshot shows audio and subtitle tracks aligning across 21 action beats" width="100%"></a>
+<a href="https://nanmicoder.github.io/creator-pipeline/"><img src="assets/demo.png" alt="Watch the live demo; screenshot shows audio and subtitle tracks aligning across 21 action beats" width="100%"></a>
 
 The example contains **21 editorial action beats within six original SRT cues**, with forward, back and replay controls. See the [runnable example](examples/first-video/README.md) and [same-audio comparison](docs/VALIDATION.md).
 
