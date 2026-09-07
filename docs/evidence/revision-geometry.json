@@ -1,0 +1,149 @@
+{
+  "tested_with": "Ego Lite on macOS; tool choice is not a skill requirement",
+  "cases": [
+    {
+      "mode": "manual",
+      "x": 177.78125,
+      "y": 100,
+      "w": 1564.4444580078125,
+      "h": 880,
+      "ratio": 1.777777793190696,
+      "guide": "1px",
+      "scrollWidth": 1920,
+      "viewportWidth": 1920,
+      "viewportHeight": 1080
+    },
+    {
+      "mode": "?auto=1&mute=1",
+      "x": 177.78125,
+      "y": 100,
+      "w": 1564.4444580078125,
+      "h": 880,
+      "ratio": 1.777777793190696,
+      "guide": "1px",
+      "scrollWidth": 1920,
+      "viewportWidth": 1920,
+      "viewportHeight": 1080
+    },
+    {
+      "mode": "?review=1&t=24&mute=1",
+      "x": 177.78125,
+      "y": 100,
+      "w": 1564.4444580078125,
+      "h": 880,
+      "ratio": 1.777777793190696,
+      "guide": "1px",
+      "scrollWidth": 1920,
+      "viewportWidth": 1920,
+      "viewportHeight": 1080
+    },
+    {
+      "mode": "manual",
+      "x": 80,
+      "y": 90,
+      "w": 1280,
+      "h": 720,
+      "ratio": 1.7777777777777777,
+      "guide": "1px",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "viewportHeight": 900
+    },
+    {
+      "mode": "?auto=1&mute=1",
+      "x": 80,
+      "y": 90,
+      "w": 1280,
+      "h": 720,
+      "ratio": 1.7777777777777777,
+      "guide": "1px",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "viewportHeight": 900
+    },
+    {
+      "mode": "?review=1&t=24&mute=1",
+      "x": 80,
+      "y": 90,
+      "w": 1280,
+      "h": 720,
+      "ratio": 1.7777777777777777,
+      "guide": "1px",
+      "scrollWidth": 1440,
+      "viewportWidth": 1440,
+      "viewportHeight": 900
+    },
+    {
+      "mode": "manual",
+      "x": 497.78125,
+      "y": 100,
+      "w": 1564.4443359375,
+      "h": 880,
+      "ratio": 1.777777654474432,
+      "guide": "1px",
+      "scrollWidth": 2560,
+      "viewportWidth": 2560,
+      "viewportHeight": 1080
+    },
+    {
+      "mode": "?auto=1&mute=1",
+      "x": 497.78125,
+      "y": 100,
+      "w": 1564.4443359375,
+      "h": 880,
+      "ratio": 1.777777654474432,
+      "guide": "1px",
+      "scrollWidth": 2560,
+      "viewportWidth": 2560,
+      "viewportHeight": 1080
+    },
+    {
+      "mode": "?review=1&t=24&mute=1",
+      "x": 497.78125,
+      "y": 100,
+      "w": 1564.4443359375,
+      "h": 880,
+      "ratio": 1.777777654474432,
+      "guide": "1px",
+      "scrollWidth": 2560,
+      "viewportWidth": 2560,
+      "viewportHeight": 1080
+    },
+    {
+      "mode": "manual",
+      "x": 48,
+      "y": 27,
+      "w": 384,
+      "h": 216,
+      "ratio": 1.7777777777777777,
+      "guide": "1px",
+      "scrollWidth": 480,
+      "viewportWidth": 480,
+      "viewportHeight": 270
+    },
+    {
+      "mode": "?auto=1&mute=1",
+      "x": 48,
+      "y": 27,
+      "w": 384,
+      "h": 216,
+      "ratio": 1.7777777777777777,
+      "guide": "1px",
+      "scrollWidth": 480,
+      "viewportWidth": 480,
+      "viewportHeight": 270
+    },
+    {
+      "mode": "?review=1&t=24&mute=1",
+      "x": 48,
+      "y": 27,
+      "w": 384,
+      "h": 216,
+      "ratio": 1.7777777777777777,
+      "guide": "1px",
+      "scrollWidth": 480,
+      "viewportWidth": 480,
+      "viewportHeight": 270
+    }
+  ]
+}

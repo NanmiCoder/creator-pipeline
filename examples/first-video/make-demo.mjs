@@ -16,17 +16,28 @@ if(m.source_text_sha256!==hash||m.segments.length!==6)throw new Error('Synthesiz
 const root=path.resolve(outArg),project=path.join(root,'presentation');
 if(fs.existsSync(root)&&fs.readdirSync(root).length)throw new Error('Output directory must be new or empty');
 fs.mkdirSync(root,{recursive:true});
-execFileSync('bash',[path.join(repo,'skills/web-video-presentation/scripts/scaffold.sh'),project,'--theme=paper-press'],{stdio:'inherit'});
+execFileSync('bash',[path.join(repo,'skills/web-video-presentation/scripts/scaffold.sh'),project,'--theme=creator-dark'],{stdio:'inherit'});
 const input=importVoiceover(manifest,project);
-const motions=['文案与参考声音两个容器进入同一空间','声音波形在原卡片内部生成','第三张时间戳卡出现，连线贯通','原卡片缩小让位给网页视口，内容卡组在同一空间展开','同一音频时钟推动播放头','网页缩为交付对象，MP4导出图标出现'];
+const motions=['倾斜文案卡和分层声音卡进入同一空间','原声音卡放大，实际配音振幅逐段点亮','真实 SRT 片段展开成连续时间轴','声音卡收进左下角，时间轴进入网页画面','同一音频时钟推动播放头和曲线运动','网页缩为交付对象，PLAY 输出卡进入'];
 const yaml=['srt: presentation/'+input.srt,'audio: '+input.audio,'duration: '+input.duration,'chapters:','  - id: pipeline','    title: 从文案到网页视频','    steps:'];
-input.cues.forEach((cue,i)=>yaml.push('      - at: '+cue.at,'        vo: '+JSON.stringify(cue.text),'        scene: pipeline','        screen: '+JSON.stringify(['文案 / 参考录音','克隆配音','时间戳','声画同频','声画同频','MP4'][i]),'        do: '+JSON.stringify(motions[i])));
-fs.writeFileSync(path.join(root,'plan.md'),'# Creator Pipeline 实测样片\n\n```timeline\n'+yaml.join('\n')+'\n```\n\n## 全片视觉约定\n主题 paper-press；无头像，无外置字幕。主体身份跨步保留。时间来自真实音频/SRT。\n\n## 章节画面备注\n### pipeline\n六步共用一个场景，使用章内 time 驱动对象转换。\n');
+input.cues.forEach((cue,i)=>yaml.push('      - at: '+cue.at,'        vo: '+JSON.stringify(cue.text),'        scene: pipeline','        screen: '+JSON.stringify(['从一段话，开始创作。','把你的声音，留在作品里。','每一句话，都有落点。','让内容，长成画面。','声音向前，画面跟随。','从一段话，到一部作品。'][i]),'        do: '+JSON.stringify(motions[i])));
+fs.writeFileSync(path.join(root,'plan.md'),'# Creator Pipeline 实测样片\n\n```timeline\n'+yaml.join('\n')+'\n```\n\n## 全片视觉约定\n主题 creator-dark；无头像，无外置字幕。预览/自动播放/验帧都保留 16:9 外框。无衬线大字、分层声音卡，实际配音振幅展开成时间轴，再进入画面。主体身份跨步保留。时间来自真实音频/SRT。\n\n## 章节画面备注\n### pipeline\n六步共用一个场景，使用章内 time 驱动对象转换。\n');
 execFileSync('npm',['run','gen'],{cwd:project,stdio:'inherit'});
 const chapter=path.join(project,'src/chapters/01-pipeline');
+// Measured amplitude overview of this run's PCM, not stock decoration.
+const wav=fs.readFileSync(path.join(project,'public',input.audio));
+let pcm;
+for(let at=12;at+8<=wav.length;){const size=wav.readUInt32LE(at+4);if(wav.toString('ascii',at,at+4)==='data'){pcm=wav.subarray(at+8,at+8+size);break;}at+=8+size+(size%2);}
+if(!pcm)throw new Error('Missing PCM data for waveform');
+const frames=pcm.length/2,bins=Array.from({length:96},(_,i)=>{
+ let sum=0,n=0;for(let j=Math.floor(i*frames/96);j<Math.floor((i+1)*frames/96);j++){sum+=(pcm.readInt16LE(j*2)/32768)**2;n++;}return Math.sqrt(sum/Math.max(1,n));
+});
+const peak=Math.max(...bins);
+fs.writeFileSync(path.join(chapter,'waveform.ts'),'export const waveform = '+JSON.stringify(bins.map(x=>Math.max(.06,Number((x/peak).toFixed(4)))))+';\n');
 for(const name of ['chapter.tsx','chapter.css'])fs.copyFileSync(path.join(here,name),path.join(chapter,name));
 fs.writeFileSync(path.join(project,'src/registry/chapters.ts'),`import type {ChapterDef} from './types';\nimport Pipeline from '../chapters/01-pipeline/chapter';\nimport {narrations} from '../chapters/01-pipeline/narrations';\nexport const CHAPTERS:ChapterDef[]=[{id:'pipeline',title:'Creator Pipeline',narrations,Component:Pipeline}];\n`);
 fs.rmSync(path.join(project,'src/chapters/01-example'),{recursive:true});
+const html=path.join(project,'index.html');fs.writeFileSync(html,fs.readFileSync(html,'utf8').replace('<title>Presentation</title>','<title>Creator Pipeline · 声音与画面</title>'));
 execFileSync('npm',['run','check'],{cwd:project,stdio:'inherit'});
 execFileSync('npm',['run','build'],{cwd:project,stdio:'inherit'});
 console.log(`Demo ready: ${project}. npm run dev, then ?auto=1 or ?review=1&t=<seconds>.`);

@@ -16,10 +16,16 @@ sys.path.insert(0, str(SCRIPTS))
 from common import checked_segments, digest, fingerprint, trim_bounds, wav_info, write_json
 from segment import parse_chapters, build_segments, hard_wrap
 from verify import verify
-from providers import MiniMax
+from providers import MiniMax, auto_provider
 
 
 class VoiceTests(unittest.TestCase):
+    def test_default_is_qwen_on_all_platforms(self):
+        for system,machine,expected in [('Darwin','arm64','mlx'),('Darwin','x86_64','qwen'),
+                                         ('Linux','x86_64','qwen'),('Windows','AMD64','qwen')]:
+            with patch('providers.platform.system',return_value=system),patch('providers.platform.machine',return_value=machine):
+                self.assertEqual(auto_provider(),expected)
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.root = Path(self.tmp.name)

@@ -5,7 +5,7 @@
 
 Creator Pipeline combines two AI Agent skills: clone narration from your own reference recording, produce audio and an SRT timeline, then build an autoplaying web presentation with continuous diagrams, cards and motion graphics.
 
-The default voice backend runs locally on CPU without a cloud account or API key. MiniMax is an explicit optional backend. Installing the skills installs instructions, scripts and templates; model weights download when you first use the local voice backend.
+The default model is **Qwen3-TTS**: MLX on Apple Silicon, official PyTorch on other platforms, without a cloud account or API key. MiniMax is an explicit optional backend. Installing the skills installs instructions, scripts and templates; model weights download when you first use the local voice backend.
 
 ## Install
 
@@ -36,11 +36,13 @@ SRT timing comes from actual PCM sample frames for each synthesized segment. It 
 
 The output is an **HTML presentation, not a `.pptx` file**. MP4 output requires the separate [recording workflow](skills/web-video-presentation/references/RECORDING.md).
 
+Preview, autoplay and frame review keep the same framed **16:9 capture area**, with guides outside the content. Browser QA uses the user's chosen or locally available browser skill—Ego, agent-browser or another real browser tool. No specific browser product is required.
+
 ## Backends and evidence
 
-- **Nano, default:** MOSS-TTS-Nano 100M ONNX on CPU. Tested on Apple Silicon macOS, including actual synthesis, interruption recovery and audio-to-web handoff. The full Python entry point still uses PyTorch for audio preprocessing.
-- **MLX:** Qwen3-TTS 0.6B Base 4bit on Apple Silicon. Tested on the same six-sentence script.
-- **Qwen PyTorch:** official Base model adapter supplied; CUDA hardware execution has not been tested.
+- **MLX, Apple Silicon default:** Qwen3-TTS 0.6B Base 4bit on Apple Silicon. Tested on the same six-sentence script.
+- **Qwen PyTorch, default on other platforms:** official Base model adapter supplied; CUDA hardware execution has not been tested.
+- **Nano, explicit option:** MOSS-TTS-Nano 100M ONNX on CPU. Tested on Apple Silicon macOS, including actual synthesis, interruption recovery and audio-to-web handoff. The full Python entry point still uses PyTorch for audio preprocessing.
 - **MiniMax:** optional, potentially paid. CLI flags and a mocked speech call were checked; no live paid synthesis or registration was tested.
 
 One Nano first pass produced ASR discrepancies. Targeted seed overrides allow retrying only an affected sentence while keeping the other cached segments. We keep these failures in the evaluation rather than claiming perfect audio from a valid WAV file.

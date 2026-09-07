@@ -140,11 +140,19 @@ body {
   overflow: hidden;
   cursor: pointer;
   box-shadow: var(--shadow-stage);
-  border: var(--stage-border, none);
-  /* radius on the LIVE stage gives editorial / keynote softness;
-     theme can disable with --r-stage: 0 */
-  border-radius: var(--r-stage, 0);
+  border: 0;
+  border-radius: 0;
 }
+
+/* Capture guides belong to the shell, outside the exact 16:9 content. */
+.stage-guide { position:absolute; inset:-1px; pointer-events:none; z-index:5; outline:1px solid rgba(160,174,198,.32); }
+.stage-guide-label { position:absolute; top:-29px; left:0; color:#a7b0c0; font:11px ui-monospace,monospace; letter-spacing:2px; }
+.stage-guide-corner { position:absolute; width:15px; height:15px; border-color:#b5c0d3; border-style:solid; }
+.stage-guide-tl { top:-5px; left:-5px; border-width:1px 0 0 1px; }
+.stage-guide-tr { top:-5px; right:-5px; border-width:1px 1px 0 0; }
+.stage-guide-bl { bottom:-5px; left:-5px; border-width:0 0 1px 1px; }
+.stage-guide-br { bottom:-5px; right:-5px; border-width:0 1px 1px 0; }
+@media (max-height:400px) { .stage-guide-label { top:-18px; font-size:9px; } }
 
 /* OPTIONAL pattern layer drawn ON the stage so screen recordings catch it */
 .stage-frame::after {

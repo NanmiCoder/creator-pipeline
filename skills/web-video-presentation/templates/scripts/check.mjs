@@ -9,7 +9,7 @@
  *   4. 章节 .css/.tsx 红线（逐行、剔除注释）：硬编码颜色 / font-family 不走 var() /
  *      vw/vh / setTimeout/setInterval / emoji / 跨章 import
  *   5. CSS 类前缀：每章与 BRIEF.md 分配一致（无 BRIEF 则按多数推断）、章间不冲突
- *   6. 提醒（不算 FAIL）：安全区无法静态检查 → ego-browser 截关键帧确认
+ *   6. 提醒（不算 FAIL）：安全区无法静态检查 → 可用浏览器工具截关键帧确认
  *
  * Node ≥ 18，零第三方依赖。
  */
@@ -435,6 +435,6 @@ console.log(
   `\n${fails === 0 ? "✓ 全绿" : `✗ ${fails} 项 FAIL`} · ${results.filter((r) => r.status === "PASS").length} PASS / ${results.filter((r) => r.status === "SKIP").length} SKIP`,
 );
 console.log(
-  "ℹ 安全区（头像圆 / 底部字幕带）无法静态检查 —— 用 ego-browser 1920×1080 截 2-3 张关键帧逐章确认（几何判据见 references/CRAFT.md）。",
+  "ℹ 安全区（头像圆 / 底部字幕带）无法静态检查 —— 用可用浏览器工具按 1920×1080 舞台 截 2-3 张关键帧逐章确认（几何判据见 references/CRAFT.md）。",
 );
 process.exit(fails === 0 ? 0 : 1);

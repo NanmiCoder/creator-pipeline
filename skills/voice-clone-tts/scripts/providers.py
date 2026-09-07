@@ -20,7 +20,8 @@ NANO_TOKENIZER_REVISION = 'ceff0d0749bfb3fa2d61149794ec6feef0d1e1ae'
 
 
 def auto_provider():
-    return 'nano'
+    """Qwen3-TTS everywhere; use its MLX implementation on Apple Silicon."""
+    return 'mlx' if platform.system() == 'Darwin' and platform.machine() == 'arm64' else 'qwen'
 
 
 class Nano:

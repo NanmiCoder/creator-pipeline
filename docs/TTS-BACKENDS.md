@@ -4,11 +4,13 @@
 
 ## 当前选择
 
+用户听感反馈优先于“能在 CPU 上跑通”。首版 Nano 出现质量问题，现改为 Qwen3-TTS 默认：Apple Silicon 自动选 MLX，其他平台选官方 PyTorch。Nano 保留显式选择，不自动降级。历史 Nano 性能记录不作为默认质量背书。
+
 | 方案 | 判断 | 依据 |
 |---|---|---|
-| **MOSS-TTS-Nano 100M ONNX** | 默认 CPU 后端 | 2026 年 4 月发布；支持参考音频克隆，无需转写；代码和所选 ONNX 权重为 Apache-2.0。本机安装和实际 CPU 合成通过 |
-| **Qwen3-TTS 0.6B Base / MLX 4bit** | Apple Silicon 可选后端 | Base 提供声音克隆。实际六句中文测试通过；无参考文本使用 speaker embedding，有匹配转写可用完整 ICL 路径 |
-| **Qwen3-TTS 0.6B Base / PyTorch** | CUDA 扩展入口 | 官方 API 适配器，设备和实际速度尚未在 CUDA 实机验证；不能把 MLX 的结果移植成 CUDA 承诺 |
+| **MOSS-TTS-Nano 100M ONNX** | 显式 CPU 选项 | 2026 年 4 月发布；支持参考音频克隆，无需转写；代码和所选 ONNX 权重为 Apache-2.0。本机安装和实际 CPU 合成通过 |
+| **Qwen3-TTS 0.6B Base / MLX 4bit** | Apple Silicon 默认 | Base 提供声音克隆。实际六句中文测试通过；无参考文本使用 speaker embedding，有匹配转写可用完整 ICL 路径 |
+| **Qwen3-TTS 0.6B Base / PyTorch** | 其他平台默认 | 官方 API 适配器，设备和实际速度尚未在 CUDA 实机验证；不能把 MLX 的结果移植成 CUDA 承诺 |
 | **MiniMax mmx** | 显式云端选择 | 用户自己的凭据、音色和额度。需要用户明确选择，不因本地失败自动上传声音 |
 
 来源：[MOSS 官方代码](https://github.com/OpenMOSS/MOSS-TTS-Nano)、[Nano ONNX 模型卡](https://huggingface.co/OpenMOSS-Team/MOSS-TTS-Nano-100M-ONNX)、[Tokenizer 模型卡](https://huggingface.co/OpenMOSS-Team/MOSS-Audio-Tokenizer-Nano-ONNX)、[Qwen 官方代码](https://github.com/QwenLM/Qwen3-TTS)、[Qwen Base 模型卡](https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-Base)、[MLX Audio](https://github.com/Blaizzy/mlx-audio)、[MLX 模型卡](https://huggingface.co/mlx-community/Qwen3-TTS-12Hz-0.6B-Base-4bit)、[MiniMax CLI](https://github.com/MiniMax-AI/cli)。

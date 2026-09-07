@@ -1,6 +1,6 @@
 ---
 name: voice-clone-tts
-description: 将文案与用户自己的参考录音合成为配音、SRT 和可交接时间轴。默认使用免费的本地 MOSS-TTS-Nano CPU 声音克隆；可选 Qwen3-TTS、Apple Silicon MLX 或 MiniMax。适用于口播配音、声音复刻，以及为网页视频演示准备最终音频和字幕。
+description: 将文案与用户自己的参考录音合成为配音、SRT 和可交接时间轴。默认使用免费的本地 Qwen3-TTS 声音克隆，Apple Silicon 自动选 MLX；可选 Nano CPU 或 MiniMax。适用于口播配音、声音复刻，以及为网页视频演示准备最终音频和字幕。
 ---
 
 # 文案与参考声音 → 配音与时间轴
@@ -9,10 +9,10 @@ description: 将文案与用户自己的参考录音合成为配音、SRT 和可
 
 ## 选择后端
 
-默认 **nano**：MOSS-TTS-Nano，CPU 本地推理，无需云账号/API key。需要首次下载模型，仍占用内存、磁盘与计算时间。优先完成一个代表性短段，再扩展全文。
+默认 **Qwen3-TTS 0.6B Base**，本地推理，无需云账号/API key。需要首次下载模型，仍占用内存、磁盘与计算时间。优先完成一个代表性短段，再扩展全文。
 
-- Apple Silicon 用户可显式选 **mlx**，使用 Qwen3-TTS 0.6B Base 4bit。
-- **qwen** 是官方 PyTorch/CUDA 适配器，设备需单独验证；CPU 用户优先 nano。
+- 默认 `auto` 在 Apple Silicon 选择 **mlx**（Qwen3-TTS 0.6B Base 4bit），其他平台选择 **qwen**（官方 PyTorch，自动使用可用 CUDA，否则 CPU）。setup 与 run 采用同一选择逻辑。
+- **nano** 仅供用户显式选择较轻的 CPU 路线，不因 Qwen 缺依赖或运行失败自动降级。优先保证声音质量，不能把小模型的成功运行当作默认选择依据。
 - 用户指定在线服务时用 **minimax** 与自己的 voice ID。不会因本地失败自动上传录音、切换云服务或使用别人的声音。
 
 各后端使用独立环境；首次运行读 [SETUP.md](references/SETUP.md)。音色来源是用户提供的本人/已获授权录音，没有共享的默认私人音色。
@@ -24,7 +24,7 @@ description: 将文案与用户自己的参考录音合成为配音、SRT 和可
 `SKILL_DIR` 表示本 SKILL.md 所在目录。实际定位安装目录，不硬编码某个用户的 `~/.claude` 路径。
 
 ```bash
-python3 "$SKILL_DIR/scripts/setup.py" --provider nano
+python3 "$SKILL_DIR/scripts/setup.py"
 # 上一条会输出独立环境 Python 的实际路径；下文以 PY 表示它。
 "$PY" "$SKILL_DIR/scripts/run.py" script.md \
   --reference my-voice.mp3 --outdir voiceover-demo

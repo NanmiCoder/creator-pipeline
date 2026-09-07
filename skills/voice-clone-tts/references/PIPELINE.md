@@ -20,7 +20,7 @@ cp script.md voiceover-demo/script.md
 常用参数：
 
 - 分段：`--max-chars 40 --min-chars 8`；不是固定字数配额。超长英文标识符不拆断。
-- 合成：`--provider nano`、`--threads 4`、`--seed 0`、`--force`。默认串行复用一次模型和参考编码，避免多个模型同时占内存。
+- 合成：默认 Qwen3-TTS（Apple Silicon 为 mlx，其他平台为 qwen）；Nano 需显式 `--provider nano`，可用 `--threads 4` 限制其线程。其他控制包括 `--seed 0`、`--force`。默认串行复用一次模型和参考编码，避免多个模型同时占内存。
 - Qwen：`--reference-text reference.txt`、`--temperature 0.8`、`--max-tokens 800`。Nano 使用其固定上游采样配置，max-tokens 控制音频帧上限；language 根据输入自动处理。
 - 拼接：`--gap-hold 600`、`--no-trim`、`--trim-margin 15`。段间暂停在 segments.json/meta/silence_ms 中。默认出 SRT；纯音频用途可显式 `--no-srt`。
 

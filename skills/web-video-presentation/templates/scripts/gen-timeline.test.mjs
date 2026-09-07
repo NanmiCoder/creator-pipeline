@@ -383,7 +383,7 @@ t("emit：BRIEF 尾部附画面备注；无备注不加空节", () => {
   assert.match(withNote, /- 信息池：X —— 来源：Y/);
   const without = emitBrief(m, m.chapters[0], px);
   assert.ok(!without.includes("## 画面备注"));
-  assert.match(without, /npm run check 全绿 \+ Ego Browser .*连续播放 → 汇报\n$/);
+  assert.match(without, /npm run check 全绿 \+ 真实浏览器 .*连续播放 → 汇报\n$/);
 });
 
 

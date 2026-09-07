@@ -671,7 +671,7 @@ ${delayRule}
 - 安全区（若 App 配置了）：右上头像圆 + 底部字幕带几何判据见 CRAFT.md
 - 同一 scene 跨 step 保留主体；do 写起态→动作→终态；屏幕短语见下表，不复述 vo
 - timing.ts 时间均为章内秒；cue 原文来自 SRT（若提供），不要按字数估时
-- 完工 = npm run check 全绿 + Ego Browser 起/中/末帧与相邻转场 + 连续播放 → 汇报
+- 完工 = npm run check 全绿 + 真实浏览器 起/中/末帧与相邻转场 + 连续播放 → 汇报
 ${note ? `
 ## 画面备注（plan.md「章节画面备注 · ${ch.id}」原文，改备注请回 plan.md 再重 gen）
 

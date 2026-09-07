@@ -102,7 +102,7 @@ cat <<EOF
 完成。项目：$TARGET
   npm run dev     # 启动预览，以终端显示的端口为准
   npm run gen     # 默认读 ../plan.md；生成 timeline / BRIEF / timing
-  npm run check   # 工程检查；还需 Ego Browser 视觉与播放验收
+  npm run check   # 工程检查；还需 真实浏览器 视觉与播放验收
   npm run build   # 静态产物 dist/
 
 开发入口：$SKILL_DIR/references/CRAFT.md

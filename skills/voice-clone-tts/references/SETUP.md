@@ -5,19 +5,21 @@
 ```bash
 # macOS 示例；已有依赖可跳过
 brew install uv ffmpeg
-python3 "$SKILL_DIR/scripts/setup.py" --provider nano
+python3 "$SKILL_DIR/scripts/setup.py"
 ```
+
+setup 缺省使用 Qwen3-TTS：Apple Silicon 选 mlx，其他平台选 qwen。CPU 执行 Qwen 可能较慢，先做短样；Nano 必须明确 `--provider nano` 才使用。
 
 setup 为每个后端建立独立 `.creator-env/<provider>/`；使用它打印的 Python 路径执行 run.py。可用 `--env <目录>` 指定位置。它不会修改系统 Python，也不在安装 skill 时自动下载模型。
 
 | 后端 | 默认模型/执行方式 | 输入与使用边界 |
 |---|---|---|
-| nano | MOSS-TTS-Nano-100M ONNX，CPU 4 线程 | 默认，参考 MP3/WAV；无需参考文本。代码和权重固定 revision；实际完整入口含 PyTorch 音频预处理 |
-| mlx | Qwen3-TTS 0.6B Base 4bit，MLX | Apple Silicon；本机实际合成测试。额外参考转写可走 ICL；无转写使用 speaker embedding |
-| qwen | Qwen3-TTS 0.6B Base，官方 PyTorch | `--device auto/cpu/cuda:0`；未在 CUDA 实机测试。没有强制安装 FlashAttention；有显卡也先测短段 |
+| nano | MOSS-TTS-Nano-100M ONNX，CPU 4 线程 | 显式选择，参考 MP3/WAV；无需参考文本。代码和权重固定 revision；实际完整入口含 PyTorch 音频预处理 |
+| mlx | Qwen3-TTS 0.6B Base 4bit，MLX | Apple Silicon 默认；本机实际合成测试。额外参考转写可走 ICL；无转写使用 speaker embedding |
+| qwen | Qwen3-TTS 0.6B Base，官方 PyTorch | 其他平台默认；`--device auto/cpu/cuda:0`；未在 CUDA 实机测试。没有强制安装 FlashAttention；有显卡也先测短段 |
 | minimax | mmx + speech-2.8-hd | 用户自己的服务账号和音色。显式选择，可能计费；本项目不包含额度 |
 
-切换后端时分别运行 `setup.py --provider mlx/qwen/minimax`，使用对应 Python。Nano 的固定依赖与 Qwen/MLX 的 Transformers 版本不应混装。Nano CPU 在 Linux/Windows 使用 CPU PyTorch wheel，避免自动下载 CUDA 依赖。
+切换后端时分别运行 `setup.py --provider mlx/qwen/nano/minimax`，使用对应 Python。Nano 的固定依赖与 Qwen/MLX 的 Transformers 版本不应混装。Nano CPU 在 Linux/Windows 使用 CPU PyTorch wheel，避免自动下载 CUDA 依赖。
 
 首次推理下载公开模型。Nano 默认目录为 `~/.cache/creator-pipeline/models/`，可设置 `CREATOR_MODEL_DIR`；HF 缓存与网络行为遵循 huggingface-hub。支持提前下载后使用本地目录；`--model` 自定义模型需自行保证模型类型兼容。模型缓存齐全后可用 `HF_HUB_OFFLINE=1` 检验离线运行。不要把“本地推理”理解为首次安装完全不联网。
 

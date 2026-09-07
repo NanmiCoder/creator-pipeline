@@ -6,20 +6,22 @@ import platform
 import shutil
 import subprocess
 from pathlib import Path
-from providers import NANO_COMMIT
+from providers import NANO_COMMIT, auto_provider
 
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--provider', choices=['nano', 'mlx', 'qwen', 'minimax'], default='nano')
+    p.add_argument('--provider', choices=['auto', 'nano', 'mlx', 'qwen', 'minimax'], default='auto')
     p.add_argument('--env', help='Environment directory; default .creator-env/<provider> in this project')
     args = p.parse_args()
+    args.provider = auto_provider() if args.provider == 'auto' else args.provider
+    print(f'Backend: {args.provider}', flush=True)
     if not shutil.which('uv'):
         p.error('Install uv first: https://docs.astral.sh/uv/getting-started/installation/')
     if not shutil.which('ffmpeg'):
         p.error('Install FFmpeg first; macOS: brew install ffmpeg; Ubuntu: sudo apt install ffmpeg')
     if args.provider == 'mlx' and (platform.system() != 'Darwin' or platform.machine() != 'arm64'):
-        p.error('MLX requires Apple Silicon. Use nano for CPU or qwen for CUDA.')
+        p.error('MLX requires Apple Silicon. Use qwen for the official PyTorch backend.')
     env = Path(args.env or f'.creator-env/{args.provider}').resolve()
     python = env / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
     if not python.exists():

@@ -11,7 +11,7 @@
 
 Creator Pipeline 是一组可以配合使用的 AI Agent skills。先用自己的录音在本地克隆配音，得到真实音频时间轴；再让 Agent 把内容做成卡片、图解与连续 MG 场景，让画面跟着声音展开。
 
-默认配音路线无需 MiniMax 账号或 API key，CPU 也能运行。已有云端音色的用户可以显式选择 MiniMax。**安装的是可执行脚本、模板与制作方法；模型在首次使用配音功能时下载。**
+默认使用 **Qwen3-TTS** 本地配音，无需 MiniMax 账号或 API key；Apple Silicon 自动用 MLX，其他平台用官方 PyTorch。已有云端音色的用户可以显式选择 MiniMax。**安装的是可执行脚本、模板与制作方法；模型在首次使用配音功能时下载。**
 
 ## 安装两个 skills
 
@@ -48,9 +48,11 @@ npx skills add NanmiCoder/creator-pipeline --list
 
 网页中的 step 表示口播焦点，scene 表示连续空间。几个句子可以共用一个场景：卡片转成窗口，连线显示关系，游标推进时间；每句口播无需重新换一张文字页。
 
-<p><img src="assets/demo.png" alt="真实样例截图：文案和配音卡片连续变成网页演示，右侧出现声画同频的动态场景" width="100%"></p>
+<p><img src="assets/demo.png" alt="真实样例截图：16:9 外框内，配音卡、SRT 时间轴与网页画面连续转换" width="100%"></p>
 
-<sub>截图来自仓库内六句文案的真实运行结果。示意波形用于表现配音阶段，不是测量图。个人参考录音与克隆后的声音不随仓库分发。</sub>
+<sub>截图来自六句文案的实际运行，保留预览外框。振幅概览取自最终配音，窗口是制作流程示意。个人参考录音与克隆后的声音不随仓库分发。</sub>
+
+预览、自动播放与验帧都保留清晰的 **16:9 框选区**，录屏时只选舞台内容。验收兼容用户指定或本机可用的 `ego-browser`、`agent-browser` 及其他真实浏览器 skill，不要求安装某个品牌的浏览器。
 
 输出是 **HTML 网页演示，不是 `.pptx`**。导出 MP4 需要按 [录制说明](skills/web-video-presentation/references/RECORDING.md) 完成录制；安装 skills 不会自动替你生成或上传视频。
 
@@ -58,14 +60,16 @@ npx skills add NanmiCoder/creator-pipeline --list
 
 | 后端 | 适合谁 | 本项目验证状态 |
 |---|---|---|
-| **Nano · 默认** | 没有独立显卡，希望先在 CPU 上跑通 | MOSS-TTS-Nano 100M ONNX，macOS CPU 实际合成与全流程验证 |
-| **Qwen MLX** | Apple Silicon Mac 用户 | Qwen3-TTS 0.6B Base 4bit，实际完成同稿六句配音 |
-| **Qwen PyTorch** | 希望使用 CUDA 的用户 | 提供官方模型适配器，尚未做 CUDA 实机验证 |
+| **Nano · 可选** | 明确希望尝试较轻的 CPU 路线 | MOSS-TTS-Nano 100M ONNX，macOS CPU 实际合成与全流程验证 |
+| **Qwen MLX · Mac 默认** | Apple Silicon Mac 用户 | Qwen3-TTS 0.6B Base 4bit，实际完成同稿六句配音 |
+| **Qwen PyTorch · 其他平台默认** | CUDA / CPU 用户 | 提供官方模型适配器，尚未做 CUDA 实机验证 |
 | **MiniMax** | 已有在线服务与自己的音色 | 可选，CLI 参数与模拟调用已检查；未调用付费接口验证 |
+
+默认优先考虑配音质量；Nano 在前次实测中需要局部重试，现只保留为显式选项，不会自动降级。
 
 本地模型代码和权重分别遵循上游许可。Nano、Qwen Base 及所选 MLX 权重的公开许可、固定版本与取舍见 [TTS 选型](docs/TTS-BACKENDS.md)。MiniMax 的权限和费用以账号实际额度为准，不按套餐名字推断。
 
-“免费本地”仍然需要首次联网下载、磁盘与运行内存。我们的 Nano 短样本在这台 Mac 上进程峰值约 **3.5–3.9 GiB**，不能据此承诺所有低配电脑都可用。完整 Nano Python 入口仍用到 PyTorch 音频预处理，ONNX 并不意味着整个依赖链都没有 PyTorch。
+“免费本地”仍然需要首次联网下载、磁盘与运行内存。历史 Nano 短样本在这台 Mac 上进程峰值约 **3.5–3.9 GiB**，不能据此承诺所有低配电脑都可用。完整 Nano Python 入口仍用到 PyTorch 音频预处理，ONNX 并不意味着整个依赖链都没有 PyTorch。
 
 ## 做过什么验证
 

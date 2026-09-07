@@ -43,7 +43,7 @@ SVG ID 用章/镜头前缀防止多图 clipPath 冲突。表格比例由真实�
 
 启动服务后打开 `?review=1&t=69.600&mute=1`（使用该项目实际绝对秒）。
 review 隐藏开发控件与安全区提示；安全区仍按 App 配置测量。不会修改手动游标。
-需要连续采样时，通过 ego-browser 页面 JS 调用：
+需要连续采样时，通过所选浏览器工具的页面 JS 接口调用：
 
 ```js
 window.dispatchEvent(new CustomEvent('presentation:seek', {detail:69.6}));

@@ -6,12 +6,14 @@
 
 1. `npm run check` + `npm run build`。检查的 SKIP（例如数据驱动 step 分支）列出浏览器补验方式。
 2. 每种主要镜头至少查起态、动作中点、结果、下一镜头入口；短片遍历所有 step，长片选风险帧并覆盖每章。
-3. 用 ego-browser 真实浏览器播放已改章节及两侧转场；全片交付按 part 播一次。自动验证带 `mute=1`。
+3. 用可用的真实浏览器播放已改章节及两侧转场；全片交付按 part 播一次。自动验证带 `mute=1`。
    检查浏览器是否后台节流；真实捕获/可见播放时记录音频时间与 scene 时间，不把隐藏页面低帧率误认为成片帧率。静态 review 不覆盖这个问题。
 4. 关键结果前 0.1 秒、cue 时刻、cue 后 0.3–0.8 秒重点检查：有无提前剧透、迟到、黑场、跳回、遮挡。
 5. 1920×1080 舞台下量布局，并看约 480px 宽缩略图。头像与字幕占位按真实配置算，不能把字幕区中的文字计作“可读”。
 
-浏览器交互遵循用户指定工具；Ego Lite 可用时读 ego-browser skill。若环境未提供 Ego，使用该环境已授权的真实浏览器工具完成相同验收，并记录工具与未测项。使用 Ego 时：先读它，用同一个 task space；捕获截图后实际打开看；结束在独立 heredoc 调用 completeTaskSpace。不得关掉用户的其他窗口。
+工具选择：先遵循用户/项目指定的浏览器，再选择本机已安装可用的浏览器 skill，例如 ego-browser、agent-browser 或其他真实浏览器工具。读取所选工具自身的说明；不要求安装 Ego，不限定 Windows/macOS/Linux。截图、点击、执行页面 JS、连续播放和错误检查均使用所选工具对应接口，验收标准相同。记录工具、视口和未测项，并按所选工具的规则清理本次临时页面。若没有可用自动化工具，给出可运行的网页与人工检查步骤，明确哪些尚未实际检查，不把 build 通过当作浏览器验收通过。
+
+在 16:9、16:10、窄屏三个视口检查 `.stage-frame.getBoundingClientRect()`：宽高比为 16:9，四周留出可见外边距。Manual/Auto/Review 的矩形应一致，角标和控制条位于矩形外。截取成片时用该矩形裁取；全窗口截图用于证明外框，不能用全屏模式掩盖外框回归。
 
 VO 新采样动画用 MOTION 的 review/seek 接口。旧项目先读 STORAGE_KEY，设置该项目 localStorage 游标再 reload；CSS 动画用 `document.getAnimations()` 暂停并设置 currentTime 可辅助查单次入场。**旧版持续场景的 CSS animation / transition 各有开始时刻，不能全部设成当前 step 的局部时间**，否则已完成元素会消失。正式基线从该章入口顺序播放，并记录真实音频时间；任意 seek 的历史版本对照优先用原站录制的视频。尺寸以 `.stage-frame.getBoundingClientRect()` 换算，不把 letterbox 当设计留白。
 
@@ -31,7 +33,7 @@ VO 新采样动画用 MOTION 的 review/seek 接口。旧项目先读 STORAGE_KE
 | 画面质量 | 主体占比、对比、材质/线宽统一、安全区 | 小主体大空底、信息挤角、背景喧宾夺主 |
 | 工程与效率 | 真实 build、复现命令、失败记录、改动行数 | 用代码量或动画数冒充效率/质量 |
 
-可选用 `templates/scripts/visual-audit-expression.js`（脚手架中为 scripts/ 下）作为 ego-browser `js(source)` 的 DOM 诊断表达式，按实际头像位置调整几何。它不会自行启动浏览器。
+可选用 `templates/scripts/visual-audit-expression.js`（脚手架中为 scripts/ 下）作为所选浏览器工具的页面 JS 诊断表达式，按实际头像位置调整几何。它不依赖具体浏览器控制器，也不会自行启动浏览器。
 
 DOM 字数统计只是代理指标：需排除 opacity/display/visibility、背面、裁切与父级隐藏；截图中的文字与 Canvas 无法靠 DOM 自动识别。报告统计口径与缺失项，不能把 innerText 字数直接当可见字数。帧差、动画覆盖时间也不能证明“有意义的运动”。
 

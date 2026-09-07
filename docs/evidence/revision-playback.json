@@ -1,0 +1,46 @@
+{
+  "date": "2026-09-07",
+  "browser_used": "Ego Lite (local tool preference, not a public dependency)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capture_rectangle": {
+    "x": 80,
+    "y": 90,
+    "width": 1280,
+    "height": 720
+  },
+  "audio_provider": "mlx",
+  "model_family": "Qwen3-TTS",
+  "audio_duration_seconds": 31.3535,
+  "captured_frames": 1520,
+  "observations": 336,
+  "steps_observed": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "max_observed_clock_difference_seconds": 0.01914899999999875,
+  "final": {
+    "scene": 31.354,
+    "step": 5,
+    "audio": 31.3535,
+    "paused": true,
+    "ended": false,
+    "duration": 31.3535,
+    "error": null
+  },
+  "errors": [],
+  "review_checks": {
+    "deterministic": true,
+    "reverseStep": "1",
+    "reducedMotion": true,
+    "reducedArtStable": true,
+    "reducedObjectsStable": true
+  },
+  "scope": "One local sample; observed clock difference is not a frame-rate or cross-browser guarantee."
+}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { stageScale } from "../motion/stageGeometry";
 
 /**
  * Compute the scale needed to fit a 1920x1080 stage inside the current
@@ -11,20 +12,17 @@ export function useStageScale(
   marginX = 80,
   marginY = 100,
 ) {
-  const q = new URLSearchParams(window.location.search);
-  const clean = q.get("auto") === "1" || q.get("review") === "1";
-  const [scale, setScale] = useState(1);
+  const measure = () => stageScale(window.innerWidth, window.innerHeight, baseW, baseH, marginX, marginY);
+  const [scale, setScale] = useState(measure);
 
   useEffect(() => {
     function update() {
-      const usefulW = Math.max(320, window.innerWidth - (clean ? 0 : marginX * 2));
-      const usefulH = Math.max(180, window.innerHeight - (clean ? 0 : marginY * 2));
-      setScale(Math.min(usefulW / baseW, usefulH / baseH));
+      setScale(stageScale(window.innerWidth, window.innerHeight, baseW, baseH, marginX, marginY));
     }
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
-  }, [baseW, baseH, marginX, marginY, clean]);
+  }, [baseW, baseH, marginX, marginY]);
 
   return scale;
 }

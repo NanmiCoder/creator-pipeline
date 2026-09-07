@@ -75,7 +75,7 @@ npm run gen
 ## 4. 验收后交付
 
 1. `npm run check`：真实 TypeScript 项目检查、时间轴/步数/红线。SKIP 不等于该项已验证。
-2. 按 [EVALUATION.md](references/EVALUATION.md) 遵循用户浏览器偏好，优先用可用的 **ego-browser** 看每种镜头的起/中/末帧和转场；新时钟镜头可用 `?review=1&t=<绝对秒>&mute=1` 精确复现。
+2. 按 [EVALUATION.md](references/EVALUATION.md) 使用用户指定或本机可用的真实浏览器 skill（如 ego-browser、agent-browser 或其他浏览器工具），不绑定平台或品牌。查看每种镜头起/中/末帧和转场；新时钟镜头可用 `?review=1&t=<绝对秒>&mute=1` 精确复现。
 3. `?auto=1&mute=1` 按 part 连续播放，确认声音时钟推进、cue 落点、无黑场/错位/截断。静态验帧不能代替播放。
 4. 复查上屏事实、缺失素材与安全区。修最小镜头，再复查它的相邻转场。
 5. 交付可运行目录、播放链接、录制方式和实测证据。用户录制链接去掉 `mute=1` 和 `review=1`。没有量过的速度/返工改善不要写成结论。
@@ -83,5 +83,7 @@ npm run gen
 ## 保留的工程底线
 
 固定 1920×1080 舞台，用 transform 适配视口，章节不用 vw/vh；颜色与字体用主题 token；章节 CSS 有前缀；无跨章 import。step 与口播条目数一致。整段原声由 audio.currentTime 驱动；章节不用独立计时器制造第二条时间轴。术语、数据口径和真实素材来源统一。
+
+**Manual、Auto 与 Review 都保留舞台外边距和 16:9 框选边界**。画面区域为直角矩形，边框、角标和控制条在画面外；切换播放模式不得改变矩形大小。截图/录制按 `.stage-frame` 的真实边界裁取，不为得到满屏截图而清零外边距。
 
 [EXAMPLES](references/EXAMPLES/) 中的旧文字/清单案例只作结构参考；新项目默认以脚手架的连续场景示例、[真实 SRT MG 示例](references/EXAMPLES/continuous-scene/)和代表性样片为起点。

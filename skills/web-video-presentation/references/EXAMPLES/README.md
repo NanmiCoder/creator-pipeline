@@ -107,3 +107,7 @@ CRAFT.md ③ 节制使用）、真素材（不是占位卡）、字号狠对比�
 这些场景的视觉原语已经在 [`../CRAFT.md`](../CRAFT.md)
 ③ 视觉工具箱里覆盖了；按 anchor
 的"形"组合即可。
+
+## Creator Pipeline 完整样片
+
+[公开的 first-video 源码与组装方法](https://github.com/NanmiCoder/creator-pipeline/tree/main/examples/first-video) 展示文案卡、声音振幅、SRT 时间轴到网页画面的连续交接。示例依赖真实六句配音与生成的 timing/waveform 数据；迁移时先对应自己的 cue，不把示例时间直接抄入新项目。
