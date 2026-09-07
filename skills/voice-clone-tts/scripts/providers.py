@@ -19,9 +19,14 @@ REVISIONS = {
 NANO_TOKENIZER_REVISION = 'ceff0d0749bfb3fa2d61149794ec6feef0d1e1ae'
 
 
-def auto_provider():
-    """Qwen3-TTS everywhere; use its MLX implementation on Apple Silicon."""
+def local_provider():
+    """Explicit free local route: Qwen3-TTS, with MLX on Apple Silicon."""
     return 'mlx' if platform.system() == 'Darwin' and platform.machine() == 'arm64' else 'qwen'
+
+
+def auto_provider():
+    """Package preference; no failed backend silently selects another one."""
+    return 'minimax'
 
 
 class Nano:

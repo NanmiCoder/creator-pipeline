@@ -1,0 +1,623 @@
+{
+  "date": "2026-09-07",
+  "decision": "MiniMax is the default after the voice owner selected it on all three listening cases. This is personal preference, not proof of general superiority.",
+  "protocol": {
+    "speakers": 1,
+    "heldout_cases": 3,
+    "runs": 2,
+    "generated_comparison_segments": 18,
+    "reference_seconds": 12.05,
+    "minimax_prompt_seconds": 4.05,
+    "qwen_reference_transcript": true,
+    "minimax_model": "speech-2.8-hd",
+    "qwen_model": "Qwen3-TTS 0.6B Base MLX 4bit",
+    "nano_model": "MOSS-TTS-Nano 100M ONNX CPU",
+    "listening": "First-run clips, constant gain targeting -20 LUFS with -1 dBTP cap; no time/pitch changes. Provider labels can be hidden/revealed; submitted screenshot showed labels. Not a controlled blind study.",
+    "speaker_preprocessing": "WeSpeaker official ONNX: 16 kHz mono, Kaldi 80-bin filterbank, frame 25/10 ms, hamming, dither 0, feature mean subtraction; cosine on normalized embeddings."
+  },
+  "user_preference": {
+    "technical": "minimax",
+    "question": "minimax",
+    "outro": "minimax"
+  },
+  "runs": [
+    {
+      "note": "Cosine similarity, not a percentage or identity decision. These held-out clips come from the same recording session; no population calibration. Raw native timings; no speed or pitch correction.",
+      "models": {
+        "ResNet34": {
+          "revision": "f0c48c298fd835726c27956a5d617bad7115627e",
+          "original_pairwise": [
+            0.8618144989013672,
+            0.8227865695953369,
+            0.8411535024642944
+          ],
+          "providers": {
+            "minimax": {
+              "same_text": [
+                0.8414900302886963,
+                0.815093457698822,
+                0.6956869959831238
+              ],
+              "mean_same_text": 0.7840901613235474,
+              "all_heldout": [
+                [
+                  0.8414900302886963,
+                  0.8312211036682129,
+                  0.7760148644447327
+                ],
+                [
+                  0.7882607579231262,
+                  0.815093457698822,
+                  0.7366225719451904
+                ],
+                [
+                  0.7308545708656311,
+                  0.7733719348907471,
+                  0.6956869959831238
+                ]
+              ],
+              "mean_all_heldout": 0.7765129208564758,
+              "clone_reference": [
+                0.8945975303649902,
+                0.8698311448097229,
+                0.8430735468864441
+              ]
+            },
+            "qwen": {
+              "same_text": [
+                0.8400924801826477,
+                0.7760756015777588,
+                0.775085985660553
+              ],
+              "mean_same_text": 0.7970846891403198,
+              "all_heldout": [
+                [
+                  0.8400924801826477,
+                  0.8103424310684204,
+                  0.7700177431106567
+                ],
+                [
+                  0.7518031597137451,
+                  0.7760756015777588,
+                  0.7099609375
+                ],
+                [
+                  0.8213856220245361,
+                  0.8227444887161255,
+                  0.775085985660553
+                ]
+              ],
+              "mean_all_heldout": 0.7863898277282715,
+              "clone_reference": [
+                0.8603555560112,
+                0.7830076217651367,
+                0.8381955623626709
+              ]
+            },
+            "nano": {
+              "same_text": [
+                0.6220970153808594,
+                0.7178860306739807,
+                0.6486412882804871
+              ],
+              "mean_same_text": 0.6628747781117758,
+              "all_heldout": [
+                [
+                  0.6220970153808594,
+                  0.621903121471405,
+                  0.6007932424545288
+                ],
+                [
+                  0.6970689296722412,
+                  0.7178860306739807,
+                  0.6276941299438477
+                ],
+                [
+                  0.6417990922927856,
+                  0.6770739555358887,
+                  0.6486412882804871
+                ]
+              ],
+              "mean_all_heldout": 0.6505507561895583,
+              "clone_reference": [
+                0.7349367737770081,
+                0.7638062834739685,
+                0.7505376935005188
+              ]
+            }
+          }
+        },
+        "ECAPA512": {
+          "revision": "a2f3dcb1c8702caccc7a55ceb57f5e8d1842112b",
+          "original_pairwise": [
+            0.8942611217498779,
+            0.8502984046936035,
+            0.8821604251861572
+          ],
+          "providers": {
+            "minimax": {
+              "same_text": [
+                0.883590817451477,
+                0.8627969026565552,
+                0.7733648419380188
+              ],
+              "mean_same_text": 0.839917520682017,
+              "all_heldout": [
+                [
+                  0.883590817451477,
+                  0.8652932643890381,
+                  0.807668924331665
+                ],
+                [
+                  0.8451371192932129,
+                  0.8627969026565552,
+                  0.7853540182113647
+                ],
+                [
+                  0.8389344215393066,
+                  0.854124128818512,
+                  0.7733648419380188
+                ]
+              ],
+              "mean_all_heldout": 0.8351404931810167,
+              "clone_reference": [
+                0.9046017527580261,
+                0.8970071077346802,
+                0.8796917796134949
+              ]
+            },
+            "qwen": {
+              "same_text": [
+                0.8859572410583496,
+                0.8335130214691162,
+                0.7991285920143127
+              ],
+              "mean_same_text": 0.8395329515139262,
+              "all_heldout": [
+                [
+                  0.8859572410583496,
+                  0.8515162467956543,
+                  0.8022792339324951
+                ],
+                [
+                  0.8263193368911743,
+                  0.8335130214691162,
+                  0.7398885488510132
+                ],
+                [
+                  0.8592474460601807,
+                  0.8575626611709595,
+                  0.7991285920143127
+                ]
+              ],
+              "mean_all_heldout": 0.8283791475825839,
+              "clone_reference": [
+                0.8847147226333618,
+                0.8469122052192688,
+                0.8782888650894165
+              ]
+            },
+            "nano": {
+              "same_text": [
+                0.7004473209381104,
+                0.7742685675621033,
+                0.6868381500244141
+              ],
+              "mean_same_text": 0.7205180128415426,
+              "all_heldout": [
+                [
+                  0.7004473209381104,
+                  0.6782506108283997,
+                  0.6360577344894409
+                ],
+                [
+                  0.7432956695556641,
+                  0.7742685675621033,
+                  0.679607629776001
+                ],
+                [
+                  0.7271093726158142,
+                  0.7519638538360596,
+                  0.6868381500244141
+                ]
+              ],
+              "mean_all_heldout": 0.708648767736223,
+              "clone_reference": [
+                0.7526915073394775,
+                0.799140989780426,
+                0.7945869565010071
+              ]
+            }
+          }
+        }
+      },
+      "durations": {
+        "reference": 12.05,
+        "original_0": 11.254,
+        "original_1": 8.95,
+        "original_2": 7.41,
+        "minimax_0": 10.3213125,
+        "minimax_1": 8.823625,
+        "minimax_2": 7.5465,
+        "qwen_0": 10.72,
+        "qwen_1": 9.0058125,
+        "qwen_2": 9.68,
+        "nano_0": 11.2,
+        "nano_1": 10.56,
+        "nano_2": 8.56
+      },
+      "asr": [
+        {
+          "provider": "minimax",
+          "id": 1,
+          "edit_distance": 2,
+          "characters": 74,
+          "cer": 0.02702702702702703
+        },
+        {
+          "provider": "minimax",
+          "id": 2,
+          "edit_distance": 1,
+          "characters": 50,
+          "cer": 0.02
+        },
+        {
+          "provider": "minimax",
+          "id": 3,
+          "edit_distance": 0,
+          "characters": 46,
+          "cer": 0.0
+        },
+        {
+          "provider": "qwen",
+          "id": 1,
+          "edit_distance": 2,
+          "characters": 74,
+          "cer": 0.02702702702702703
+        },
+        {
+          "provider": "qwen",
+          "id": 2,
+          "edit_distance": 1,
+          "characters": 50,
+          "cer": 0.02
+        },
+        {
+          "provider": "qwen",
+          "id": 3,
+          "edit_distance": 0,
+          "characters": 46,
+          "cer": 0.0
+        },
+        {
+          "provider": "nano",
+          "id": 1,
+          "edit_distance": 3,
+          "characters": 74,
+          "cer": 0.04054054054054054
+        },
+        {
+          "provider": "nano",
+          "id": 2,
+          "edit_distance": 1,
+          "characters": 50,
+          "cer": 0.02
+        },
+        {
+          "provider": "nano",
+          "id": 3,
+          "edit_distance": 0,
+          "characters": 46,
+          "cer": 0.0
+        }
+      ],
+      "local_seed_base": 0,
+      "minimax_seed_controlled": false
+    },
+    {
+      "note": "Cosine similarity, not a percentage or identity decision. These held-out clips come from the same recording session; no population calibration. Raw native timings; no speed or pitch correction.",
+      "models": {
+        "ResNet34": {
+          "revision": "f0c48c298fd835726c27956a5d617bad7115627e",
+          "original_pairwise": [
+            0.8618144989013672,
+            0.8227865695953369,
+            0.8411535024642944
+          ],
+          "providers": {
+            "minimax": {
+              "same_text": [
+                0.8325986266136169,
+                0.8231224417686462,
+                0.7394661903381348
+              ],
+              "mean_same_text": 0.7983957529067993,
+              "all_heldout": [
+                [
+                  0.8325986266136169,
+                  0.8122659921646118,
+                  0.7548151612281799
+                ],
+                [
+                  0.7886208295822144,
+                  0.8231224417686462,
+                  0.7282377481460571
+                ],
+                [
+                  0.7482146620750427,
+                  0.7630224227905273,
+                  0.7394661903381348
+                ]
+              ],
+              "mean_all_heldout": 0.7767071194118924,
+              "clone_reference": [
+                0.8759346604347229,
+                0.8625666499137878,
+                0.8670041561126709
+              ]
+            },
+            "qwen": {
+              "same_text": [
+                0.8761650323867798,
+                0.8031924366950989,
+                0.7739765644073486
+              ],
+              "mean_same_text": 0.8177780111630758,
+              "all_heldout": [
+                [
+                  0.8761650323867798,
+                  0.8301905989646912,
+                  0.7848470211029053
+                ],
+                [
+                  0.8044412732124329,
+                  0.8031924366950989,
+                  0.7058314085006714
+                ],
+                [
+                  0.8124232292175293,
+                  0.7849397659301758,
+                  0.7739765644073486
+                ]
+              ],
+              "mean_all_heldout": 0.7973341478241814,
+              "clone_reference": [
+                0.8727008104324341,
+                0.8459271788597107,
+                0.8051996231079102
+              ]
+            },
+            "nano": {
+              "same_text": [
+                0.7161853313446045,
+                0.7332229614257812,
+                0.6466866731643677
+              ],
+              "mean_same_text": 0.6986983219782511,
+              "all_heldout": [
+                [
+                  0.7161853313446045,
+                  0.6983009576797485,
+                  0.6538900136947632
+                ],
+                [
+                  0.7497687339782715,
+                  0.7332229614257812,
+                  0.6992621421813965
+                ],
+                [
+                  0.6788991689682007,
+                  0.7073311805725098,
+                  0.6466866731643677
+                ]
+              ],
+              "mean_all_heldout": 0.6981719070010715,
+              "clone_reference": [
+                0.7869147658348083,
+                0.821387767791748,
+                0.7196685671806335
+              ]
+            }
+          }
+        },
+        "ECAPA512": {
+          "revision": "a2f3dcb1c8702caccc7a55ceb57f5e8d1842112b",
+          "original_pairwise": [
+            0.8942611217498779,
+            0.8502984046936035,
+            0.8821604251861572
+          ],
+          "providers": {
+            "minimax": {
+              "same_text": [
+                0.8772997856140137,
+                0.8887323141098022,
+                0.7846283912658691
+              ],
+              "mean_same_text": 0.8502201636632284,
+              "all_heldout": [
+                [
+                  0.8772997856140137,
+                  0.8545124530792236,
+                  0.7950136661529541
+                ],
+                [
+                  0.8755979537963867,
+                  0.8887323141098022,
+                  0.7969033718109131
+                ],
+                [
+                  0.836582601070404,
+                  0.8380758762359619,
+                  0.7846283912658691
+                ]
+              ],
+              "mean_all_heldout": 0.8385940459039476,
+              "clone_reference": [
+                0.8853158950805664,
+                0.9132906794548035,
+                0.8853830099105835
+              ]
+            },
+            "qwen": {
+              "same_text": [
+                0.9006273746490479,
+                0.8341447114944458,
+                0.8383058309555054
+              ],
+              "mean_same_text": 0.8576926390329996,
+              "all_heldout": [
+                [
+                  0.9006273746490479,
+                  0.8533682823181152,
+                  0.8137727379798889
+                ],
+                [
+                  0.8495518565177917,
+                  0.8341447114944458,
+                  0.7489010095596313
+                ],
+                [
+                  0.8626028299331665,
+                  0.8349945545196533,
+                  0.8383058309555054
+                ]
+              ],
+              "mean_all_heldout": 0.8373632431030273,
+              "clone_reference": [
+                0.8870896100997925,
+                0.8895416259765625,
+                0.860132098197937
+              ]
+            },
+            "nano": {
+              "same_text": [
+                0.7759333252906799,
+                0.7997179627418518,
+                0.7072601318359375
+              ],
+              "mean_same_text": 0.7609704732894897,
+              "all_heldout": [
+                [
+                  0.7759333252906799,
+                  0.7637662887573242,
+                  0.6935602426528931
+                ],
+                [
+                  0.8029438257217407,
+                  0.7997179627418518,
+                  0.7247998118400574
+                ],
+                [
+                  0.7777005434036255,
+                  0.7611601948738098,
+                  0.7072601318359375
+                ]
+              ],
+              "mean_all_heldout": 0.7563158141242133,
+              "clone_reference": [
+                0.8209015130996704,
+                0.8444219827651978,
+                0.7819149494171143
+              ]
+            }
+          }
+        }
+      },
+      "durations": {
+        "reference": 12.05,
+        "original_0": 11.254,
+        "original_1": 8.95,
+        "original_2": 7.41,
+        "minimax_0": 10.53025,
+        "minimax_1": 7.976125,
+        "minimax_2": 7.5465,
+        "qwen_0": 10.96,
+        "qwen_1": 9.44,
+        "qwen_2": 8.72,
+        "nano_0": 13.6,
+        "nano_1": 12.24,
+        "nano_2": 8.8
+      },
+      "asr": [
+        {
+          "provider": "minimax",
+          "id": 1,
+          "edit_distance": 2,
+          "characters": 74,
+          "cer": 0.02702702702702703
+        },
+        {
+          "provider": "minimax",
+          "id": 2,
+          "edit_distance": 0,
+          "characters": 50,
+          "cer": 0.0
+        },
+        {
+          "provider": "minimax",
+          "id": 3,
+          "edit_distance": 0,
+          "characters": 46,
+          "cer": 0.0
+        },
+        {
+          "provider": "qwen",
+          "id": 1,
+          "edit_distance": 2,
+          "characters": 74,
+          "cer": 0.02702702702702703
+        },
+        {
+          "provider": "qwen",
+          "id": 2,
+          "edit_distance": 1,
+          "characters": 50,
+          "cer": 0.02
+        },
+        {
+          "provider": "qwen",
+          "id": 3,
+          "edit_distance": 0,
+          "characters": 46,
+          "cer": 0.0
+        },
+        {
+          "provider": "nano",
+          "id": 1,
+          "edit_distance": 3,
+          "characters": 74,
+          "cer": 0.04054054054054054
+        },
+        {
+          "provider": "nano",
+          "id": 2,
+          "edit_distance": 3,
+          "characters": 50,
+          "cer": 0.06
+        },
+        {
+          "provider": "nano",
+          "id": 3,
+          "edit_distance": 0,
+          "characters": 46,
+          "cer": 0.0
+        }
+      ],
+      "local_seed_base": 100,
+      "minimax_seed_controlled": false
+    }
+  ],
+  "mean_over_six_same_text_clips": {
+    "ResNet34": {
+      "minimax": 0.7912429571151733,
+      "qwen": 0.8074313501516978,
+      "nano": 0.6807865500450134
+    },
+    "ECAPA512": {
+      "minimax": 0.8450688421726227,
+      "qwen": 0.8486127952734629,
+      "nano": 0.7407442430655161
+    }
+  }
+}

@@ -9,9 +9,9 @@
 <p align="center"><b>文案 + 你的声音 → 配音与 SRT → 会自动播放的网页 PPT</b><br>
 中文 · <a href="README.en.md">English</a></p>
 
-Creator Pipeline 是一组可以配合使用的 AI Agent skills。先用自己的录音在本地克隆配音，得到真实音频时间轴；再让 Agent 把内容做成卡片、图解与连续 MG 场景，让画面跟着声音展开。
+Creator Pipeline 是一组可以配合使用的 AI Agent skills。先用自己的录音克隆配音，得到真实音频时间轴；再让 Agent 把内容做成卡片、图解与连续 MG 场景，让画面跟着声音展开。
 
-默认使用 **Qwen3-TTS** 本地配音，无需 MiniMax 账号或 API key；Apple Silicon 自动用 MLX，其他平台用官方 PyTorch。已有云端音色的用户可以显式选择 MiniMax。**安装的是可执行脚本、模板与制作方法；模型在首次使用配音功能时下载。**
+默认使用 **MiniMax speech-2.8-hd** 与你自己的克隆音色，需要可用的 MiniMax 凭据和额度。无云账号时可显式选 `--provider local`，用免费的 **Qwen3-TTS**：Apple Silicon 走 MLX，其他平台走官方 PyTorch。**安装的是脚本、模板与制作方法；本地模型在首次使用时下载，个人声音不会随技能分发。**
 
 ## 安装两个 skills
 
@@ -31,11 +31,11 @@ npx skills add NanmiCoder/creator-pipeline --list
 
 ## 给 Agent 的第一条任务
 
-准备 `script.md` 和一段干净、单人、无配乐的本人录音 `my-voice.mp3`，参考片段建议 3–30 秒。然后发送：
+准备 `script.md` 和一段干净、单人、无配乐的本人录音 `my-voice.mp3`，MiniMax 参考片段建议 10–30 秒（接口接受 10–300 秒），本地模型通常选 3–30 秒。然后发送：
 
-> 使用 voice-clone-tts 和 web-video-presentation。文案在 script.md，参考声音在 my-voice.mp3。先用默认本地后端制作代表性配音样片，检查读音；再生成完整 WAV、MP3、SRT。基于最终时间轴制作 16:9 自动播放网页演示：少放整段文字，用连续图解、卡片状态变化和 MG 解释内容。完成后运行校验，并在浏览器实际播放、检查转场，交付运行方式。
+> 使用 voice-clone-tts 和 web-video-presentation。文案在 script.md，参考声音在 my-voice.mp3。先使用我的 MiniMax 音色；没有音色时用这段本人录音在 MiniMax 登记。制作代表性配音样片，检查读音和音色；再生成完整 WAV、MP3、SRT。基于最终时间轴制作 16:9 自动播放网页演示：少放整段文字，用连续图解、卡片状态变化和 MG 解释内容。完成后运行校验，并在浏览器实际播放、检查转场，交付运行方式。
 
-本地配音需要 Python 3.12、[uv](https://docs.astral.sh/uv/getting-started/installation/) 和 FFmpeg；网页需要 Node.js/npm。skill 内的 `setup.py` 会创建独立 Python 环境。完整命令见 [配音环境](skills/voice-clone-tts/references/SETUP.md)；想直接跑固定样例，见 [first-video](examples/first-video/README.md)。
+配音脚本需要 Python 3.12、[uv](https://docs.astral.sh/uv/getting-started/installation/) 和 FFmpeg；网页需要 Node.js/npm。skill 内的 `setup.py` 会创建独立 Python 环境。完整命令见 [配音环境](skills/voice-clone-tts/references/SETUP.md)；想直接跑固定样例，见 [first-video](examples/first-video/README.md)。
 
 ## 两个 skills，各有清楚的交付
 
@@ -58,16 +58,16 @@ npx skills add NanmiCoder/creator-pipeline --list
 
 输出是 **HTML 网页演示，不是 `.pptx`**。导出 MP4 需要按 [录制说明](skills/web-video-presentation/references/RECORDING.md) 完成录制；安装 skills 不会自动替你生成或上传视频。
 
-## 免费本地优先，后端可以选
+## MiniMax 默认，保留免费本地方案
 
 | 后端 | 适合谁 | 本项目验证状态 |
 |---|---|---|
 | **Nano · 可选** | 明确希望尝试较轻的 CPU 路线 | MOSS-TTS-Nano 100M ONNX，macOS CPU 实际合成与全流程验证 |
-| **Qwen MLX · Mac 默认** | Apple Silicon Mac 用户 | Qwen3-TTS 0.6B Base 4bit，实际完成同稿六句配音 |
-| **Qwen PyTorch · 其他平台默认** | CUDA / CPU 用户 | 提供官方模型适配器，尚未做 CUDA 实机验证 |
-| **MiniMax** | 已有在线服务与自己的音色 | 可选，CLI 参数与模拟调用已检查；未调用付费接口验证 |
+| **Qwen MLX · 本地选项** | Apple Silicon Mac 用户 | Qwen3-TTS 0.6B Base 4bit，实际完成同稿六句配音 |
+| **Qwen PyTorch · 本地选项** | CUDA / CPU 用户 | 提供官方模型适配器，尚未做 CUDA 实机验证 |
+| **MiniMax · 默认** | 使用在线服务和自己的音色 | 已实际登记音色，并完成三段、两轮同稿对照；用户三段试听均选 MiniMax |
 
-默认优先考虑配音质量；Nano 在前次实测中需要局部重试，现只保留为显式选项，不会自动降级。
+这次默认取自用户对本人声音的三段试听选择。声纹模型对 MiniMax 与 Qwen 的分数接近，并未证明普遍胜负；[对照方法与结果](docs/VALIDATION.md#三家音色对照与-minimax-默认)保留这些限制。缺少账号或音色时会提示配置，不静默切换供应商。
 
 本地模型代码和权重分别遵循上游许可。Nano、Qwen Base 及所选 MLX 权重的公开许可、固定版本与取舍见 [TTS 选型](docs/TTS-BACKENDS.md)。MiniMax 的权限和费用以账号实际额度为准，不按套餐名字推断。
 
@@ -80,7 +80,7 @@ npx skills add NanmiCoder/creator-pipeline --list
 - **故障恢复**：改一段、换参考、损坏缓存、真实进程中断、搬迁目录，都做过独立前向测试；导入器会拒绝损坏或过期清单。
 - **网页质量**：真实 TypeScript 检查、时间轴校验、构建与浏览器播放；文案密度、构图和动作含义仍需要视觉审查。
 
-数字、范围、失败与修复记录见 [验证报告](docs/VALIDATION.md)。目前没有跨机器速度基准、盲听音色相似度评分或大样本返工率结论。
+数字、范围、失败与修复记录见 [验证报告](docs/VALIDATION.md)。目前有单人三段试听选择与两轮声纹辅助对照，没有跨机器速度基准、受控双盲研究或大样本返工率结论。
 
 ## 开发与贡献
 

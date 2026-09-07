@@ -4,22 +4,18 @@
 
 从仓库根目录执行，先安装 uv、FFmpeg、Node.js/npm：
 
+先按 [SETUP](../../skills/voice-clone-tts/references/SETUP.md) 配置 mmx，并登记自己的 MiniMax 音色：
+
 ```bash
+python3 skills/voice-clone-tts/scripts/configure.py --provider minimax --voice YOUR_VOICE_ID
 python3 skills/voice-clone-tts/scripts/setup.py
-# 将 PY 设为 setup 输出的 Python 路径，例如Apple Silicon 当前项目的路径（其他平台是 qwen）：
-PY="$PWD/.creator-env/mlx/bin/python"
+# PY 使用 setup 输出的实际路径；macOS/Linux 当前项目的缺省路径如下：
+PY="$PWD/.creator-env/minimax/bin/python"
 "$PY" skills/voice-clone-tts/scripts/run.py examples/first-video/script.md \
-  --reference /path/to/my-voice.mp3 --outdir voiceover-first
+  --outdir voiceover-first
 ```
 
-先检查声音。如果只有第 2 段需要重试，可为它指定新 seed，其他五段继续使用缓存：
-
-```bash
-"$PY" skills/voice-clone-tts/scripts/run.py examples/first-video/script.md \
-  --reference /path/to/my-voice.mp3 --outdir voiceover-first --segment-seed 2:3
-```
-
-`2:3` 是“第 2 段使用 seed 3”，并不保证这个 seed 对所有声音有效。选择保存在 segments.json，普通续跑不会撤销；相同 ID 的正文变化后才不再继承。可重复传入多个 `--segment-seed`，用 `--clear-segment-seeds` 显式清空所有覆盖。改稿、换参考或换模型后重新检查。不要为了转写匹配而改掉原稿。
+先检查声音、术语和句间停顿。MiniMax 不提供可控 seed；`--force` 会重新请求所有段，可能产生费用。免费本地方案在 setup 和 run 都添加 `--provider local`，并在 run 传 `--reference /path/to/my-voice.mp3 --reference-text /path/to/reference.txt`，使用对应环境 Python。本地单句重试与缓存见 [PIPELINE](../../skills/voice-clone-tts/references/PIPELINE.md)。
 
 然后组装网页，目标目录必须是新的空目录：
 
@@ -40,6 +36,6 @@ npm run dev -- --host 127.0.0.1
 
 该 helper 只组装这份固定六句样例，会核对源稿哈希与段数。制作自己的内容时由 Agent 按 web skill 规划 `plan.md` 与场景，使用 `import-voiceover.mjs` 导入最终配音，再实现和验证动画。它不是一个可以把任意文章自动套进六张卡片的通用生成器。
 
-Qwen3-TTS 是默认模型；setup 与 run 自动选择同一平台后端。Nano 需单独建立 `--provider nano` 环境，并在 run 中显式指定。所有音频和模型都在本机；本例不自动调用在线服务或发布网页。
+MiniMax 是默认后端，使用个人配置中的音色；免费 Qwen 通过 `--provider local` 选择，Nano 通过 `--provider nano` 选择。实际 Demo 的模型标签来自配音 manifest，波形来自实际 PCM。组装脚本不合成音频，也不发布网页。
 
 默认脚手架已内置本例的场景、动作谱和 Step 控制条，源码统一维护在 [01-pipeline](../../skills/web-video-presentation/templates/src/chapters/01-pipeline/)。单独体验无需配音，见 [STARTER](../../skills/web-video-presentation/templates/STARTER.md)。此处的 `make-demo.mjs` 在同一模板上接入真实音频、SRT 和 PCM 波形，不再复制另一套动画实现。

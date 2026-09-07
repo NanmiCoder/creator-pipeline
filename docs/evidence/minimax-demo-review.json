@@ -1,0 +1,70 @@
+{
+  "date": "2026-09-07",
+  "provider": "minimax",
+  "model": "speech-2.8-hd",
+  "used_personal_voice": true,
+  "explicit_provider_or_voice_flags": false,
+  "audio_duration": 25.067792,
+  "segments": 6,
+  "structural_validation": "pass",
+  "asr_normalized_matches": 6,
+  "typescript_timeline_check": "7 PASS / 0 SKIP",
+  "production_build": "pass",
+  "browser": "Ego Lite",
+  "continuous_samples": 127,
+  "observed_beats": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "max_observed_clock_difference_ms": 32.205999999998625,
+  "capture_geometry": {
+    "x": 80,
+    "y": 90,
+    "width": 1280,
+    "height": 720,
+    "errors": [],
+    "audioDuration": 25.067792
+  },
+  "final": {
+    "time": 25.067,
+    "beat": 20,
+    "audio": 25.067792,
+    "paused": true,
+    "ended": false,
+    "model": "MINIMAX00:25.07"
+  },
+  "step_controls": {
+    "first": {
+      "time": "0.826",
+      "label": "01 / 21文案落入画面"
+    },
+    "back": {
+      "time": "0.826",
+      "label": "01 / 21文案落入画面"
+    },
+    "reset": {
+      "time": "0.000",
+      "label": "逐步演示点击下一步，看画面如何推进"
+    }
+  },
+  "limitations": "Discrete observations, not an all-frame synchronization bound. ASR is a content aid, not a voice-similarity score. New narration changes one sentence to remove the inaccurate local-only claim; this demo is not a controlled provider A/B."
+}

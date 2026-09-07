@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Clone locally by default; cache audio by all inputs, and checkpoint each successful segment."""
+"""Synthesize with your selected voice; cache inputs and checkpoint successful segments."""
 import argparse
 import importlib.metadata
 import json
@@ -10,13 +10,14 @@ import tempfile
 import time
 from pathlib import Path
 from common import digest, fingerprint, normalize_audio, wav_info, write_json
-from providers import BACKENDS, MODELS, REVISIONS, NANO_COMMIT, NANO_TOKENIZER_REVISION, auto_provider
+from providers import BACKENDS, MODELS, REVISIONS, NANO_COMMIT, NANO_TOKENIZER_REVISION
+from user_config import load_config, configured_provider
 
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('segments')
-    p.add_argument('--provider', choices=['auto', *BACKENDS], default='auto')
+    p.add_argument('--provider', choices=['auto', 'local', *BACKENDS], default='auto')
     p.add_argument('--reference', help='Your reference MP3/WAV; local backends keep it on this computer')
     p.add_argument('--reference-text', help='Optional UTF-8 transcript file matching the reference clip')
     p.add_argument('--voice', help='MiniMax voice ID, required only for the cloud backend')
@@ -35,10 +36,20 @@ def main():
     args = p.parse_args()
     if not shutil.which('ffmpeg'):
         p.error('ffmpeg is required. See references/SETUP.md.')
-    provider = auto_provider() if args.provider == 'auto' else args.provider
+    defaults = load_config()
+    provider = configured_provider(args.provider, defaults)
+    args.voice = args.voice or os.environ.get('MINIMAX_VOICE_ID') or defaults.get('voice')
+    explicit_reference = args.reference is not None
+    args.reference = args.reference or defaults.get('reference')
+    # Never attach an old transcript to a new explicitly supplied recording.
+    if not explicit_reference and not args.reference_text:
+        args.reference_text = defaults.get('reference_text')
     if provider == 'minimax':
         if not args.voice or not shutil.which('mmx'):
-            p.error('MiniMax requires mmx and --voice YOUR_VOICE_ID. No local voice is uploaded automatically.')
+            p.error('MiniMax needs mmx and your voice ID (--voice, MINIMAX_VOICE_ID, or configure.py). Use --provider local for free Qwen cloning. No recording is uploaded automatically.')
+        # A registered cloud voice needs no local reference or transcript file.
+        # Moving a reference used by Qwen must not break existing MiniMax voices.
+        args.reference = args.reference_text = None
     elif not args.reference or not Path(args.reference).is_file():
         p.error('Local cloning requires --reference your-recording.mp3')
     if args.max_tokens <= 0 or args.threads <= 0 or not 0 < args.temperature <= 2:
@@ -108,7 +119,8 @@ def main():
     if not pending:
         print(f"{len(doc['segments'])}/{len(doc['segments'])} ready (cache); no model loaded")
         return 0
-    print(f"Backend: {provider}; {len(pending)} pending. First use downloads public model weights.", flush=True)
+    print(f"Backend: {provider}; {len(pending)} pending." +
+          (' Cloud speech uses your MiniMax account.' if provider == 'minimax' else ' First use may download public model weights.'), flush=True)
     started = time.perf_counter()
     with tempfile.TemporaryDirectory(prefix='voice-clone-', dir=sp.parent) as td:
         td = Path(td)

@@ -16,15 +16,17 @@ sys.path.insert(0, str(SCRIPTS))
 from common import checked_segments, digest, fingerprint, trim_bounds, wav_info, write_json
 from segment import parse_chapters, build_segments, hard_wrap
 from verify import verify
-from providers import MiniMax, auto_provider
+from providers import MiniMax, auto_provider, local_provider
+from user_config import configured_provider, load_config, config_path
 
 
 class VoiceTests(unittest.TestCase):
-    def test_default_is_qwen_on_all_platforms(self):
+    def test_default_is_minimax_on_all_platforms(self):
         for system,machine,expected in [('Darwin','arm64','mlx'),('Darwin','x86_64','qwen'),
                                          ('Linux','x86_64','qwen'),('Windows','AMD64','qwen')]:
             with patch('providers.platform.system',return_value=system),patch('providers.platform.machine',return_value=machine):
-                self.assertEqual(auto_provider(),expected)
+                self.assertEqual(auto_provider(),'minimax')
+                self.assertEqual(local_provider(),expected)
 
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -47,12 +49,89 @@ class VoiceTests(unittest.TestCase):
     def tearDown(self):
         self.tmp.cleanup()
 
+    def test_explicit_provider_overrides_personal_and_environment_preferences(self):
+        with patch.dict(os.environ, {'CREATOR_TTS_PROVIDER':'nano'}):
+            self.assertEqual(configured_provider('minimax', {'provider':'qwen'}), 'minimax')
+            self.assertEqual(configured_provider('auto', {'provider':'qwen'}), 'nano')
+        with patch.dict(os.environ, {}, clear=True):
+            self.assertEqual(configured_provider('auto', {'provider':'qwen'}), 'qwen')
+            self.assertEqual(configured_provider('auto', {}), 'minimax')
+
+    def test_personal_voice_config_keeps_keys_out_and_does_not_live_in_skill(self):
+        path=self.root/'prefs.json'
+        with patch.dict(os.environ, {'CREATOR_TTS_CONFIG':str(path)}):
+            self.assertEqual(load_config(), {})
+            path.write_text('{"provider":"minimax","voice":"MyOwnVoice01"}')
+            self.assertEqual(load_config()['voice'], 'MyOwnVoice01')
+            path.write_text('{"api_key":"must-stay-in-mmx"}')
+            with self.assertRaisesRegex(ValueError,'API keys'):
+                load_config()
+
+    def test_configure_preserves_voice_when_selecting_local(self):
+        path=self.root/'prefs.json'
+        env=dict(os.environ, CREATOR_TTS_CONFIG=str(path))
+        subprocess.run([sys.executable,str(SCRIPTS/'configure.py'),'--provider','minimax','--voice','MyOwnVoice01'], env=env,check=True,capture_output=True)
+        subprocess.run([sys.executable,str(SCRIPTS/'configure.py'),'--provider','local'], env=env,check=True,capture_output=True)
+        self.assertEqual(json.loads(path.read_text()), {'provider':'local','voice':'MyOwnVoice01'})
+
+    def test_clone_uses_one_configured_account_and_region(self):
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('clone_minimax',SCRIPTS/'clone-minimax.py')
+        clone=importlib.util.module_from_spec(spec);spec.loader.exec_module(clone)
+        (self.root/'config.json').write_text('{"api_key":"configured-key","region":"cn"}')
+        with patch.dict(os.environ,{'MMX_CONFIG_DIR':str(self.root),'MINIMAX_API_KEY':'different-environment-key'},clear=True):
+            self.assertEqual(clone.credentials(), ('configured-key','cn'))
+            self.assertEqual(clone.credentials('global'), ('configured-key','global'))
+            (self.root/'config.json').unlink()
+            self.assertEqual(clone.credentials(), ('different-environment-key','global'))
+
+    def test_changing_saved_reference_does_not_reuse_old_transcript(self):
+        path=self.root/'prefs.json'
+        path.write_text(json.dumps({'provider':'local','reference':'old.wav','reference_text':'old.txt'}))
+        reference=self.root/'new.wav';reference.write_bytes(b'placeholder')
+        subprocess.run([sys.executable,str(SCRIPTS/'configure.py'),'--reference',str(reference)],
+                       env=dict(os.environ,CREATOR_TTS_CONFIG=str(path)),check=True,capture_output=True)
+        self.assertNotIn('reference_text',json.loads(path.read_text()))
+
     def test_changed_reference_and_parameters_invalidate_cache(self):
         seg = self.doc['segments'][0]
         before = fingerprint(seg,self.doc['meta'])
         for key,value in [('reference_sha256','b'),('model','new'),('provider','other'),('temperature',.9)]:
             m = copy.deepcopy(self.doc['meta']);m['synthesis'][key]=value
             self.assertNotEqual(before,fingerprint(seg,m))
+
+    def test_registered_cloud_voice_ignores_missing_local_reference_files(self):
+        import synth
+        preferences={'provider':'minimax','voice':'MyOwnVoice01',
+                     'reference':str(self.root/'moved.wav'),
+                     'reference_text':str(self.root/'moved.txt')}
+        with patch('synth.load_config',return_value=preferences), \
+             patch('synth.shutil.which',return_value='/tool'), \
+             patch.dict(os.environ,{},clear=True), \
+             patch.object(sys,'argv',['synth.py',str(self.sp)]), \
+             patch.dict(synth.BACKENDS,{'minimax':unittest.mock.Mock(side_effect=RuntimeError('stop before API'))}):
+            with self.assertRaisesRegex(RuntimeError,'stop before API'):
+                synth.main()
+            settings,_,transcript=synth.BACKENDS['minimax'].call_args.args
+            self.assertEqual(settings['voice'],'MyOwnVoice01')
+            self.assertIsNone(settings['reference_sha256'])
+            self.assertIsNone(transcript)
+
+    def test_invalid_clone_prompt_fails_before_any_upload(self):
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('clone_minimax',SCRIPTS/'clone-minimax.py')
+        clone=importlib.util.module_from_spec(spec);spec.loader.exec_module(clone)
+        transcript=self.root/'prompt.txt';transcript.write_text('matching transcript')
+        with patch.object(sys,'argv',['clone-minimax.py','reference.wav','MyOwnVoice01',
+                                     '--prompt-audio','prompt.wav','--prompt-text',str(transcript)]), \
+             patch.object(clone,'audio_info',side_effect=[(self.root/'ref.wav',12),(self.root/'prompt.wav',8)]), \
+             patch.object(clone,'upload') as upload, \
+             patch.object(clone,'credentials') as credentials, \
+             patch('sys.stderr'):
+            with self.assertRaises(SystemExit):
+                clone.main()
+            upload.assert_not_called()
+            credentials.assert_not_called()
 
     def test_changed_script_cannot_build_old_audio(self):
         self.doc['segments'][0]['text']='已经改稿。'

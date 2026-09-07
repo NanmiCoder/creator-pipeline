@@ -2,7 +2,7 @@ import {useReducedMotion} from '../../hooks/useReducedMotion';
 import type {ChapterStepProps} from '../../registry/types';
 import {progress,mix,easeInOut} from '../../motion/sample';
 import {timing} from './timing';
-import {waveform,waveformIsIllustrative} from './waveform';
+import {waveform,waveformIsIllustrative,voiceModelLabel} from './waveform';
 import {beats} from './beats';
 import {StepReview} from './StepReview';
 import './chapter.css';
@@ -37,7 +37,7 @@ export default function Pipeline({step,time=0,stepReview=false}:ChapterStepProps
   <div className="pi-masthead"><span className="pi-mark"><i/><i/><i/></span><b>Creator Pipeline</b><span>WORDS INTO MOTION</span></div>
   <div className="pi-count"><b>{String(index+1).padStart(2,'0')}</b><span>/ 06</span></div>
   <div className="pi-heading" style={{transform:pose(108,headingY+(1-titleIn)*22,headingS),opacity:titleIn}}>
-   <span className="pi-kicker">{['SCRIPT & REFERENCE','YOUR VOICE, LOCALLY','ONE SHARED TIMELINE','WORDS BECOME OBJECTS','VOICE DRIVES THE SCENE','READY TO PLAY'][index]}</span>
+   <span className="pi-kicker">{['SCRIPT & REFERENCE','YOUR VOICE, CLONED','ONE SHARED TIMELINE','WORDS BECOME OBJECTS','VOICE DRIVES THE SCENE','READY TO PLAY'][index]}</span>
    <h1>{headings[index]![0]}{step===0?<br/>:' '}<em>{headings[index]![1]}</em></h1>
   </div>
   <svg className="pi-pairing" viewBox="0 0 1920 1080" style={{opacity:pair*(1-merge)}}><path d="M1050 630C1100 700 1175 765 1260 715" pathLength="1" strokeDasharray="1" strokeDashoffset={1-pair}/><circle cx="1170" cy="735" r={27*pair}/><path d="M1158 735h24m-12-12v24"/></svg>
@@ -49,8 +49,8 @@ export default function Pipeline({step,time=0,stepReview=false}:ChapterStepProps
   <div className="pi-voice" data-motion-object="voice" style={{transform:pose(voiceX,voiceY+mix(110,0,record),voiceScale,mix(8,0,pair)),opacity:record*(1-expand)}}>
    <div className="pi-voice-top"><div className="pi-voice-symbol"><i/><i/><i/><i/></div><div><small>{merge>.5?'克隆配音':'参考录音'}</small><h2>你的声音</h2></div><span className="pi-status-dot"/></div>
    <Wave fill={merge>.5?synth:1}/>
-   <div className="pi-voice-foot"><span>{merge>.5?'QWEN3-TTS':'REFERENCE AUDIO'}</span><span>{merge>.5?clock(duration):'YOUR VOICE'}</span></div>
-   <div className="pi-local-seal" style={{opacity:local,transform:pose(mix(40,0,local),0,mix(.7,1,local))}}><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 6"/></svg>本地完成</div>
+   <div className="pi-voice-foot"><span>{merge>.5?voiceModelLabel:'REFERENCE AUDIO'}</span><span>{merge>.5?clock(duration):'YOUR VOICE'}</span></div>
+   <div className="pi-local-seal" style={{opacity:local,transform:pose(mix(40,0,local),0,mix(.7,1,local))}}><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 6"/></svg>音色就绪</div>
   </div>
   <div className="pi-browser" data-motion-object="browser" style={{opacity:web,transform:pose(screenX,mix(365,screenY,web),screenS)}}>
    <div className="pi-browser-bar"><span className="pi-dots"><i/><i/><i/></span><span>Creator Pipeline</span><span>16:9</span></div>
@@ -96,7 +96,7 @@ export default function Pipeline({step,time=0,stepReview=false}:ChapterStepProps
       <path d={`M${w/2} ${mix(167,62,web)}v${mix(0,mix(68,20,web),align)}`} className="pi-tether" opacity={align}/>
       <g transform={`translate(0 ${mix(365,mix(250,90,web),align)})`} opacity={align}>
        <rect x={gap/2} width={w-gap} height={mix(76,48,web)} rx="9" className="pi-cue-clip"/>
-       <text x={w/2} y={mix(48,31,web)} textAnchor="middle" className="pi-cue-number">{['准备输入','本地克隆','时间戳','生成画面','声画同步','交付'][i]}</text>
+       <text x={w/2} y={mix(48,31,web)} textAnchor="middle" className="pi-cue-number">{['准备输入','声音克隆','时间戳','生成画面','声画同步','交付'][i]}</text>
       </g>
      </g>;
     })}

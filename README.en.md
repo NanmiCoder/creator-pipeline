@@ -5,7 +5,7 @@
 
 Creator Pipeline combines two AI Agent skills: clone narration from your own reference recording, produce audio and an SRT timeline, then build an autoplaying web presentation with continuous diagrams, cards and motion graphics.
 
-The default model is **Qwen3-TTS**: MLX on Apple Silicon, official PyTorch on other platforms, without a cloud account or API key. MiniMax is an explicit optional backend. Installing the skills installs instructions, scripts and templates; model weights download when you first use the local voice backend.
+The default is **MiniMax speech-2.8-hd**, using your own registered voice and speech-capable account. For free local inference, explicitly choose `--provider local`: Qwen3-TTS via MLX on Apple Silicon or official PyTorch elsewhere. Installing the skills installs instructions, scripts and templates; model weights download when you first use the local voice backend.
 
 ## Install
 
@@ -19,9 +19,9 @@ Uses the [Vercel skills CLI](https://github.com/vercel-labs/skills) and its stan
 
 ## Try it
 
-Prepare a script and a clean 3–30 second recording of your own or an authorized voice. Ask your Agent:
+Prepare a script and a clean 10–30 second recording (MiniMax accepts 10–300 seconds; local models usually use 3–30 seconds) of your own or an authorized voice. Ask your Agent:
 
-> Use voice-clone-tts and web-video-presentation. Read script.md and use my-voice.mp3 as the voice reference. Start with a local narration sample and check pronunciation, then generate the full WAV, MP3 and SRT. Build a 16:9 autoplaying web presentation from the final timeline, using continuous diagrams and purposeful motion instead of dense text. Run the checks and play it in a real browser before handing it over.
+> Use voice-clone-tts and web-video-presentation. Read script.md and use my-voice.mp3 as the voice reference. Use my MiniMax voice, or register my reference recording with MiniMax first. Start with a narration sample and check pronunciation and voice similarity, then generate the full WAV, MP3 and SRT. Build a 16:9 autoplaying web presentation from the final timeline, using continuous diagrams and purposeful motion instead of dense text. Run the checks and play it in a real browser before handing it over.
 
 Voice generation requires Python 3.12, uv and FFmpeg. The skill's setup script creates a separate environment for each backend. The web presentation requires Node.js/npm. See [setup](skills/voice-clone-tts/references/SETUP.md) and the runnable [first-video example](examples/first-video/README.md). Production instructions and the sample currently focus on Chinese narration.
 
@@ -42,14 +42,14 @@ Preview, autoplay and frame review keep the same framed **16:9 capture area**, w
 
 ## Backends and evidence
 
-- **MLX, Apple Silicon default:** Qwen3-TTS 0.6B Base 4bit on Apple Silicon. Tested on the same six-sentence script.
-- **Qwen PyTorch, default on other platforms:** official Base model adapter supplied; CUDA hardware execution has not been tested.
+- **MLX, local option:** Qwen3-TTS 0.6B Base 4bit on Apple Silicon. Tested on the same six-sentence script.
+- **Qwen PyTorch, local option:** official Base model adapter supplied; CUDA hardware execution has not been tested.
 - **Nano, explicit option:** MOSS-TTS-Nano 100M ONNX on CPU. Tested on Apple Silicon macOS, including actual synthesis, interruption recovery and audio-to-web handoff. The full Python entry point still uses PyTorch for audio preprocessing.
-- **MiniMax:** optional, potentially paid. CLI flags and a mocked speech call were checked; no live paid synthesis or registration was tested.
+- **MiniMax, default:** live voice registration and two rounds of three matching scripts tested. The voice owner preferred MiniMax on all three listening cases. Speaker encoders gave close scores for MiniMax and Qwen; this does not establish universal superiority. Cloud usage may incur charges.
 
 One Nano first pass produced ASR discrepancies. Targeted seed overrides allow retrying only an affected sentence while keeping the other cached segments. We keep these failures in the evaluation rather than claiming perfect audio from a valid WAV file.
 
-See [validation](docs/VALIDATION.md), [backend selection](docs/TTS-BACKENDS.md) and [third-party notices](THIRD_PARTY_NOTICES.md) for measured results, pinned versions, licenses and limitations. Initial downloads, disk space and RAM are still required. There is no cross-device speed guarantee or blinded voice-similarity score.
+See [validation](docs/VALIDATION.md), [backend selection](docs/TTS-BACKENDS.md) and [third-party notices](THIRD_PARTY_NOTICES.md) for measured results, pinned versions, licenses and limitations. Initial downloads, disk space and RAM are still required. The single-listener preference and speaker-embedding comparison are not a controlled double-blind study or a cross-device speed guarantee.
 
 ## Development
 

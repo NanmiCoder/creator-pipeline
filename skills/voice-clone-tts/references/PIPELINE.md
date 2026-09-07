@@ -6,7 +6,7 @@ run.py 等价于以下步骤，全部脚本都位于本 skill 的 scripts/：
 mkdir -p voiceover-demo
 cp script.md voiceover-demo/script.md
 "$PY" "$SKILL_DIR/scripts/segment.py" voiceover-demo/script.md -o voiceover-demo/segments.json
-"$PY" "$SKILL_DIR/scripts/synth.py" voiceover-demo/segments.json --reference my-voice.mp3
+"$PY" "$SKILL_DIR/scripts/synth.py" voiceover-demo/segments.json
 "$PY" "$SKILL_DIR/scripts/build.py" voiceover-demo/segments.json
 "$PY" "$SKILL_DIR/scripts/verify.py" voiceover-demo/voiceover.json
 ```
@@ -20,12 +20,14 @@ cp script.md voiceover-demo/script.md
 常用参数：
 
 - 分段：`--max-chars 40 --min-chars 8`；不是固定字数配额。超长英文标识符不拆断。
-- 合成：默认 Qwen3-TTS（Apple Silicon 为 mlx，其他平台为 qwen）；Nano 需显式 `--provider nano`，可用 `--threads 4` 限制其线程。其他控制包括 `--seed 0`、`--force`。默认串行复用一次模型和参考编码，避免多个模型同时占内存。
+- 合成：默认 MiniMax，先配置 mmx 和自己的 voice ID。`--provider local` 显式选免费 Qwen（Apple Silicon 为 mlx，其他平台为 qwen），另传本人录音与准确参考文本。Nano 需 `--provider nano`，可用 `--threads 4`。本地串行复用模型和参考编码；MiniMax 逐段在线请求。`--force` 会重做所有段，包括云端请求。
 - Qwen：`--reference-text reference.txt`、`--temperature 0.8`、`--max-tokens 800`。Nano 使用其固定上游采样配置，max-tokens 控制音频帧上限；language 根据输入自动处理。
 - 拼接：`--gap-hold 600`、`--no-trim`、`--trim-margin 15`。段间暂停在 segments.json/meta/silence_ms 中。默认出 SRT；纯音频用途可显式 `--no-srt`。
 
 本地模型也会漏字、重复、错误读专名；SRT 文件正确不能替代听审。需要字词级时间时，对最终 WAV 与已确认原文运行实际强制对齐模型，再验证异常时间。不要用原稿字符占比分摊音频秒数。
 
 ## 单句重试与持久化
+
+以下 seed 控制适用于本地模型；MiniMax CLI 不提供可控 seed，不能用它承诺在线生成可复现。
 
 `run.py` 或 `synth.py` 可添加 `--segment-seed 2:3`，仅第 2 段使用新 seed。相同 ID 与正文会继承保存在 segments.json 的选择，普通续跑仍保留；新增其他段覆盖不会撤销之前的选择。需要恢复默认时显式传 `--clear-segment-seeds`。原句文本变化后不继承旧覆盖；换参考或模型仍会使音频缓存失效并需要重新检查。

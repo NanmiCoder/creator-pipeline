@@ -4,6 +4,38 @@
 
 这不是跨设备排行榜。不同模型、暖缓存与句长影响时间；没有把单机短样本结果写成所有用户的实时或低内存保证。
 
+## 三家音色对照与 MiniMax 默认
+
+2026-09-07，声音本人在三段试听中都选择 **B = MiniMax**，并明确指定使用 MiniMax。默认后端与个人偏好据此更新；Qwen 保留为显式免费本地路线。这是个人实际偏好，不是供应商普遍质量排行榜。
+
+三家使用同一段 12.05 秒本人录音。MiniMax 额外使用 4.05 秒精确转写 prompt，Qwen MLX 使用准确参考转写的完整 ICL。另取未参与克隆的三段原声，覆盖技术专名、口语问句、结尾节奏，用同样文案生成两轮，共 18 段；本地第二轮更换 seed，MiniMax 发起新请求但未控制 seed。全部结构校验通过，保留两轮完整结果。
+
+试听副本仅做恒定增益调整（目标 -20 LUFS、峰值上限 -1 dBTP），不改速度或音高。页面可隐藏标签，但提交选择截图已揭晓，因此记录为用户试听选择，不声称双盲。
+
+两个独立 WeSpeaker 编码器对合成段与**同文案未见原声**的余弦均值（3 段 × 2 轮）：
+
+| 供应商 | ResNet34 | ECAPA512 | 用户首轮选择 |
+|---|---:|---:|---:|
+| MiniMax | 0.7912 | 0.8451 | 3 / 3 |
+| Qwen3-TTS MLX | 0.8074 | 0.8486 | 0 / 3 |
+| MOSS Nano | 0.6808 | 0.7407 | 0 / 3 |
+
+**分数不是音色相似百分比。** MiniMax 与 Qwen 接近，Qwen 的两轮合并均值略高；MiniMax 没有获得客观指标的一致胜出。Nano 在本次样本的两个编码器上较低。原声三段之间的余弦范围分别为 0.8228–0.8618、0.8503–0.8943，内容和韵律也影响指标。与克隆输入本身的比较单列保存，不据此宣布胜者。
+
+全部 18 段经同一 large-v3-turbo ASR 检查。MiniMax/Qwen 的差异主要是少量语气字和英文术语；原声 ASR 也会混淆这些术语，不能把转写偏差直接判为读错，没有据此改稿。样本同人同次录制、模型有限，没有人群校准、跨设备速度测试或受控双盲结论。
+
+[完整脱敏数字与两轮分数](evidence/voice-provider-comparison.json)。参考音频、克隆输出、个人音色 ID 和账号信息留在本机。新增个人配置保存在技能目录外，升级不覆盖音色；默认 MiniMax，显式参数仍可切换后端。
+
+实际修复了克隆登记的账号一致性问题：mmx 配置和环境变量可能属于不同账号，旧流程会分别用于上传与登记。现在两个请求使用同一凭据和区域，支持匹配 prompt；新音色已实际登记并完成上述合成。
+
+方法来源：[MiniMax 复刻 API](https://platform.minimax.io/docs/api-reference/voice-cloning-clone)、[Qwen 音频与文本参考](https://github.com/QwenLM/Qwen3-TTS)、[WeSpeaker ONNX 预处理](https://github.com/wenet-e2e/wespeaker/blob/master/wespeaker/bin/infer_onnx.py)、[ResNet34 模型卡](https://huggingface.co/Wespeaker/wespeaker-voxceleb-resnet34-LM)、[ECAPA512 模型卡](https://huggingface.co/Wespeaker/wespeaker-ecapa-tdnn512-LM)。
+
+新默认 Demo 不传 provider 或 voice 参数，读取个人偏好生成六句 MiniMax 配音：25.0678 秒，WAV/MP3/SRT 同源验证通过；六句 ASR 规范化文本均匹配。第二句改为供应商中性的表述，删去不再成立的“本地完成、无需在线套餐”，因此这支新 Demo 不作为同文案 A/B。
+
+在新音频时轴上保留 21 拍动作。实际浏览器连续 127 次观测覆盖全部 21 拍，尾帧暂停；最大观测声画时钟差约 32.21 ms（非全帧上界）。1440×900 视口下舞台 x=80、y=90、1280×720，仍为 16:9；前进、回退、重播抽查通过，无页面错误。TypeScript/时轴检查 7 PASS / 0 SKIP，生产构建与现有网页测试通过；配音单元测试扩展到 23 项。[Demo 验收记录](evidence/minimax-demo-review.json)。
+
+以下保留此前版本的历史验证，默认选择以本节为准。
+
 ## 默认模板晋升：安装后即得完整动作场景
 
 `web-video-presentation` 2.5.0 将用户验收的 21 拍场景从独立 example 移入模板 `01-pipeline`，移除旧三步示例。默认入口提供逐拍控制；`?auto=1` 先提供明确标注的无声演示。真实配音 Demo 直接在同一模板上导入 WAV/SRT，不再维护第二份动画代码。
@@ -37,7 +69,7 @@
 
 [动作谱与实测证据](evidence/step-motion-review.json)。动作数量和表中编排不能单独证明审美提升，最终观看判断看同配音的前后动态对照。
 
-## 本次修订：Qwen 默认、16:9 外框与视觉样片
+## 历史修订：Qwen 默认、16:9 外框与视觉样片
 
 用户反馈后，默认模型改为 **Qwen3-TTS**，不再用 Nano 的 CPU 可运行性代替听感要求。Apple Silicon 自动选择 MLX，其他平台选择官方 PyTorch。`setup.py` 与 `run.py` 都使用同一默认选择函数；Nano 必须显式指定。
 

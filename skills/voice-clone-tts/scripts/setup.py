@@ -6,15 +6,16 @@ import platform
 import shutil
 import subprocess
 from pathlib import Path
-from providers import NANO_COMMIT, auto_provider
+from providers import NANO_COMMIT
+from user_config import configured_provider
 
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--provider', choices=['auto', 'nano', 'mlx', 'qwen', 'minimax'], default='auto')
+    p.add_argument('--provider', choices=['auto', 'local', 'nano', 'mlx', 'qwen', 'minimax'], default='auto')
     p.add_argument('--env', help='Environment directory; default .creator-env/<provider> in this project')
     args = p.parse_args()
-    args.provider = auto_provider() if args.provider == 'auto' else args.provider
+    args.provider = configured_provider(args.provider)
     print(f'Backend: {args.provider}', flush=True)
     if not shutil.which('uv'):
         p.error('Install uv first: https://docs.astral.sh/uv/getting-started/installation/')
@@ -43,7 +44,8 @@ def main():
     else:
         print('MiniMax also needs the official mmx CLI and your own speech-capable account.')
     print(f'Python ready: {python}')
-    print('Model weights are public downloads; local inference needs no API key.')
+    print('MiniMax uses your configured mmx account and registered voice ID.' if args.provider == 'minimax'
+          else 'Model weights are public downloads; local inference needs no API key.')
 
 
 if __name__ == '__main__':

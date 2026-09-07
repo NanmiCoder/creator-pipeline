@@ -1,3 +1,4 @@
+export const voiceModelLabel = "MINIMAX";
 // Deterministic illustration; no recording or biometric data is bundled.
 export const waveformIsIllustrative = true;
 export const waveform = Array.from({length:96}, (_, i) =>
