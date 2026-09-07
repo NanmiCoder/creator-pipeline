@@ -7,6 +7,16 @@
 
 No installation needed: click to play **25 seconds of MiniMax cloned narration, a real SRT timeline and continuous 16:9 animation**. The creator has authorized the sample narration for this public demo.
 
+The complete demo source and published narration are versioned in [examples/live-demo](examples/live-demo/README.md). To edit or present it locally, use Node.js 22 LTS:
+
+```bash
+cd examples/live-demo/presentation
+npm ci
+npm run dev
+```
+
+No TTS account is needed to run the bundled demo. After linking your own Vercel project, `npm run deploy` checks, builds and publishes it. Git pushes and deployments are separate operations.
+
 Creator Pipeline combines two AI Agent skills: clone narration from your own reference recording, produce audio and an SRT timeline, then build an autoplaying web presentation with continuous diagrams, cards and motion graphics.
 
 The default is **MiniMax speech-2.8-hd**, using your own registered voice and speech-capable account. For free local inference, explicitly choose `--provider local`: Qwen3-TTS via MLX on Apple Silicon or official PyTorch elsewhere. Installing the skills installs instructions, scripts and templates; model weights download when you first use the local voice backend.

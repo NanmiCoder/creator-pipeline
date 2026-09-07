@@ -13,6 +13,16 @@
 
 无需安装即可预览：点击页面开始播放，体验 **25 秒 MiniMax 克隆配音 + 真实 SRT 时间轴 + 16:9 连续动画**。在线样片使用作者授权的示例配音。
 
+想修改或本地演示？完整源码和成品配音已纳入本仓库的 [examples/live-demo](examples/live-demo/README.md)，全新 clone 后即可运行，无需配置 TTS 账号：
+
+```bash
+cd examples/live-demo/presentation
+npm ci
+npm run dev
+```
+
+使用 Node.js 22 LTS。修改后可运行 `npm run deploy` 更新关联的 Vercel 项目，详见 [Demo 维护说明](examples/live-demo/README.md)。
+
 Creator Pipeline 是一组可以配合使用的 AI Agent skills。先用自己的录音克隆配音，得到真实音频时间轴；再让 Agent 把内容做成卡片、图解与连续 MG 场景，让画面跟着声音展开。
 
 默认使用 **MiniMax speech-2.8-hd** 与你自己的克隆音色，需要可用的 MiniMax 凭据和额度。无云账号时可显式选 `--provider local`，用免费的 **Qwen3-TTS**：Apple Silicon 走 MLX，其他平台走官方 PyTorch。**安装的是脚本、模板与制作方法；本地模型在首次使用时下载，个人声音不会随技能分发。**
@@ -56,7 +66,7 @@ npx skills add NanmiCoder/creator-pipeline --list
 
 **这版现已成为默认模板**，随 `npx skills add` 一起安装。新建项目首页即可逐拍体验，无需生成配音；自动播放提供明确标注的无声演示。它在六段口播内设计了 **21 个动作拍**，支持逐步播放、回退与重播；从波形拆分、时间标记到卡片关系持续推进。见[默认模板用法](skills/web-video-presentation/templates/STARTER.md)、[真实配音示例](examples/first-video/README.md)和[同配音对照记录](docs/VALIDATION.md)。
 
-<sub>截图来自六句文案的实际运行，保留预览外框。振幅概览取自最终配音，窗口是制作流程示意。个人参考录音与克隆后的声音不随仓库分发。</sub>
+<sub>截图来自六句文案的实际运行，保留预览外框。振幅概览取自最终配音，窗口是制作流程示意。已公开的成品配音随 Demo 提供，原始参考录音和私人音色 ID 不包含在仓库中。</sub>
 
 预览、自动播放与验帧都保留清晰的 **16:9 框选区**，录屏时只选舞台内容。验收兼容用户指定或本机可用的 `ego-browser`、`agent-browser` 及其他真实浏览器 skill，不要求安装某个品牌的浏览器。
 
@@ -93,6 +103,7 @@ skills/
   voice-clone-tts/          # 本地/云配音适配器、缓存、SRT 和验证
   web-video-presentation/   # 场景制作方法、主题、网页运行时与导入器
 examples/first-video/       # 不含私人声音的可复现端到端样例
+examples/live-demo/         # 线上有声 Demo 的源码、计划、配音、字幕与部署入口
 tests/                     # 无需模型或云账号的故障与交接测试
 docs/                      # 模型取舍、实测结果与验证边界
 ```

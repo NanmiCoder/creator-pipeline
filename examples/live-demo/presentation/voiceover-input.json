@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "audio": "audio/voiceover.wav",
+  "srt": "public/audio/voiceover.srt",
+  "duration": 25.06779166666667,
+  "timing_method": "segment_frames",
+  "source_text_sha256": "d4da02ba8b9419b999571334f1bf852cf53f43ec891c3a4daaf81574696df357",
+  "files": {
+    "voiceover.wav": "4de2ddf6c16df5d2321609ad1b909aaf5ccc3d5852e130631b95c4370d870176",
+    "voiceover.mp3": "c51331f38188cc6416eedd4411fe65434985217158eadf75c76e8eb64e7357fd",
+    "voiceover.srt": "6f9f59f724c3270a7c38e5f72152e533273ca817a7863c84bf1ebb4bc4e21cdc"
+  },
+  "cues": [
+    {
+      "id": "1",
+      "at": 0,
+      "end": 3.576,
+      "text": "先准备一份文案，再放入一段自己的录音。"
+    },
+    {
+      "id": "2",
+      "at": 3.576,
+      "end": 7.494,
+      "text": "克隆自己的声音，让每一段配音都保留熟悉的表达。"
+    },
+    {
+      "id": "3",
+      "at": 7.494,
+      "end": 12.578,
+      "text": "每段音频都有对应的时间戳，字幕和声音来自同一条时间轴。"
+    },
+    {
+      "id": "4",
+      "at": 12.578,
+      "end": 17.289,
+      "text": "接下来，让文字变成卡片，让卡片之间的关系动起来。"
+    },
+    {
+      "id": "5",
+      "at": 17.289,
+      "end": 20.812,
+      "text": "播放时，声音走到哪里，画面就推进到哪里。"
+    },
+    {
+      "id": "6",
+      "at": 20.812,
+      "end": 25.068,
+      "text": "最后得到可以自动播放的网页演示，也可以录制成视频。"
+    }
+  ]
+}

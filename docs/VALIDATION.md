@@ -1,10 +1,12 @@
 # 实测与已知边界
 
-日期：2026-09-07。机器：**Apple M5 Pro，64 GB 统一内存，macOS 26.5.2，arm64**。各轮参考片段与处理条件见对应章节。公开仓库包含测试文案、样例代码和脱敏结果，不包含原始参考录音或克隆音频；线上 Demo 经作者授权公开示例成品配音。
+日期：2026-09-07。机器：**Apple M5 Pro，64 GB 统一内存，macOS 26.5.2，arm64**。各轮参考片段与处理条件见对应章节。公开仓库包含测试文案、样例代码和脱敏结果；经作者授权公开的 Demo 成品配音已随 `examples/live-demo` 纳入 Git，原始参考录音、私人音色 ID 和账号凭据不包含在内。
 
 这不是跨设备排行榜。不同模型、暖缓存与句长影响时间；没有把单机短样本结果写成所有用户的实时或低内存保证。
 
 ## Vercel 在线演示
+
+线上 Demo 的完整源码现在位于 [examples/live-demo](../examples/live-demo/README.md)，与 skills 使用同一仓库管理。只从 Git 索引导出到空目录，重新执行 npm ci、gen、check、build 和静态部署打包，均通过；生成源码没有机器绝对路径，六个构建文件与已批准线上版本逐字节相同。移走打包 WAV 的负例会使媒体校验失败，恢复后通过。CI 增加了 Demo 的独立安装、媒体/时间轴检查、测试、构建和生成文件一致性检查。
 
 [有声演示](https://creator-pipeline-alpha.vercel.app/) · [逐拍查看](https://creator-pipeline-alpha.vercel.app/?review=1&t=0&steps=1)。使用本机 Vercel CLI 59.1.3 在 Node 22 下部署静态构建产物；默认首页显示点击起播入口，保留 16:9 舞台和完整 MiniMax 成品配音。原始参考录音、个人音色 ID 和密钥不在部署包内。
 

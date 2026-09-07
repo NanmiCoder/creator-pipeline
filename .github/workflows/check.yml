@@ -25,6 +25,16 @@ jobs:
           npm test
           npm run check
           npm run build
+      - name: Build the versioned live demo
+        working-directory: examples/live-demo/presentation
+        run: |
+          npm ci --no-audit --no-fund
+          npm run gen
+          git diff --exit-code -- src
+          npm run check
+          npm test
+          npm run build
+          npm run prepare:vercel
       - name: Skills discovery
         env:
           DISABLE_TELEMETRY: '1'

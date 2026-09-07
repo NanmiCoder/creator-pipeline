@@ -1,0 +1,80 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · creator-dark
+ *   Distilled from the user's own bench-test deck (index-light.html) —
+ *   specifically its SIGNATURE DARK cover slides: near-black stage with a
+ *   green radial glow + fine line grid, electric-lime accent, warm-white
+ *   ink, and CHUNKY upright display numbers (1M / 8H). Cool, data-forward,
+ *   "评测播报" tech vibe. (The cream "paper" data slides are a secondary
+ *   surface in the source; this theme commits to the dark world.)
+ *
+ *   source palette → token:
+ *     • near-black   #050505 / #0a0c0a → --shell / --surface
+ *     • warm white   #f7f2e8           → --text
+ *     • electric lime #c9ff3a          → --accent (rings, big numbers,
+ *                                         pills, top borders, progress)
+ *
+ *   character knobs:
+ *     • hero numbers — Archivo Black, UPRIGHT, chunky (the 1M/8H look)
+ *     • display CN   — heavy sans 黑体 (NOT serif)
+ *     • display EN   — Inter grotesk, upright
+ *     • rule         — 1px warm hairline at low opacity
+ *     • card         — 16px radius + deep soft shadow
+ *     • surface      — green glow (top-left) + faint line grid
+ *     • motion       — small & snappy (source animations are subtle)
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette ─── */
+  --shell:        #050505;
+  --surface:      #0a0c0a;
+  --surface-2:    #141814;
+  --surface-3:    #1d221c;
+  --text:         #f7f2e8;
+  --text-2:       #cfccc0;
+  --text-mute:    rgba(247, 242, 232, 0.60);
+  --text-faint:   rgba(247, 242, 232, 0.26);
+  --rule:         rgba(247, 242, 232, 0.14);
+  --accent:       #c9ff3a;
+  --accent-soft:  rgba(201, 255, 58, 0.14);
+  --accent-glow:  rgba(201, 255, 58, 0.50);
+
+  /* ─── fonts — heavy sans / grotesk (no serif) ─── */
+  --font-display-cn: "PingFang SC", "Noto Sans SC", "Source Han Sans SC", -apple-system, sans-serif;
+  --font-display-en: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-body:       "Inter", "PingFang SC", "Manrope", "Noto Sans SC", -apple-system, sans-serif;
+  --font-mono:       "JetBrains Mono", "IBM Plex Mono", "SF Mono", ui-monospace, monospace;
+  --font-features:   "tnum", "ss01";
+
+  /* ─── motion: small & snappy ─── */
+  --dur-quick:      200ms;
+  --dur-base:       420ms;
+  --dur-slow:       680ms;
+  --dur-cinematic:  1000ms;
+
+  /* ─── design identity ─── */
+  --r-card:        16px;
+  --r-stage:       0;
+  --rule-w:        1px;
+  --rule-style:    solid;
+  --hero-num-font:    "Archivo Black", "Inter", sans-serif;  /* chunky upright figures */
+  --hero-num-style:   normal;
+  --hero-num-weight:  900;
+  --hero-num-track:   -0.02em;
+  --stage-pad-x:   112px;
+  --stage-pad-y:   84px;
+  --card-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04),
+    0 30px 80px rgba(0, 0, 0, 0.50);
+  --shadow-stage:
+    0 40px 120px rgba(0, 0, 0, 0.60),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+
+  /* ─── decoration: green glow (top-left) + faint line grid ─── */
+  --surface-vignette:
+    radial-gradient(70% 60% at 22% 14%, rgba(150, 210, 60, 0.16), transparent 58%),
+    radial-gradient(60% 60% at 92% 96%, rgba(38, 162, 255, 0.06), transparent 60%);
+  --surface-pattern:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='54' height='54'><path d='M54 0H0V54' fill='none' stroke='%23f7f2e8' stroke-opacity='0.05' stroke-width='1'/></svg>");
+  --surface-pattern-size: 54px 54px;
+  --surface-pattern-blend: normal;
+  --surface-pattern-opacity: 1;
+}

@@ -25,3 +25,8 @@ wav/
 .claude/
 .codex/
 skills-lock.json
+.vercel/
+examples/live-demo/.deployment-history/
+# Only the already-public demo narration is versioned; personal recordings stay ignored.
+!examples/live-demo/presentation/public/audio/voiceover.wav
+!examples/live-demo/presentation/public/audio/voiceover.mp3
