@@ -30,7 +30,9 @@ Voice generation requires Python 3.12, uv and FFmpeg. The skill's setup script c
 | [voice-clone-tts](skills/voice-clone-tts/SKILL.md) | WAV, MP3, SRT and a verified `voiceover.json` handoff |
 | [web-video-presentation](skills/web-video-presentation/SKILL.md) | A Vite + React + TypeScript presentation, driven by the final audio clock |
 
-<img src="assets/demo.png" alt="Actual example: script and narration cards transform into a web presentation" width="100%">
+<img src="assets/demo.png" alt="Step review: audio and subtitle tracks align; controls stay outside the 16:9 frame" width="100%">
+
+The example contains **21 editorial action beats within six original SRT cues**, with forward, back and replay controls. See the [runnable example](examples/first-video/README.md) and [same-audio comparison](docs/VALIDATION.md).
 
 SRT timing comes from actual PCM sample frames for each synthesized segment. It is segment-level timing, not word-level forced alignment. Structural checks cannot prove correct pronunciation or voice similarity.
 

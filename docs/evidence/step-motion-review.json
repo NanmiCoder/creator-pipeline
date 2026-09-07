@@ -1,0 +1,399 @@
+{
+  "date": "2026-09-07",
+  "baseline_commit": "c99580ab6de554c4af72150a1685dda0a8741ba4",
+  "same_audio_and_srt": {
+    "voiceover.wav": true,
+    "voiceover.srt": true
+  },
+  "srt_cues": 6,
+  "editorial_action_beats": [
+    {
+      "step": 0,
+      "at": 0,
+      "duration": 0.92,
+      "label": "文案落入画面"
+    },
+    {
+      "step": 0,
+      "at": 1.45926,
+      "duration": 0.92,
+      "label": "参考录音进入"
+    },
+    {
+      "step": 0,
+      "at": 2.91852,
+      "duration": 0.92,
+      "label": "两份输入配对"
+    },
+    {
+      "step": 1,
+      "at": 4.422,
+      "duration": 0.7122640000000001,
+      "label": "输入汇入声音"
+    },
+    {
+      "step": 1,
+      "at": 5.43952,
+      "duration": 0.92,
+      "label": "配音波形生成"
+    },
+    {
+      "step": 1,
+      "at": 7.0764,
+      "duration": 0.92,
+      "label": "本地克隆落定"
+    },
+    {
+      "step": 2,
+      "at": 8.846,
+      "duration": 0.92,
+      "label": "展开完整音轨"
+    },
+    {
+      "step": 2,
+      "at": 10.24454,
+      "duration": 0.92,
+      "label": "按真实 cue 拆分"
+    },
+    {
+      "step": 2,
+      "at": 11.64308,
+      "duration": 0.92,
+      "label": "时间戳逐个落位"
+    },
+    {
+      "step": 2,
+      "at": 13.2959,
+      "duration": 0.92,
+      "label": "字幕与声音对齐"
+    },
+    {
+      "step": 3,
+      "at": 15.203,
+      "duration": 0.92,
+      "label": "时间轴进入网页"
+    },
+    {
+      "step": 3,
+      "at": 16.581599999999998,
+      "duration": 0.92,
+      "label": "文字长成卡片"
+    },
+    {
+      "step": 3,
+      "at": 18.16699,
+      "duration": 0.92,
+      "label": "连接与传递关系"
+    },
+    {
+      "step": 3,
+      "at": 20.0281,
+      "duration": 0.92,
+      "label": "推进主体焦点"
+    },
+    {
+      "step": 4,
+      "at": 22.096,
+      "duration": 0.9141089999999991,
+      "label": "声音带动画面"
+    },
+    {
+      "step": 4,
+      "at": 23.40187,
+      "duration": 0.92,
+      "label": "焦点推进到声音"
+    },
+    {
+      "step": 4,
+      "at": 24.752769999999998,
+      "duration": 0.92,
+      "label": "焦点推进到画面"
+    },
+    {
+      "step": 5,
+      "at": 26.599,
+      "duration": 0.7988400000000009,
+      "label": "收拢网页作品"
+    },
+    {
+      "step": 5,
+      "at": 27.7402,
+      "duration": 0.8986949999999981,
+      "label": "演示播放状态"
+    },
+    {
+      "step": 5,
+      "at": 29.02405,
+      "duration": 0.7988400000000009,
+      "label": "分出视频交付"
+    },
+    {
+      "step": 5,
+      "at": 30.16525,
+      "duration": 0.8321249999999991,
+      "label": "完成落版"
+    }
+  ],
+  "note": "Action times inside cues are editorial timing, not word alignment. Beat count is not a quality score.",
+  "browser": "Ego Lite (this machine only; the public workflow accepts other browser tools)",
+  "step_review": {
+    "results": [
+      {
+        "beat": 0,
+        "label": "文案落入画面",
+        "time": 0.92,
+        "expected": 0.92,
+        "correctBeat": true
+      },
+      {
+        "beat": 1,
+        "label": "参考录音进入",
+        "time": 2.379,
+        "expected": 2.37926,
+        "correctBeat": true
+      },
+      {
+        "beat": 2,
+        "label": "两份输入配对",
+        "time": 3.839,
+        "expected": 3.83852,
+        "correctBeat": true
+      },
+      {
+        "beat": 3,
+        "label": "输入汇入声音",
+        "time": 5.134,
+        "expected": 5.134264,
+        "correctBeat": true
+      },
+      {
+        "beat": 4,
+        "label": "配音波形生成",
+        "time": 6.36,
+        "expected": 6.35952,
+        "correctBeat": true
+      },
+      {
+        "beat": 5,
+        "label": "本地克隆落定",
+        "time": 7.996,
+        "expected": 7.9963999999999995,
+        "correctBeat": true
+      },
+      {
+        "beat": 6,
+        "label": "展开完整音轨",
+        "time": 9.766,
+        "expected": 9.766,
+        "correctBeat": true
+      },
+      {
+        "beat": 7,
+        "label": "按真实 cue 拆分",
+        "time": 11.165,
+        "expected": 11.16454,
+        "correctBeat": true
+      },
+      {
+        "beat": 8,
+        "label": "时间戳逐个落位",
+        "time": 12.563,
+        "expected": 12.56308,
+        "correctBeat": true
+      },
+      {
+        "beat": 9,
+        "label": "字幕与声音对齐",
+        "time": 14.216,
+        "expected": 14.2159,
+        "correctBeat": true
+      },
+      {
+        "beat": 10,
+        "label": "时间轴进入网页",
+        "time": 16.123,
+        "expected": 16.123,
+        "correctBeat": true
+      },
+      {
+        "beat": 11,
+        "label": "文字长成卡片",
+        "time": 17.502,
+        "expected": 17.5016,
+        "correctBeat": true
+      },
+      {
+        "beat": 12,
+        "label": "连接与传递关系",
+        "time": 19.087,
+        "expected": 19.08699,
+        "correctBeat": true
+      },
+      {
+        "beat": 13,
+        "label": "推进主体焦点",
+        "time": 20.948,
+        "expected": 20.9481,
+        "correctBeat": true
+      },
+      {
+        "beat": 14,
+        "label": "声音带动画面",
+        "time": 23.01,
+        "expected": 23.010109,
+        "correctBeat": true
+      },
+      {
+        "beat": 15,
+        "label": "焦点推进到声音",
+        "time": 24.322,
+        "expected": 24.32187,
+        "correctBeat": true
+      },
+      {
+        "beat": 16,
+        "label": "焦点推进到画面",
+        "time": 25.673,
+        "expected": 25.67277,
+        "correctBeat": true
+      },
+      {
+        "beat": 17,
+        "label": "收拢网页作品",
+        "time": 27.398,
+        "expected": 27.397840000000002,
+        "correctBeat": true
+      },
+      {
+        "beat": 18,
+        "label": "演示播放状态",
+        "time": 28.639,
+        "expected": 28.638894999999998,
+        "correctBeat": true
+      },
+      {
+        "beat": 19,
+        "label": "分出视频交付",
+        "time": 29.823,
+        "expected": 29.82289,
+        "correctBeat": true
+      },
+      {
+        "beat": 20,
+        "label": "完成落版",
+        "time": 30.997,
+        "expected": 30.997374999999998,
+        "correctBeat": true
+      }
+    ],
+    "reverseMatches": true,
+    "resetTime": "0.000",
+    "errors": []
+  },
+  "toolbar_outside_stage": true,
+  "modes": {
+    "hold": {
+      "step": "0",
+      "motionTime": "4.421",
+      "beat": "2",
+      "voiceOpacity": "1"
+    },
+    "advance": {
+      "step": "1",
+      "beat": "3"
+    },
+    "deterministic": true,
+    "reduced": {
+      "time": "0.920",
+      "label": "下一步 →"
+    }
+  },
+  "playback": {
+    "frames": 1074,
+    "observations": 402,
+    "beats_observed": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "max_clock_difference_seconds": 0.020698000000001215,
+    "audio_duration": 31.3535,
+    "final_motion_time": 31.353,
+    "errors": [],
+    "capture_rectangle": {
+      "x": 80,
+      "y": 90,
+      "width": 1280,
+      "height": 720
+    },
+    "audio_errors": []
+  },
+  "toolbar_viewports": [
+    {
+      "width": 1440,
+      "height": 900,
+      "stage_bottom": 810,
+      "toolbar_top": 830,
+      "outside": true
+    },
+    {
+      "width": 900,
+      "height": 600,
+      "stage_bottom": 522.75,
+      "toolbar_top": 575,
+      "outside": true
+    },
+    {
+      "width": 480,
+      "height": 270,
+      "stage_bottom": 243,
+      "toolbar_top": 245,
+      "outside": true
+    }
+  ],
+  "encoded_video": {
+    "method": "Both original CDP captures: omit pre-play overlay, compensate a measured ~100 ms capture offset, preserve original audio, pad final video frame. No animation timing or audio changed.",
+    "spot_checks": [
+      {
+        "video_time": 17,
+        "visible_scene_time": 17.05,
+        "difference": 0.05
+      },
+      {
+        "video_time": 20,
+        "visible_scene_time": 20.04,
+        "difference": 0.04
+      },
+      {
+        "video_time": 24,
+        "visible_scene_time": 24.07,
+        "difference": 0.07
+      },
+      {
+        "video_time": 26,
+        "visible_scene_time": 26.04,
+        "difference": 0.04,
+        "method": "Visually read the extracted frame; OCR matched the total duration instead of the current time."
+      }
+    ],
+    "scope": "Four output-frame checks, not a maximum error bound for every encoded frame."
+  }
+}
