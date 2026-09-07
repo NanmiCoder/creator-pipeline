@@ -2,7 +2,7 @@ import {useReducedMotion} from '../../hooks/useReducedMotion';
 import type {ChapterStepProps} from '../../registry/types';
 import {progress,mix,easeInOut} from '../../motion/sample';
 import {timing} from './timing';
-import {waveform} from './waveform';
+import {waveform,waveformIsIllustrative} from './waveform';
 import {beats} from './beats';
 import {StepReview} from './StepReview';
 import './chapter.css';
@@ -12,10 +12,10 @@ const clock=(n:number)=>`${Math.floor(n/60).toString().padStart(2,'0')}:${(n%60)
 const pose=(x:number,y:number,s=1,r=0)=>`translate(${x}px,${y}px) scale(${s}) rotate(${r}deg)`;
 const headings=[['从一段话，','开始创作。'],['克隆声音，','留住你的表达。'],['每一句话，','落在同一条时间轴。'],['让文字成形，','让关系流动。'],['声音走到哪里，','画面推进到哪里。'],['一部作品，','两种打开方式。']];
 function Wave({fill=1}:{fill?:number}) {
- return <svg className="pi-wave" viewBox="0 0 640 160" aria-label="实际配音振幅概览">{waveform.map((v,i)=><rect key={i} x={i*6.65} y={80-v*68} width="3.7" height={Math.max(4,v*136)} rx="1.8" className={i/96<=fill?'pi-ink':'pi-dim'}/>)}</svg>;
+ return <svg className="pi-wave" viewBox="0 0 640 160" aria-label={waveformIsIllustrative?"示意波形（未生成配音）":"实际配音振幅概览"}>{waveform.map((v,i)=><rect key={i} x={i*6.65} y={80-v*68} width="3.7" height={Math.max(4,v*136)} rx="1.8" className={i/96<=fill?'pi-ink':'pi-dim'}/>)}</svg>;
 }
 
-export default function Pipeline({step,time=0}:ChapterStepProps) {
+export default function Pipeline({step,time=0,stepReview=false}:ChapterStepProps) {
  // Manual click mode holds at this cue until the next click; its preview clock can keep advancing.
  time=Math.min(time,timing[Math.min(step,5)]!.end-.001);
  const reduced=useReducedMotion();
@@ -79,7 +79,7 @@ export default function Pipeline({step,time=0}:ChapterStepProps) {
   </div>
   <div className="pi-timeline" data-motion-object="timeline" style={{opacity:expand*(1-end*.30),transform:pose(trackX,trackY,trackScale)}}>
    <div className="pi-timeline-head" style={{marginBottom:mix(70,18,web)}}><span>{align>.5?'声音 + 字幕':'配音音轨'}</span><b>{clock(time)}<i> / {clock(duration)}</i></b></div>
-   <svg viewBox={`0 0 1500 ${mix(390,160,web)}`} style={{height:mix(390,160,web)}} className="pi-tracks" aria-label="实际 SRT 的六个声音与字幕片段">
+   <svg viewBox={`0 0 1500 ${mix(390,160,web)}`} style={{height:mix(390,160,web)}} className="pi-tracks" aria-label={waveformIsIllustrative?"六段演示时间区间":"实际 SRT 的六个声音与字幕片段"}>
     <text x="0" y={mix(108,42,web)} className="pi-track-label">VO</text><text x="0" y={mix(302,122,web)} className="pi-track-label" opacity={align}>SRT</text>
     <g transform="translate(100 0)">
     {timing.map((cue,i)=>{
@@ -109,6 +109,6 @@ export default function Pipeline({step,time=0}:ChapterStepProps) {
   </div>
   <div className="pi-finish" style={{opacity:end,transform:pose(1320,854+mix(25,0,end))}}><i/>网页 / 视频</div>
   <div className="pi-footer"><span>文案</span><i/><span className={step>=1?'pi-active':''}>声音</span><i/><span className={step>=2?'pi-active':''}>时间轴</span><i/><span className={step>=3?'pi-active':''}>画面</span><span className="pi-footer-note">CREATE WITH YOUR OWN VOICE</span></div>
- </div><StepReview/>
+ </div><StepReview enabled={stepReview}/>
  </>;
 }

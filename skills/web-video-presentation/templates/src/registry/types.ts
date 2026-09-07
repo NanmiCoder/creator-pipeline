@@ -3,6 +3,8 @@ import type { ComponentType } from "react";
 export interface ChapterStepProps {
   /** Chapter-relative seconds. VO uses audio.currentTime; review is deterministic. */
   time?: number;
+  /** External beat controls; review never changes audio or the saved manual cursor. */
+  stepReview?: boolean;
   step: number; // 0..(narrations.length - 1)
 }
 
@@ -24,4 +26,6 @@ export interface ChapterDef {
    */
   narrations: Narration[];
   Component: ComponentType<ChapterStepProps>;
+  /** Optional silent, single-chapter starter. Removed when authoring real chapters. */
+  previewTiming?: readonly {at: number; end: number}[];
 }

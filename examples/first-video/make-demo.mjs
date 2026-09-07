@@ -33,10 +33,8 @@ const frames=pcm.length/2,bins=Array.from({length:96},(_,i)=>{
  let sum=0,n=0;for(let j=Math.floor(i*frames/96);j<Math.floor((i+1)*frames/96);j++){sum+=(pcm.readInt16LE(j*2)/32768)**2;n++;}return Math.sqrt(sum/Math.max(1,n));
 });
 const peak=Math.max(...bins);
-fs.writeFileSync(path.join(chapter,'waveform.ts'),'export const waveform = '+JSON.stringify(bins.map(x=>Math.max(.06,Number((x/peak).toFixed(4)))))+';\n');
-for(const name of ['chapter.tsx','chapter.css','beats.ts','StepReview.tsx'])fs.copyFileSync(path.join(here,name),path.join(chapter,name));
+fs.writeFileSync(path.join(chapter,'waveform.ts'),'export const waveformIsIllustrative = false;\nexport const waveform = '+JSON.stringify(bins.map(x=>Math.max(.06,Number((x/(peak||1)).toFixed(4)))))+';\n');
 fs.writeFileSync(path.join(project,'src/registry/chapters.ts'),`import type {ChapterDef} from './types';\nimport Pipeline from '../chapters/01-pipeline/chapter';\nimport {narrations} from '../chapters/01-pipeline/narrations';\nexport const CHAPTERS:ChapterDef[]=[{id:'pipeline',title:'Creator Pipeline',narrations,Component:Pipeline}];\n`);
-fs.rmSync(path.join(project,'src/chapters/01-example'),{recursive:true});
 const html=path.join(project,'index.html');fs.writeFileSync(html,fs.readFileSync(html,'utf8').replace('<title>Presentation</title>','<title>Creator Pipeline · 声音与画面</title>'));
 execFileSync('npm',['run','check'],{cwd:project,stdio:'inherit'});
 execFileSync('npm',['run','build'],{cwd:project,stdio:'inherit'});

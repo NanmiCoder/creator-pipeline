@@ -32,7 +32,7 @@ export function AutoStartGate({ visible, onStart, label, hint }: Props) {
     >
       <div className="auto-gate-card">
         <div className="auto-gate-kicker">{label ?? "AUTO PLAYBACK"}</div>
-        <div className="auto-gate-title">按 SPACE 开始录制</div>
+        <div className="auto-gate-title">按 SPACE 开始播放</div>
         <div className="auto-gate-sub">
           {hint ?? "音频自动播放并推进画面。"}
           <br />

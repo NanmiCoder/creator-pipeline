@@ -50,7 +50,7 @@ npx skills add NanmiCoder/creator-pipeline --list
 
 <p><img src="assets/demo.png" alt="逐步演示截图：21 个动作拍中的声轨与字幕对齐，控制条在 16:9 画面外" width="100%"></p>
 
-样例在六段真实 SRT 内设计了 **21 个动作拍**，支持逐步播放、回退与重播；从波形拆分、时间标记到卡片关系持续推进。见[可运行示例](examples/first-video/README.md)和[同配音对照记录](docs/VALIDATION.md)。
+**这版现已成为默认模板**，随 `npx skills add` 一起安装。新建项目首页即可逐拍体验，无需生成配音；自动播放提供明确标注的无声演示。它在六段口播内设计了 **21 个动作拍**，支持逐步播放、回退与重播；从波形拆分、时间标记到卡片关系持续推进。见[默认模板用法](skills/web-video-presentation/templates/STARTER.md)、[真实配音示例](examples/first-video/README.md)和[同配音对照记录](docs/VALIDATION.md)。
 
 <sub>截图来自六句文案的实际运行，保留预览外框。振幅概览取自最终配音，窗口是制作流程示意。个人参考录音与克隆后的声音不随仓库分发。</sub>
 

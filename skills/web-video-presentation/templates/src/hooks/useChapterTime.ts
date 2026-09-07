@@ -18,8 +18,8 @@ export function useChapterTime(absolute: number | null, chapterStart: number, st
 }
 
 /** Review is opt-in, silent, and does not mutate the persisted manual cursor. */
-export function useReviewTime(duration: number) {
-  const enabled = new URLSearchParams(window.location.search).get('review') === '1';
+export function useReviewTime(duration: number, defaultEnabled = false) {
+  const enabled = defaultEnabled || new URLSearchParams(window.location.search).get('review') === '1';
   const bound = (n: number) => Math.max(0, Math.min(duration, n));
   const [time, setTime] = useState(() => {
     const raw = new URLSearchParams(window.location.search).get('t');

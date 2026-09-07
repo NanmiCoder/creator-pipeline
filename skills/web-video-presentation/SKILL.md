@@ -44,11 +44,13 @@ node <本技能目录>/scripts/import-voiceover.mjs <voiceover.json> <presentati
 ## 2. 搭台，复用可靠部分
 
 ```bash
-bash <skill>/scripts/scaffold.sh ./presentation --theme=<id>
+bash <skill>/scripts/scaffold.sh ./presentation
 cd presentation
-npm run gen
+npm run dev   # 立即体验默认模板；准备好 ../plan.md 后再 npm run gen
 ```
 
+- **默认模板就是 `01-pipeline` 的完整连续场景**：creator-dark 主题、6 段口播、21 个动作拍，含对象配对/汇合、波形拆轨、时间戳落位、卡片生成、关系传递、焦点推进和交付转场。首页直接逐拍交互，`?auto=1` 无声连播；用法与替换路径见 [STARTER.md](templates/STARTER.md)。主题可用 `--theme=<id>` 改选。
+- 新项目延续这套对象连续性、动作密度与转场质量；按内容重写镜头和动作谱，不把六段文案或 21 拍当固定配额。默认示意波形/时间不能作为实测证据。
 - 删除示例前先准备实际章节，并同步 `src/registry/chapters.ts` 注册，避免空列表崩溃。
 - **旧项目先查版本**：旧 gen 不认识 srt/scene/screen，旧 App 也不传 time；按 [MOTION 的旧项目迁移](references/MOTION.md#旧项目迁移) 在副本中升级后再用新字段。
 - `gen` 默认读 `../plan.md`；生成 timeline、章节 narrations、BRIEF。有 `srt:` 时同时生成准确 cue 数据 `timing.ts`，不再每章重复抄时间。

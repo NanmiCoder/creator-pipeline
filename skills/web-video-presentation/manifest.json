@@ -1,6 +1,6 @@
 {
   "name": "web-video-presentation",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "category": "Web Video / Presentation",
   "description": "SRT-driven 16:9 web video presentations with persistent visual scenes, a shared motion clock, deterministic frame review, locked scaffolding and real-case evaluation.",
   "homepage": "https://github.com/NanmiCoder/creator-pipeline",

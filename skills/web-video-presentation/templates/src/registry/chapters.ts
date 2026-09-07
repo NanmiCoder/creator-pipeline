@@ -1,23 +1,11 @@
-import type { ChapterDef } from "./types";
-import ExampleChapter from "../chapters/01-example/Example";
-import { narrations as exampleNarrations } from "../chapters/01-example/narrations";
+import type {ChapterDef} from "./types";
+import Pipeline from "../chapters/01-pipeline/chapter";
+import {narrations} from "../chapters/01-pipeline/narrations";
+import {timing} from "../chapters/01-pipeline/timing";
 
-/**
- * Order = order of presentation.
- *
- * Each chapter MUST provide a `narrations: Narration[]` array. Its length
- * is the chapter's step count — there is no `totalSteps` to maintain
- * separately. This guarantees the audio synthesis pipeline, the runtime
- * stepper, and the chapter `.tsx` switch on `step` cannot drift apart.
- *
- * Visual styling (color, fonts) comes entirely from the active theme —
- * chapters never hard-code palette / font names. See THEMES.md.
- */
-export const CHAPTERS: ChapterDef[] = [
-  {
-    id: "example",
-    title: "示例章节",
-    narrations: exampleNarrations,
-    Component: ExampleChapter,
-  },
-];
+export const CHAPTERS: ChapterDef[] = [{
+  id: "pipeline", title: "Creator Pipeline", narrations, Component: Pipeline,
+  // Explicit silent starter only. Real generated audio always takes precedence.
+  // Remove previewTiming when replacing this example with your own chapters.
+  previewTiming: timing,
+}];

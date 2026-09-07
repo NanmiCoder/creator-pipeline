@@ -3,10 +3,9 @@ import {createPortal} from 'react-dom';
 import {beats} from './beats';
 
 /** A silent, opt-in review controller. It owns the review clock only; autoplay keeps its audio clock. */
-export function StepReview() {
+export function StepReview({enabled}:{enabled:boolean}) {
  const [index,setIndex]=useState(-1),[playing,setPlaying]=useState(false);
  const cursor=useRef(-1),clock=useRef(0),raf=useRef(0);
- const enabled=new URLSearchParams(location.search).get('steps')==='1'&&new URLSearchParams(location.search).get('review')==='1';
  function go(n:number){
   const target=Math.max(0,Math.min(beats.length-1,n)),beat=beats[target]!;
   const from=target===cursor.current+1?clock.current:beat.at;

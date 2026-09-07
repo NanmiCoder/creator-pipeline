@@ -1,0 +1,323 @@
+{
+  "skillVersion": "2.5.0",
+  "date": "2026-09-07",
+  "method": "Fresh scaffold and isolated npx skills 1.5.24 copy installation; Ego Lite real browser with continuous CDP capture during playback. Reused the existing six-sentence Qwen WAV/SRT; no new synthesis.",
+  "defaultSteps": {
+    "count": 21,
+    "beats": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "reverseMatches": true,
+    "reset": "0.000"
+  },
+  "modes": {
+    "measurements": [
+      {
+        "viewport": [
+          1440,
+          900
+        ],
+        "stage": {
+          "x": 80,
+          "y": 90,
+          "width": 1280,
+          "height": 720,
+          "top": 90,
+          "right": 1360,
+          "bottom": 810,
+          "left": 80
+        },
+        "controls": [
+          {
+            "selector": ".pi-review",
+            "bounds": {
+              "x": 465.25390625,
+              "y": 830,
+              "width": 509.4921875,
+              "height": 58,
+              "top": 830,
+              "right": 974.74609375,
+              "bottom": 888,
+              "left": 465.25390625
+            },
+            "outside": true
+          },
+          {
+            "selector": ".preview-notice",
+            "bounds": {
+              "x": 544.90234375,
+              "y": 14,
+              "width": 350.1953125,
+              "height": 28.5,
+              "top": 14,
+              "right": 895.09765625,
+              "bottom": 42.5,
+              "left": 544.90234375
+            },
+            "outside": true
+          }
+        ]
+      },
+      {
+        "viewport": [
+          900,
+          600
+        ],
+        "stage": {
+          "x": 54,
+          "y": 77.25,
+          "width": 792,
+          "height": 445.5,
+          "top": 77.25,
+          "right": 846,
+          "bottom": 522.75,
+          "left": 54
+        },
+        "controls": [
+          {
+            "selector": ".pi-review",
+            "bounds": {
+              "x": 289.33203125,
+              "y": 575,
+              "width": 321.3359375,
+              "height": 24,
+              "top": 575,
+              "right": 610.66796875,
+              "bottom": 599,
+              "left": 289.33203125
+            },
+            "outside": true
+          },
+          {
+            "selector": ".preview-notice",
+            "bounds": {
+              "x": 312.60546875,
+              "y": 2,
+              "width": 274.7890625,
+              "height": 20,
+              "top": 2,
+              "right": 587.39453125,
+              "bottom": 22,
+              "left": 312.60546875
+            },
+            "outside": true
+          }
+        ]
+      },
+      {
+        "viewport": [
+          480,
+          270
+        ],
+        "stage": {
+          "x": 48,
+          "y": 27,
+          "width": 384,
+          "height": 216,
+          "top": 27,
+          "right": 432,
+          "bottom": 243,
+          "left": 48
+        },
+        "controls": [
+          {
+            "selector": ".pi-review",
+            "bounds": {
+              "x": 101.8125,
+              "y": 245,
+              "width": 276.375,
+              "height": 24,
+              "top": 245,
+              "right": 378.1875,
+              "bottom": 269,
+              "left": 101.8125
+            },
+            "outside": true
+          },
+          {
+            "selector": ".preview-notice",
+            "bounds": {
+              "x": 156.33984375,
+              "y": 2,
+              "width": 167.3203125,
+              "height": 20,
+              "top": 2,
+              "right": 323.66015625,
+              "bottom": 22,
+              "left": 156.33984375
+            },
+            "outside": true
+          }
+        ]
+      }
+    ],
+    "reduced": {
+      "time": "0.920",
+      "playing": false
+    },
+    "held": {
+      "step": "0",
+      "beat": "2",
+      "time": "4.421"
+    },
+    "next": {
+      "step": "1",
+      "beat": "3",
+      "time": "4.422"
+    }
+  },
+  "silentPlayback": {
+    "gate": false,
+    "audioElements": 0,
+    "errors": [],
+    "mediaRequests": [],
+    "beats": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "sampleCount": 160,
+    "last": {
+      "t": 31.354,
+      "beat": 20
+    }
+  },
+  "realAudioPlaybackWithPreviewConfigRetained": {
+    "previewNotice": false,
+    "audioElements": 1,
+    "audioEnded": false,
+    "audioPaused": true,
+    "duration": 31.3535,
+    "errors": [],
+    "stage": {
+      "x": 80,
+      "y": 90,
+      "width": 1280,
+      "height": 720,
+      "top": 90,
+      "right": 1360,
+      "bottom": 810,
+      "left": 80
+    },
+    "beats": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "sampleCount": 137,
+    "last": {
+      "t": 31.354,
+      "beat": 20,
+      "audio": 31.3535
+    },
+    "maxObservedClockGapMs": 34.071999999998326
+  },
+  "compatibility": {
+    "comparison": [
+      {
+        "time": 0.6,
+        "approvedPoseMatches": true
+      },
+      {
+        "time": 3.8,
+        "approvedPoseMatches": true
+      },
+      {
+        "time": 7.7,
+        "approvedPoseMatches": true
+      },
+      {
+        "time": 12.7,
+        "approvedPoseMatches": true
+      },
+      {
+        "time": 14.4,
+        "approvedPoseMatches": true
+      },
+      {
+        "time": 17.8,
+        "approvedPoseMatches": true
+      },
+      {
+        "time": 20.9,
+        "approvedPoseMatches": true
+      },
+      {
+        "time": 25.9,
+        "approvedPoseMatches": true
+      },
+      {
+        "time": 30.9,
+        "approvedPoseMatches": true
+      }
+    ],
+    "missingAudioDoesNotUsePreview": {
+      "time": "0.000",
+      "previewNotice": false,
+      "beat": "0"
+    }
+  },
+  "keyboard": "Native CDP ArrowRight activated the first action in default home-page review.",
+  "limitations": [
+    "Default waveform and cue ranges are illustrative, with no bundled voice.",
+    "Pose comparison checks heading, principal object styles and cue geometry at nine times, not pixel equality of every frame.",
+    "Observed clock gap is this capture session only; not a cross-browser or frame-rate guarantee.",
+    "Default scaffold real timeline check is SKIP until gen; integrated real-audio check is 7 PASS / 0 SKIP."
+  ]
+}

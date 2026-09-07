@@ -109,5 +109,8 @@ cat <<EOF
 连续 MG：$SKILL_DIR/references/MOTION.md
 验帧：?review=1&t=<绝对秒>&mute=1（VO-First 采样动画）
 录制：?auto=1；自动验证加 &mute=1。
-先做代表性样片，按计划替换 01-example 并同步注册章节。
+默认已带 Creator Pipeline 连续场景：6 段、21 个动作拍，首页可逐拍播放。
+?auto=1 无声连播；?manual=1 按口播步骤推进；16:9 外框始终保留。
+此时波形和时间区间为示意。接入真实音频/SRT 后运行 gen，由音频时钟驱动。
+定制自己的内容见 STARTER.md；准备实际章节后同步注册，再移除示例。
 EOF

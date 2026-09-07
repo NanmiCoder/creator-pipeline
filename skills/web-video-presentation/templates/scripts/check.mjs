@@ -242,7 +242,7 @@ for (const d of chapterDirs) {
       add(
         "timeline",
         "SKIP",
-        "timeline.ts 还是模板占位（TIMELINE_GENERATED=false）—— VO-First 请先 npm run gen；TTS 路径忽略",
+        "尚未生成真实音频时间轴（TIMELINE_GENERATED=false）—— 默认模板可无声演示；VO-First 请先 npm run gen；TTS 路径忽略",
       );
     } else {
       const am = /TIMELINE\s*:\s*number\[\]\s*=\s*\[([^\]]*)\]/.exec(src);
