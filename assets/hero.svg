@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="390" viewBox="0 0 1200 390" role="img" aria-labelledby="title desc">
+  <title id="title">Creator Pipeline</title>
+  <desc id="desc">Script to voice to motion. A local-first creative workflow.</desc>
+  <rect width="1200" height="390" rx="18" fill="#eee8dc"/>
+  <g fill="#1c211c" font-family="Arial, Helvetica, sans-serif">
+    <text x="58" y="63" font-size="12" font-weight="700" letter-spacing="3">LOCAL VOICE · LIVING SLIDES</text>
+    <text x="53" y="148" font-size="76" font-weight="700" letter-spacing="-4">Creator Pipeline</text>
+    <text x="58" y="194" font-size="22" fill="#5c645b">Your script. Your voice. A presentation that moves with it.</text>
+  </g>
+  <path d="M58 228H1142" stroke="#c6ccbc"/>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#1c211c">
+    <rect x="58" y="260" width="296" height="84" rx="10" fill="#fbfaf5"/>
+    <path d="M83 284H124 M83 299H124 M83 314H113" stroke="#e65332" stroke-width="5"/>
+    <text x="148" y="309">01 / SCRIPT</text>
+    <path d="M370 302H428 M416 292L428 302 416 312" fill="none" stroke="#1c211c" stroke-width="2"/>
+    <rect x="446" y="260" width="296" height="84" rx="10" fill="#fbfaf5"/>
+    <path d="M474 297V308 M484 287V318 M494 280V325 M504 291V313 M514 296V308" stroke="#e65332" stroke-width="5" stroke-linecap="round"/>
+    <text x="536" y="309">02 / VOICE + SRT</text>
+    <path d="M758 302H816 M804 292L816 302 804 312" fill="none" stroke="#1c211c" stroke-width="2"/>
+    <rect x="834" y="260" width="308" height="84" rx="10" fill="#1c211c"/>
+    <rect x="861" y="281" width="48" height="37" rx="3" fill="none" stroke="#e65332" stroke-width="3"/>
+    <path d="M880 291L892 299 880 307Z" fill="#e65332"/>
+    <text x="932" y="309" fill="#fbfaf5">03 / MOTION</text>
+  </g>
+</svg>

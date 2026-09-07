@@ -1,0 +1,32 @@
+#!/usr/bin/env node
+// A reproducible visual example for THIS script, not a template generator for arbitrary narration.
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import {fileURLToPath} from 'node:url';
+import {execFileSync} from 'node:child_process';
+import {importVoiceover} from '../../skills/web-video-presentation/scripts/import-voiceover.mjs';
+const here=path.dirname(fileURLToPath(import.meta.url));
+const repo=path.resolve(here,'../..');
+const [manifest,outArg]=process.argv.slice(2);
+if(!manifest||!outArg)throw new Error('Usage: node make-demo.mjs <voiceover.json> <new-demo-directory>');
+const m=JSON.parse(fs.readFileSync(manifest,'utf8'));
+const hash=crypto.createHash('sha256').update(fs.readFileSync(path.join(here,'script.md'))).digest('hex');
+if(m.source_text_sha256!==hash||m.segments.length!==6)throw new Error('Synthesize examples/first-video/script.md with the default segmentation first');
+const root=path.resolve(outArg),project=path.join(root,'presentation');
+if(fs.existsSync(root)&&fs.readdirSync(root).length)throw new Error('Output directory must be new or empty');
+fs.mkdirSync(root,{recursive:true});
+execFileSync('bash',[path.join(repo,'skills/web-video-presentation/scripts/scaffold.sh'),project,'--theme=paper-press'],{stdio:'inherit'});
+const input=importVoiceover(manifest,project);
+const motions=['文案与参考声音两个容器进入同一空间','声音波形在原卡片内部生成','第三张时间戳卡出现，连线贯通','原卡片缩小让位给网页视口，内容卡组在同一空间展开','同一音频时钟推动播放头','网页缩为交付对象，MP4导出图标出现'];
+const yaml=['srt: presentation/'+input.srt,'audio: '+input.audio,'duration: '+input.duration,'chapters:','  - id: pipeline','    title: 从文案到网页视频','    steps:'];
+input.cues.forEach((cue,i)=>yaml.push('      - at: '+cue.at,'        vo: '+JSON.stringify(cue.text),'        scene: pipeline','        screen: '+JSON.stringify(['文案 / 参考录音','克隆配音','时间戳','声画同频','声画同频','MP4'][i]),'        do: '+JSON.stringify(motions[i])));
+fs.writeFileSync(path.join(root,'plan.md'),'# Creator Pipeline 实测样片\n\n```timeline\n'+yaml.join('\n')+'\n```\n\n## 全片视觉约定\n主题 paper-press；无头像，无外置字幕。主体身份跨步保留。时间来自真实音频/SRT。\n\n## 章节画面备注\n### pipeline\n六步共用一个场景，使用章内 time 驱动对象转换。\n');
+execFileSync('npm',['run','gen'],{cwd:project,stdio:'inherit'});
+const chapter=path.join(project,'src/chapters/01-pipeline');
+for(const name of ['chapter.tsx','chapter.css'])fs.copyFileSync(path.join(here,name),path.join(chapter,name));
+fs.writeFileSync(path.join(project,'src/registry/chapters.ts'),`import type {ChapterDef} from './types';\nimport Pipeline from '../chapters/01-pipeline/chapter';\nimport {narrations} from '../chapters/01-pipeline/narrations';\nexport const CHAPTERS:ChapterDef[]=[{id:'pipeline',title:'Creator Pipeline',narrations,Component:Pipeline}];\n`);
+fs.rmSync(path.join(project,'src/chapters/01-example'),{recursive:true});
+execFileSync('npm',['run','check'],{cwd:project,stdio:'inherit'});
+execFileSync('npm',['run','build'],{cwd:project,stdio:'inherit'});
+console.log(`Demo ready: ${project}. npm run dev, then ?auto=1 or ?review=1&t=<seconds>.`);

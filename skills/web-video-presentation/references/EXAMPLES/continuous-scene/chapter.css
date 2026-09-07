@@ -1,0 +1,25 @@
+.nc-world { position:absolute; inset:0; color:var(--text); }
+.nc-heading { position:absolute; top:132px; left:150px; margin:0; font:800 92px/1.12 var(--font-display-cn); letter-spacing:-3px; max-width:1280px; }
+.nc-diagram { position:absolute; inset:0; width:1920px; height:1080px; }
+.nc-wire,.nc-route { fill:none; stroke:var(--accent); stroke-width:3; }
+.nc-route { stroke:var(--rule); stroke-width:5; }
+.nc-dot { fill:var(--accent); }
+.nc-block { fill:var(--surface-2); stroke:var(--accent); stroke-width:3; }
+.nc-cross { fill:none; stroke:var(--danger); stroke-width:7; stroke-linecap:round; }
+.nc-folder-side { fill:var(--surface-3); stroke:var(--text-mute); stroke-width:2; }
+.nc-folder { fill:var(--surface-2); stroke:var(--text-2); stroke-width:3; }
+.nc-link { fill:none; stroke:var(--accent); stroke-width:8; stroke-linecap:round; }
+.nc-target { fill:var(--surface-2); stroke:var(--text-mute); stroke-width:2; }
+.nc-selection { fill:none; stroke:var(--danger); stroke-width:4; }
+.nc-drive { fill:var(--text); font:800 90px var(--font-mono); }
+.nc-file { fill:var(--text-mute); }
+.nc-label { fill:var(--text-2); font:500 36px var(--font-body); }
+.nc-quote { fill:var(--danger); font:800 160px var(--font-display-en); }
+.nc-post { fill:none; stroke:var(--text-mute); stroke-width:9; }
+.nc-barrier { fill:var(--text); }
+.nc-pivot { fill:var(--surface-3); stroke:var(--text); stroke-width:3; }
+.nc-packet { fill:var(--danger); }
+.nc-no { position:absolute; left:1390px; top:500px; display:grid; justify-items:center; color:var(--danger); }
+.nc-no strong { font:800 210px/.95 var(--font-display-en); }
+.nc-no span { font:500 38px var(--font-body); margin-top:22px; }
+.nc-note { position:absolute; left:150px; top:830px; font:400 24px var(--font-body); color:var(--text-mute); }

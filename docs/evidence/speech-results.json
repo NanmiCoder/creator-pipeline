@@ -1,0 +1,97 @@
+{
+  "date": "2026-09-07",
+  "hardware": "Apple M5 Pro / 64 GB / macOS 26.5.2",
+  "asr": "faster-whisper 1.2.1 / large-v3-turbo / CPU int8",
+  "nano_final": {
+    "segments": [
+      {
+        "start": 0.0,
+        "end": 3.54,
+        "text": "先准备一份文案,再放入一段自己的录音"
+      },
+      {
+        "start": 3.54,
+        "end": 8.0,
+        "text": "声音克隆在本地完成,不需要先购买在线套餐"
+      },
+      {
+        "start": 8.0,
+        "end": 11.5,
+        "text": "每段音频都有对应的时间戳"
+      },
+      {
+        "start": 11.5,
+        "end": 14.64,
+        "text": "字幕和声音来自同一条时间轴"
+      },
+      {
+        "start": 14.64,
+        "end": 17.1,
+        "text": "接下来,让文字变成卡片"
+      },
+      {
+        "start": 17.1,
+        "end": 19.5,
+        "text": "让卡片之间的关系动起来"
+      },
+      {
+        "start": 19.5,
+        "end": 22.1,
+        "text": "播放时声音走到哪里"
+      },
+      {
+        "start": 22.1,
+        "end": 23.8,
+        "text": "画面就推进到哪里"
+      },
+      {
+        "start": 23.8,
+        "end": 27.2,
+        "text": "最后得到可以自动播放的网页演示"
+      },
+      {
+        "start": 27.2,
+        "end": 28.3,
+        "text": "也可以录制成视频"
+      }
+    ],
+    "normalized_exact_match": true,
+    "scope": "transcript match only; no speaker similarity measurement"
+  },
+  "qwen_mlx": [
+    {
+      "start": 0.0,
+      "end": 3.98,
+      "text": "先准备一份文案,再放入一段自己的录音。"
+    },
+    {
+      "start": 4.86,
+      "end": 8.32,
+      "text": "声音克隆在本地完成,不需要先购买在线套餐。"
+    },
+    {
+      "start": 8.86,
+      "end": 14.74,
+      "text": "每段音频都有对应的时间戳,字幕和声音来自同一条时间轴。"
+    },
+    {
+      "start": 15.5,
+      "end": 21.72,
+      "text": "接下来,让文字变成卡片,让卡片之间的关系动起来。"
+    },
+    {
+      "start": 22.32,
+      "end": 26.2,
+      "text": "播放时,声音走到哪里,画面就推进到哪里。"
+    },
+    {
+      "start": 26.2,
+      "end": 31.24,
+      "text": "最后得到可以自动播放的网页演示,也可以录制成视频。"
+    }
+  ],
+  "nano_final_pcm_duration": 28.386,
+  "qwen_final_pcm_duration": 31.3535,
+  "nano_retry": "Only segment 2 regenerated with --segment-seed 2:3; five cached segments retained",
+  "limitations": "ASR text comparison, not human listening or speaker-similarity evaluation"
+}

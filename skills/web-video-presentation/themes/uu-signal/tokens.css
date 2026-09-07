@@ -1,0 +1,96 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · uu-signal
+ *   为「远程 / 跨端 / Agent 干活」这类技术口播定制。深炭舞台把大量真实
+ *   终端与代码素材托住（白底会让深色截图像贴上去的补丁），UU 红作为唯一
+ *   饱和强调色，青色只承担一件事：**远端**。
+ *
+ *   语义分工（章节必须遵守，这是本主题的表达核心）：
+ *     • --accent            #de283b  本地 / 主张 / 编号 / 结论   ← 唯一强调色
+ *     • --signal-remote     #25b1bf  远端设备 / 连接链路 / 隧道   ← 受限语义色
+ *   青色永远不许拿去做"第二个强调色"（标题、按钮、重点词）。
+ *   它只出现在「另一头」和「这条线」上，观众才会把青 = 远端读成条件反射。
+ *
+ *   character knobs:
+ *     • hero numbers — Archivo Black, UPRIGHT, 900（01/02/03/04 功能编号）
+ *     • display CN   — 黑体（PingFang SC），不用衬线
+ *     • display EN   — Space Grotesk 几何 grotesk，有个性不怪
+ *     • mono         — JetBrains Mono（全片终端 / CLI 画面极多）
+ *     • rule         — 1px 冷白发丝
+ *     • card         — 12px 圆角 + 深投影（托住嵌入的素材视频）
+ *     • SIGNATURE    — 48px 发丝坐标网格（技术 / 定位 / 远程的底子）
+ *     • vignette     — 左上 UU 红辉光 + 右下青色微光（本地↔远端的空间暗示）
+ *     • motion       — snappy，口播语速快，动画必须跟得上
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette ─── */
+  --shell:        #08090b;
+  --surface:      #0f1114;
+  --surface-2:    #171a1f;
+  --surface-3:    #1f242b;
+  --text:         #f2f4f7;
+  --text-2:       #b9bfc9;
+  --text-mute:    rgba(242, 244, 247, 0.56);
+  --text-faint:   rgba(242, 244, 247, 0.24);
+  --rule:         rgba(242, 244, 247, 0.13);
+  --accent:       #de283b;                      /* UU 红 — 唯一强调色 */
+  --accent-soft:  rgba(222, 40, 59, 0.14);
+  --accent-glow:  rgba(255, 99, 102, 0.50);     /* #ff6366 同色相辉光 */
+
+  /* ─── 素材压暗层：在录屏 / 截图上压字时用，四档 + 全透明 ───
+     本主题素材极多，几乎每章都要在真实画面上压文案。章节写渐变时用
+     linear-gradient(…, var(--scrim-3) 0%, var(--scrim-0) 60%) 之类组合，
+     不要自己写 rgba() —— 那是硬编码颜色，check 会拦。 */
+  --scrim-0:  rgba(8, 9, 11, 0);
+  --scrim-1:  rgba(8, 9, 11, 0.55);
+  --scrim-2:  rgba(8, 9, 11, 0.76);
+  --scrim-3:  rgba(8, 9, 11, 0.90);
+
+  /* ─── 受限语义色：远端 / 链路（不是第二强调色，用法见文件头） ─── */
+  --signal-remote:       #25b1bf;
+  --signal-remote-soft:  rgba(37, 177, 191, 0.14);
+  --signal-remote-glow:  rgba(37, 177, 191, 0.45);
+  --signal-remote-deep:  #005461;
+
+  /* ─── fonts ─── */
+  --font-display-cn: "PingFang SC", "Noto Sans SC", "Source Han Sans SC", -apple-system, sans-serif;
+  --font-display-en: "Space Grotesk", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-body:       "Inter", "PingFang SC", "Noto Sans SC", -apple-system, sans-serif;
+  --font-mono:       "JetBrains Mono", "IBM Plex Mono", "SF Mono", ui-monospace, monospace;
+  --font-features:   "tnum", "ss01";
+
+  /* ─── motion: snappy（口播语速快） ─── */
+  --dur-quick:      180ms;
+  --dur-base:       400ms;
+  --dur-slow:       660ms;
+  --dur-cinematic:  980ms;
+
+  /* ─── design identity ─── */
+  --r-card:        12px;
+  --r-stage:       0;
+  --rule-w:        1px;
+  --rule-style:    solid;
+  --hero-num-font:    "Archivo Black", "Space Grotesk", "Inter", sans-serif;
+  --hero-num-style:   normal;
+  --hero-num-weight:  900;
+  --hero-num-track:   -0.03em;
+  --stage-pad-x:   112px;
+  --stage-pad-y:   84px;
+  --card-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05),
+    0 28px 72px rgba(0, 0, 0, 0.55);
+  --shadow-stage:
+    0 40px 120px rgba(0, 0, 0, 0.62),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+
+  /* ─── SIGNATURE: 48px 发丝坐标网格 ─── */
+  --surface-pattern:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48'><path d='M48 0H0V48' fill='none' stroke='%23f2f4f7' stroke-opacity='0.045' stroke-width='1'/></svg>");
+  --surface-pattern-size: 48px 48px;
+  --surface-pattern-blend: normal;
+  --surface-pattern-opacity: 1;
+
+  /* ─── vignette: 左上 UU 红辉光 + 右下青色微光（本地 ↔ 远端） ─── */
+  --surface-vignette:
+    radial-gradient(66% 58% at 18% 12%, rgba(222, 40, 59, 0.15), transparent 60%),
+    radial-gradient(58% 58% at 90% 94%, rgba(37, 177, 191, 0.07), transparent 62%);
+}

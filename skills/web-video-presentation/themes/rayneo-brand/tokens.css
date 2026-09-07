@@ -1,0 +1,86 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · rayneo-brand
+ *   Product-world dark for the RayNeo iO AI glasses review.
+ *   Pure black stage (official landing page is #000) with the brand
+ *   coral-orange gradient (#FF6B6B → #FF8E53, button gradient on
+ *   rayneo.cn/io.html) as the single focal accent. Lens-world UI
+ *   (teleprompter highlight, status, screen content) speaks in the
+ *   product's own monochrome green (#2BDD64) via the --lens-green
+ *   derived token — accent stays the only saturated brand color.
+ *
+ *   Signature: a low brand-gradient light pool along the bottom edge
+ *   of the stage, like light refracting under the lens; vignette to
+ *   pull focus onto the stage. DIN Alternate tabular numbers for data.
+ *
+ *   character knobs:
+ *     • hero numbers   — DIN Alternate / Montserrat, weight 800
+ *     • rule           — 1px hairline (precision hardware)
+ *     • card           — 10px radius (refined, not soft)
+ *     • surface        — near-black with a faint warm bottom glow
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette ─── */
+  --shell:        #000000;
+  --surface:      #0a0a0b;
+  --surface-2:    #141417;
+  --surface-3:    #1e1e22;
+  --text:         #f7f4ef;
+  --text-2:       #d0cdc6;
+  --text-mute:    #807d76;
+  --text-faint:   #4e4c48;
+  --rule:         #26262a;
+  --accent:       #ff7a45;             /* brand coral-orange midpoint */
+  --accent-soft:  rgba(255, 122, 69, 0.14);
+  --accent-glow:  rgba(255, 122, 69, 0.50);
+
+  /* ─── derived product tokens (lens-world UI, not brand accent) ─── */
+  --lens-green:       #2bdd64;         /* MicroLED mono green / teleprompter highlight */
+  --lens-green-soft:  rgba(43, 221, 100, 0.12);
+  --brand-grad-a:     #ff6b6b;         /* rayneo.cn button gradient start */
+  --brand-grad-b:     #ff8e53;         /* rayneo.cn button gradient end */
+
+  /* ─── glass material (inner edge + top highlight, taste upgrade) ─── */
+  --glass-line:       rgba(255, 255, 255, 0.10);
+  --glass-high:       rgba(255, 255, 255, 0.14);
+
+  /* ─── fonts ─── */
+  --font-display-cn: "PingFang SC", "Noto Sans SC", "Source Han Sans SC", -apple-system, sans-serif;
+  --font-display-en: "DIN Alternate", "Montserrat", "Inter", "Helvetica Neue", sans-serif;
+  --font-body:       "PingFang SC", "Noto Sans SC", -apple-system, sans-serif;
+  --font-mono:       "SF Mono", "JetBrains Mono", ui-monospace, monospace;
+  --font-features:   "tnum", "ss01", "ss02";
+
+  /* ─── motion: crisp product reveals ─── */
+  --dur-quick:     200ms;
+  --dur-base:      460ms;
+  --dur-slow:      720ms;
+  --dur-cinematic: 1100ms;
+
+  /* ─── design identity: refined hardware ─── */
+  --r-card:        10px;
+  --r-stage:       0;
+  --rule-w:        1px;
+  --rule-style:    solid;
+  --hero-num-font:    var(--font-display-en);
+  --hero-num-style:   normal;
+  --hero-num-weight:  800;
+  --hero-num-track:   -0.02em;
+  --stage-pad-x:   100px;
+  --stage-pad-y:   80px;
+  --card-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.50),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  --shadow-stage:
+    0 60px 160px rgba(0, 0, 0, 0.70),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+
+  /* ─── decoration: lens-bottom light pool + focus vignette ─── */
+  --surface-pattern:
+    linear-gradient(0deg, rgba(255, 107, 61, 0.07) 0%, transparent 26%),
+    linear-gradient(0deg, #101013 0%, #0a0a0b 34%, #0a0a0b 100%);
+  --surface-pattern-size: 100% 100%, 100% 100%;
+  --surface-pattern-blend: normal, normal;
+  --surface-pattern-opacity: 1;
+  --surface-vignette:
+    radial-gradient(ellipse 130% 90% at 50% 42%, transparent 62%, rgba(0, 0, 0, 0.55) 100%);
+}

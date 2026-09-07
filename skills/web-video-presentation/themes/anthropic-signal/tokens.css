@@ -1,0 +1,75 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · anthropic-signal
+ *   Anthropic 的品牌语汇搬进演示舞台。Slate Dark 深炭底 + Book Cloth
+ *   陶土橙单色 accent + Ivory 米白字。几何无衬线 (Styrene 的开源近亲
+ *   Inter Tight)，中文走黑体 —— 与 Anthropic 中文站一致。
+ *
+ *   官方色值（Anthropic brand palette）：
+ *     Book Cloth   #D97757   ← 唯一 accent
+ *     Slate Dark   #141413   ← surface
+ *     Ivory Medium #F0EEE6   ← text
+ *     Kraft        #EBDBBC   （未用，避免第二饱和色）
+ *
+ *   character knobs:
+ *     • hero numbers — 几何无衬线，600 重，紧字距（不用斜体，Anthropic 不用）
+ *     • rule         — 1px 实线发丝（官方表格的分隔线语言）
+ *     • card radius  — 8px，官网卡片的克制圆角
+ *     • signature    — 陶土橙实色块 + 大留白，**不加**网格/扫描线/纸纹
+ *     • motion       — 克制平滑，不弹跳（520 / 850 / 1250ms）
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette ─── */
+  --shell:        #0b0b0a;
+  --surface:      #141413;
+  --surface-2:    #1e1d1b;
+  --surface-3:    #292724;
+  --text:         #f0eee6;
+  --text-2:       #cbc7ba;
+  --text-mute:    #8d8a7e;
+  --text-faint:   #5a5850;
+  --rule:         #302e2a;
+  --accent:       #d97757;
+  --accent-soft:  rgba(217, 119, 87, 0.13);
+  --accent-glow:  rgba(217, 119, 87, 0.42);
+
+  /* ─── fonts ─── */
+  --font-display-cn: "PingFang SC", "Noto Sans SC", "Source Han Sans SC",
+                     "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-display-en: "Inter Tight", "Inter", "Helvetica Neue",
+                     -apple-system, sans-serif;
+  --font-body:       "Inter", "PingFang SC", "Noto Sans SC",
+                     -apple-system, sans-serif;
+  --font-mono:       "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  --font-features:   "tnum", "ss01", "cv05";
+
+  /* ─── motion: restrained, never bouncy ─── */
+  --dur-base:       520ms;
+  --dur-slow:       850ms;
+  --dur-cinematic:  1250ms;
+
+  /* ─── design identity ─── */
+  --r-card:        8px;
+  --r-stage:       0;
+  --rule-w:        1px;
+  --rule-style:    solid;
+  --hero-num-font:    var(--font-display-en);
+  --hero-num-style:   normal;
+  --hero-num-weight:  600;
+  --hero-num-track:   -0.035em;
+  --stage-pad-x:   120px;
+  --stage-pad-y:   88px;
+
+  /* ─── surfaces ─── */
+  --card-shadow:   0 1px 0 rgba(240, 238, 230, 0.04) inset;
+  --card-glass-bg:     rgba(240, 238, 230, 0.045);
+  --card-glass-border: rgba(240, 238, 230, 0.10);
+  --shadow-stage:  0 40px 120px rgba(0, 0, 0, 0.55);
+
+  /* ─── decoration: 一个签名 —— 中心极淡暖光，无网格无颗粒 ─── */
+  --surface-vignette:
+    radial-gradient(115% 85% at 50% 38%,
+      rgba(217, 119, 87, 0.055) 0%,
+      transparent 58%),
+    radial-gradient(circle at 50% 50%,
+      transparent 30%, rgba(0, 0, 0, 0.38) 100%);
+}

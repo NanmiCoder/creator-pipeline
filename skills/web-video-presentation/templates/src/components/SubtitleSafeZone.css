@@ -1,0 +1,30 @@
+/* 底部烧录字幕安全区 —— 开发辅助（录制态 ?auto=1 时组件整体不渲染）。
+ * height = 1080 − 915 = 165px：字幕带从 y ≥ 915 起、全宽。项目字幕更高/更低时改这里。 */
+.subtitle-safe {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 165px; /* y ≥ 915 on the 1080 stage */
+  pointer-events: none;
+  z-index: 40;
+  border-top: 1px dashed var(--accent-glow);
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--accent-soft) 100%
+  );
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
+.subtitle-safe-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.55;
+}

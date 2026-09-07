@@ -1,0 +1,88 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · ego-obsidian（黑曜信号）
+ *
+ *   为「ego lite AI 浏览器」这类 Agent / 浏览器运行时话题定制。
+ *   气质来源 = ego lite 自己的品牌语言：纯黑白、极简几何、
+ *   三个逐渐收窄的椭圆（圆 → 椭圆 → 细条 —— 本身就是「压缩」的图形）。
+ *
+ *   设计立场：
+ *     • 舞台是石墨黑而不是纯黑 —— 长时段观看不刺眼，且留得住层次
+ *     • 全片只有一个饱和色：琥珀金。它是「开源 / 闭源分界线」的语义色
+ *       （素材包定的 #d29922 提亮版），也是所有关键数字与结论的落点
+ *     • 字型走几何无衬线（Avenir Next）—— 与 ego lite logo 的纯几何
+ *       构成同源；中文用黑体保持硬朗，不用衬线（这不是文学片）
+ *
+ *   source palette → token:
+ *     • 石墨黑  #060709 / #0e1013 → --shell / --surface
+ *     • 冷白    #f2f4f7           → --text
+ *     • 琥珀金  #f5a524           → --accent（数字 / 结论 / 分界线 / 进度）
+ *
+ *   character knobs:
+ *     • hero numbers — Avenir Next，UPRIGHT + Heavy（几何粗黑，不用斜体）
+ *     • display CN   — PingFang SC 黑体
+ *     • display EN   — Avenir Next（几何人文无衬线）
+ *     • rule         — 1px 冷白发丝，低透明
+ *     • card         — 10px 圆角（macOS App 的手感，不是 SaaS 的大圆角）
+ *     • SIGNATURE    — ego 三椭圆几何：巨大描边水印半沉在舞台右下
+ *     • motion       — 利落偏快（技术演示的节奏，不拖）
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette ─── */
+  --shell:        #060709;
+  --surface:      #0e1013;
+  --surface-2:    #171a1f;
+  --surface-3:    #21262d;
+  --text:         #f2f4f7;
+  --text-2:       #c3cad3;
+  --text-mute:    rgba(242, 244, 247, 0.56);
+  --text-faint:   rgba(242, 244, 247, 0.24);
+  --rule:         rgba(242, 244, 247, 0.13);
+  --accent:       #f5a524;
+  --accent-soft:  rgba(245, 165, 36, 0.13);
+  --accent-glow:  rgba(245, 165, 36, 0.45);
+
+  /* ─── fonts — 几何无衬线 + 黑体中文（全部为本机实装字体，不依赖下载）─── */
+  --font-display-cn: "PingFang SC", "Heiti SC", "Noto Sans SC", -apple-system, sans-serif;
+  --font-display-en: "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body:       "Avenir Next", "PingFang SC", "Helvetica Neue", -apple-system, sans-serif;
+  --font-mono:       "SF Mono", "Menlo", "Monaco", ui-monospace, monospace;
+  --font-features:   "tnum", "ss01";
+
+  /* ─── motion: 利落，技术演示节奏 ─── */
+  --dur-quick:      190ms;
+  --dur-base:       440ms;
+  --dur-slow:       720ms;
+  --dur-cinematic:  1100ms;
+
+  /* ─── design identity ─── */
+  --r-card:        10px;
+  --r-stage:       0;
+  --rule-w:        1px;
+  --rule-style:    solid;
+  --hero-num-font:    "Avenir Next", "Helvetica Neue", sans-serif;
+  --hero-num-style:   normal;
+  --hero-num-weight:  800;
+  --hero-num-track:   -0.03em;
+  --stage-pad-x:   112px;
+  --stage-pad-y:   88px;
+  --card-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05),
+    0 24px 64px rgba(0, 0, 0, 0.55);
+  --card-glass-bg:     rgba(242, 244, 247, 0.05);
+  --card-glass-border: rgba(242, 244, 247, 0.11);
+  --shadow-stage:
+    0 40px 120px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(242, 244, 247, 0.04);
+
+  /* ─── SIGNATURE · ego 三椭圆几何水印（描边，半沉在右下，出画）─── */
+  --surface-pattern:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1920' height='1080' viewBox='0 0 1920 1080'><g fill='none' stroke='%23f2f4f7' stroke-opacity='0.05' stroke-width='2'><circle cx='1178' cy='912' r='302'/><ellipse cx='1486' cy='912' rx='146' ry='302'/><ellipse cx='1778' cy='912' rx='68' ry='302'/></g></svg>");
+  --surface-pattern-size: 1920px 1080px;
+  --surface-pattern-blend: normal;
+  --surface-pattern-opacity: 1;
+
+  /* ─── 舞台照明：顶部一缕极淡琥珀（像屏幕上方的光）+ 四周压暗 ─── */
+  --surface-vignette:
+    radial-gradient(110% 78% at 50% -6%, rgba(245, 165, 36, 0.055), transparent 58%),
+    radial-gradient(112% 108% at 50% 46%, transparent 44%, rgba(0, 0, 0, 0.42) 100%);
+}

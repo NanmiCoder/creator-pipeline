@@ -1,0 +1,27 @@
+{
+  "id": "creator-dark",
+  "name": "Creator Dark",
+  "nameZh": "创作者暗色",
+  "description": "Near-black stage with a green glow + fine grid, electric lime accent, chunky upright Archivo-Black numbers and heavy sans Chinese. Cool, data-forward bench-test broadcast vibe.",
+  "descriptionZh": "近黑底 + 绿色辉光 + 细网格 + 电光黄绿强调色 + 粗黑大数字（Archivo Black）+ 黑体中文。冷峻、数据导向的跑分播报科技感。",
+  "mood": [
+    "dark",
+    "tech",
+    "data-forward",
+    "confident",
+    "grid"
+  ],
+  "bestFor": [
+    "AI 模型评测 / 对比",
+    "跑分 / 指标播报",
+    "开发者 / 极客向科技解读",
+    "Agent 实测复盘",
+    "产品横评"
+  ],
+  "preview": {
+    "shell": "#050505",
+    "surface": "#0a0c0a",
+    "text": "#f7f2e8",
+    "accent": "#c9ff3a"
+  }
+}

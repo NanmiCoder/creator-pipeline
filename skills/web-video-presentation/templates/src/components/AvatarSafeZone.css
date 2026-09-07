@@ -1,0 +1,49 @@
+/* 出镜视频的圆形头像安全区 —— 开发辅助。
+ * corner=null 或录制态(?auto=1)时整体不渲染（见 AvatarSafeZone.tsx）。
+ * 区域 432×432：圆 320 直径，四周 56px 呼吸（距边 56）。主内容请勿进入对应角。 */
+.avatar-safe {
+  position: absolute;
+  width: 432px;
+  height: 432px;
+  z-index: 30;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+}
+.avatar-safe--top-right { top: 0; right: 0; }
+.avatar-safe--bottom-left { bottom: 0; left: 0; }
+.avatar-safe--top-left { top: 0; left: 0; }
+.avatar-safe--bottom-right { bottom: 0; right: 0; }
+
+.avatar-safe-ring {
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  border: 2px dashed color-mix(in srgb, var(--accent) 40%, transparent);
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--accent) 7%, transparent),
+    transparent 68%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.avatar-safe-label {
+  font-family: var(--font-display-cn);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  color: color-mix(in srgb, var(--accent) 72%, var(--text));
+}
+
+.avatar-safe-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}

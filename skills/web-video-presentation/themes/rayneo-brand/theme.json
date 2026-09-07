@@ -1,0 +1,26 @@
+{
+  "id": "rayneo-brand",
+  "name": "RayNeo Brand",
+  "nameZh": "雷鸟品牌",
+  "description": "Pure black product-world stage with the RayNeo coral-orange gradient (#FF6B6B→#FF8E53) as the only brand accent; lens-world UI speaks in the product's own mono green. Signature: a warm gradient light pool along the bottom edge of the stage, like light refracting under the lens. DIN Alternate tabular numbers. Built for AI-hardware reviews and product launches.",
+  "descriptionZh": "纯黑产品世界舞台 + 雷鸟品牌珊瑚橙红渐变唯一强调色 + 镜内单绿显示（提词器高亮）。签名：舞台底部品牌渐变光晕。DIN Alternate 制表数字。适合 AI 硬件实测与产品发布。",
+  "mood": [
+    "dark",
+    "tech",
+    "bold",
+    "product",
+    "hardware"
+  ],
+  "bestFor": [
+    "AI 硬件实测 / 数码评测",
+    "产品发布 / 新品宣传",
+    "科技产品测评视频",
+    "品牌主视觉演示"
+  ],
+  "preview": {
+    "shell": "#000000",
+    "surface": "#0a0a0b",
+    "text": "#f7f4ef",
+    "accent": "#ff7a45"
+  }
+}

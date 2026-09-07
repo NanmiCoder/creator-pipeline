@@ -1,0 +1,15 @@
+{
+  "id": "uu-signal",
+  "name": "UU Signal",
+  "nameZh": "UU 信号",
+  "description": "Deep charcoal stage that holds real terminal footage, a single UU red accent, and cyan reserved strictly for \"the remote end\". Fine 48px coordinate grid as signature.",
+  "descriptionZh": "深炭舞台托住真实终端素材 + 唯一的 UU 红强调色 + 只用来表示「远端 / 链路」的受限青色。签名：48px 发丝坐标网格。粗黑大编号、等宽终端字。适合远程 / 跨端 / Agent 工作流这类技术口播。",
+  "mood": ["dark", "tech", "punchy", "signal"],
+  "bestFor": ["远程控制与跨端工作流", "CLI / 终端类工具演示", "Agent 自动化实操", "嵌入大量真实录屏素材的口播视频"],
+  "preview": {
+    "shell": "#08090b",
+    "surface": "#0f1114",
+    "text": "#f2f4f7",
+    "accent": "#de283b"
+  }
+}

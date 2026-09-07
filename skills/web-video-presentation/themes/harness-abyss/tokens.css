@@ -1,0 +1,88 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · harness-abyss（深海信标）
+ *   为 DeepSeek Harness 这类「官方 Agent 工具链 / 源码拆解」口播而生。
+ *
+ *   配色取自 DeepSeek 自家产品：品牌蓝 #4D6BFE（录屏里 DSH 发送按钮
+ *   禁用态取色 #B5C5F4 ≈ 该蓝 @40% on white，与公开品牌资料一致）。
+ *   底色不用纯黑，而是压到近黑的**深海墨蓝** —— 鲸鱼下潜的那片水，
+ *   让唯一的品牌蓝浮在上面时读起来是「同一片海里的光」，不是贴上去的色块。
+ *
+ *   source palette → token:
+ *     • 深海墨   #04060c / #090d16 → --shell / --surface
+ *     • 抬起石板 #121826 / #1b2334 → --surface-2 / --surface-3
+ *     • 冷白墨   #eef2fb           → --text
+ *     • DeepSeek #4d6bfe           → --accent（唯一饱和色）
+ *
+ *   character knobs:
+ *     • card   — 14px 圆角 + 顶部 1px 高光 inset + 深投影（抬起的石板，
+ *                不是浮夸的玻璃）。「卡片交互多的高级网页」靠这个撑
+ *     • hero   — Manrope 800 直立紧字距（产品页数字，不是杂志斜体）
+ *     • rule   — 1px 冷色发丝
+ *     • motion — 中速带一点从容（560/860ms），不 snappy 也不拖
+ *
+ *   ★ 唯一设计签名：**深海光柱（abyss light）** —— 一道自上而下的
+ *     品牌蓝柔光池半沉在舞台中下部，像光透进深水。网格只留极淡的
+ *     一层当材质，不参与抢戏。
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette ─── */
+  --shell:        #04060c;
+  --surface:      #090d16;
+  --surface-2:    #121826;
+  --surface-3:    #1b2334;
+  --text:         #eef2fb;
+  --text-2:       #b6c1d8;
+  --text-mute:    rgba(238, 242, 251, 0.56);
+  --text-faint:   rgba(238, 242, 251, 0.26);
+  --rule:         rgba(170, 192, 236, 0.16);
+  --accent:       #4d6bfe;
+  --accent-soft:  rgba(77, 107, 254, 0.15);
+  --accent-glow:  rgba(77, 107, 254, 0.48);
+
+  /* ─── fonts — 几何无衬线 / 黑体，产品页气质，不用衬线 ─── */
+  --font-display-cn: "PingFang SC", "Noto Sans SC", "Source Han Sans SC", -apple-system, sans-serif;
+  --font-display-en: "Manrope", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-body:       "Inter", "PingFang SC", "Noto Sans SC", -apple-system, sans-serif;
+  --font-mono:       "JetBrains Mono", "IBM Plex Mono", "SF Mono", ui-monospace, monospace;
+  --font-features:   "tnum", "ss01";
+
+  /* ─── motion: 从容中速 ─── */
+  --dur-quick:      240ms;
+  --dur-base:       560ms;
+  --dur-slow:       860ms;
+  --dur-cinematic:  1300ms;
+
+  /* ─── design identity ─── */
+  --r-card:        14px;
+  --r-stage:       0;
+  --rule-w:        1px;
+  --rule-style:    solid;
+  --hero-num-font:    "Manrope", "Inter", sans-serif;
+  --hero-num-style:   normal;
+  --hero-num-weight:  800;
+  --hero-num-track:   -0.035em;
+  --stage-pad-x:   120px;
+  --stage-pad-y:   88px;
+
+  /* 抬起的石板：顶部一道高光 + 一圈冷描边 + 深投影 */
+  --card-shadow:
+    inset 0 1px 0 rgba(190, 210, 255, 0.10),
+    0 0 0 1px rgba(150, 175, 230, 0.09),
+    0 26px 60px rgba(0, 0, 0, 0.55);
+  --card-glass-bg:     rgba(150, 175, 230, 0.055);
+  --card-glass-border: rgba(160, 185, 240, 0.16);
+  --shadow-stage:
+    0 40px 130px rgba(0, 0, 0, 0.70),
+    0 0 0 1px rgba(150, 175, 230, 0.07);
+
+  /* ─── ★ 签名：深海光柱 + 极淡网格材质 ─── */
+  --surface-vignette:
+    radial-gradient(78% 62% at 50% 104%, rgba(77, 107, 254, 0.22), transparent 62%),
+    radial-gradient(52% 44% at 50% -8%, rgba(120, 150, 255, 0.10), transparent 66%),
+    radial-gradient(120% 120% at 50% 50%, transparent 42%, rgba(2, 4, 9, 0.60) 100%);
+  --surface-pattern:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><path d='M64 0H0V64' fill='none' stroke='%23aac0ec' stroke-opacity='0.042' stroke-width='1'/></svg>");
+  --surface-pattern-size: 64px 64px;
+  --surface-pattern-blend: normal;
+  --surface-pattern-opacity: 1;
+}

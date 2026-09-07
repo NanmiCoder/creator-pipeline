@@ -1,0 +1,65 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · lex-graphite  —— 暖石墨
+ *   律师 / 法律自媒体的「亲和现代」版。暖白纸 + 石墨蓝墨（不是死黑，
+ *   少一分攻击性）+ 一枚沉静的松石绿 accent。松石绿方向取自 BairesDev
+ *   AIColors 榜单的 turquoise 一组，压深到不刺眼的深青。
+ *
+ *   气质：坐在对面跟你把事说清楚的律师，不是隔着法庭。黑体中文 +
+ *   Manrope，16px 圆角卡片配纸浮阴影 —— 温度来自形状，不靠暖色。
+ *   日常答疑、普法小课堂、面向普通人的解释最合适。
+ *
+ *   character knobs:
+ *     • signature  —— 16px 圆角卡片 + 柔和纸浮阴影（唯一装饰，材质即签名）
+ *     • hero num   —— Manrope 700 直立，清楚好读不炫技
+ *     • rule       —— 1px 实线，温和分隔
+ *     • card       —— 圆角 + 双层柔影，像便签浮在桌面上
+ *     • motion     —— 轻快但不跳脱
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette ─── */
+  --shell:        #e4e0da;             /* 暖灰桌面 */
+  --surface:      #f7f5f1;             /* 暖白纸 */
+  --surface-2:    #fffefb;             /* 卡片 —— 抬起来的一张便签 */
+  --surface-3:    #eeeae3;
+  --text:         #26333f;             /* 石墨蓝墨 —— 比纯黑柔和 */
+  --text-2:       #43515f;
+  --text-mute:    #6f7d8a;
+  --text-faint:   #9aa4ae;
+  --rule:         #dcd6ce;
+  --accent:       #2f6f68;             /* SIGNATURE —— 沉静松石绿 */
+  --accent-soft:  rgba(47, 111, 104, 0.10);
+  --accent-glow:  rgba(47, 111, 104, 0.26);
+
+  /* ─── fonts —— 黑体中文 + Manrope，现代、亲和、不端着 ─── */
+  --font-display-cn: "Noto Sans SC", "PingFang SC", -apple-system, sans-serif;
+  --font-display-en: "Manrope", "Inter", -apple-system, sans-serif;
+  --font-body:       "Manrope", "Noto Sans SC", -apple-system, sans-serif;
+  --font-mono:       "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+  --font-features:   "tnum", "ss01", "kern";
+
+  /* ─── motion: 轻快但不跳脱 ─── */
+  --dur-base:       520ms;
+  --dur-slow:       820ms;
+  --dur-cinematic:  1250ms;
+
+  /* ─── design identity ─── */
+  --r-card:        var(--r-md);        /* 16px —— 温度来自形状 */
+  --r-stage:       0;
+  --rule-w:        1px;
+  --rule-style:    solid;
+  --hero-num-font:    var(--font-display-en);
+  --hero-num-style:   normal;          /* 直立 —— 清楚好读 */
+  --hero-num-weight:  700;
+  --hero-num-track:   -0.04em;
+  --stage-pad-x:   112px;
+  --stage-pad-y:   84px;
+
+  /* SIGNATURE —— 双层柔影：便签浮在桌面上的那种轻量感 */
+  --card-shadow:
+    0 1px 2px rgba(38, 51, 63, 0.05),
+    0 12px 32px rgba(38, 51, 63, 0.09);
+  --shadow-stage:
+    0 60px 160px rgba(38, 51, 63, 0.22),
+    0 0 0 1px rgba(38, 51, 63, 0.05);
+  /* 无 pattern / 无 vignette —— 干净就是这套主题的态度 */
+}

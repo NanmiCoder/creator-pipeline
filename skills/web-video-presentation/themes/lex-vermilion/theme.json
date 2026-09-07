@@ -1,0 +1,21 @@
+{
+  "id": "lex-vermilion",
+  "name": "Lex Vermilion",
+  "nameZh": "宣纸朱印",
+  "description": "Rice-paper warm white with true ink type and a single cinnabar-red accent used like a chop stamp. All-serif (Noto Serif SC + Source Serif 4), zero-radius cards, paper-fiber texture. Reads like a stamped legal document — bright, formal, statute-friendly.",
+  "descriptionZh": "宣纸暖白 + 墨字 + 一枚朱砂红，红只出现在最该盖章的地方，像一份盖了印的法律文书。全衬线（Noto Serif SC + Source Serif 4），0 圆角，宣纸纤维纹是签名。明亮而庄重，最适合逐条讲法条、对照判例。",
+  "mood": ["light", "chinese", "documentary", "formal", "editorial", "paper"],
+  "bestFor": [
+    "法条 / 司法解释逐条解析",
+    "判例与裁判要旨解读",
+    "合同条款 / 文书范本讲解",
+    "普法科普与流程指引",
+    "需要大量文字清晰上屏的内容"
+  ],
+  "preview": {
+    "shell": "#e5e0d5",
+    "surface": "#f4f1e8",
+    "text": "#1c1a16",
+    "accent": "#a8321e"
+  }
+}

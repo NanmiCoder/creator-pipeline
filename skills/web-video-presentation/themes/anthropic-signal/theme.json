@@ -1,0 +1,21 @@
+{
+  "id": "anthropic-signal",
+  "name": "Anthropic Signal",
+  "nameZh": "Anthropic 信号",
+  "description": "Anthropic's own brand language on a presentation stage: Slate Dark ground, a single Book Cloth terracotta accent, Ivory type, geometric sans. Restrained, data-first, no ornament.",
+  "descriptionZh": "把 Anthropic 官方品牌语汇搬上舞台：Slate Dark 深炭底、唯一的 Book Cloth 陶土橙、Ivory 米白字、几何无衬线。克制、硬朗、数据优先，不加任何多余装饰。",
+  "mood": ["dark", "restrained", "editorial", "data-first", "brand-native"],
+  "bestFor": [
+    "AI 模型评测 / 跑分对比",
+    "科技产品发布解读",
+    "开发者向技术分享",
+    "与 Anthropic / Claude 相关的内容",
+    "需要与真人出镜 + 烧录字幕叠加的录屏视频"
+  ],
+  "preview": {
+    "shell": "#0b0b0a",
+    "surface": "#141413",
+    "text": "#f0eee6",
+    "accent": "#d97757"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "id": "lex-navy",
+  "name": "Lex Navy",
+  "nameZh": "案卷藏青",
+  "description": "Deep sapphire-navy stage lit like a courtroom exhibit table, with a single brass-gold accent. Noto Serif SC + Playfair Display, refined 4px cards, spotlight vignette. Authoritative and grounded — built for legal explainers that need weight.",
+  "descriptionZh": "深蓝宝石底色 + 唯一的黄铜金 accent，像深夜律所里被定向光照亮的证物台。Noto Serif SC 衬线中文 + Playfair Display，4px 精炼卡片，暗角聚光是签名。庄重、可信、压得住场，适合重磅新规解读。",
+  "mood": ["dark", "authoritative", "legal", "editorial", "grounded", "cinematic"],
+  "bestFor": [
+    "法律新规 / 司法解释解读",
+    "律师 / 事务所专业口播",
+    "政策与合规深度解析",
+    "需要权威感的严肃财经 / 商业内容",
+    "真人出镜 + 烧录字幕的录屏视频"
+  ],
+  "preview": {
+    "shell": "#070e18",
+    "surface": "#0f1c2e",
+    "text": "#e8eff8",
+    "accent": "#c9a227"
+  }
+}

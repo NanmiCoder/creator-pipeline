@@ -1,0 +1,31 @@
+name: Checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: python -m unittest discover -s tests -v
+      - run: python scripts/check-package.py
+      - name: Presentation scripts and real TypeScript check
+        run: |
+          bash skills/web-video-presentation/scripts/scaffold.sh "$RUNNER_TEMP/presentation"
+          cd "$RUNNER_TEMP/presentation"
+          npm test
+          npm run check
+          npm run build
+      - name: Skills discovery
+        env:
+          DISABLE_TELEMETRY: '1'
+        run: npx --yes skills@1.5.24 add . --list

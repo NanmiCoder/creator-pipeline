@@ -1,0 +1,28 @@
+{
+  "id": "ego-obsidian",
+  "name": "Ego Obsidian",
+  "nameZh": "黑曜信号",
+  "description": "Graphite-black stage with one signal-amber accent and geometric Avenir Next type. Signature: ego's three-ellipse mark as an oversized outline watermark sinking into the lower right. Built for agent tooling, browser runtimes and source-code teardowns.",
+  "descriptionZh": "石墨黑舞台 + 唯一的信号琥珀金 + Avenir Next 几何无衬线。签名：ego 的三椭圆标识化作巨大描边水印半沉在右下。为 Agent 工具链、浏览器运行时、源码拆解这类技术口播而生。",
+  "mood": [
+    "dark",
+    "geometric",
+    "restrained",
+    "technical",
+    "product-native",
+    "signal"
+  ],
+  "bestFor": [
+    "AI Agent 工具链实测",
+    "浏览器 / 运行时类产品拆解",
+    "开源源码原理分析",
+    "开发者向效率工具评测",
+    "真人出镜 + 烧录字幕的录屏视频"
+  ],
+  "preview": {
+    "shell": "#060709",
+    "surface": "#0e1013",
+    "text": "#f2f4f7",
+    "accent": "#f5a524"
+  }
+}

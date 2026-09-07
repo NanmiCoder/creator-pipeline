@@ -1,0 +1,28 @@
+{
+  "id": "harness-abyss",
+  "name": "Harness Abyss",
+  "nameZh": "深海信标",
+  "description": "Near-black deep-sea ink stage with a single DeepSeek brand blue accent and geometric Manrope type. Signature: a soft brand-blue light pool sinking into the lower stage, like light filtering into deep water. Built for official agent toolchains, plugin architectures and source-code teardowns.",
+  "descriptionZh": "近黑的深海墨蓝舞台 + 唯一的 DeepSeek 品牌蓝 + Manrope 几何无衬线。签名：一道品牌蓝柔光池半沉在舞台下方，像光透进深水。抬起的石板卡片撑起「高级产品页」质感，为官方 Agent 工具链、插件架构、源码拆解而生。",
+  "mood": [
+    "dark",
+    "premium",
+    "product-native",
+    "geometric",
+    "restrained",
+    "technical"
+  ],
+  "bestFor": [
+    "官方 Agent / 大模型工具链首发解读",
+    "插件化架构与源码设计哲学拆解",
+    "开发者向产品发布与实测",
+    "卡片密度高的技术产品页式演示",
+    "真人出镜 + 烧录字幕的录屏视频"
+  ],
+  "preview": {
+    "shell": "#04060c",
+    "surface": "#090d16",
+    "text": "#eef2fb",
+    "accent": "#4d6bfe"
+  }
+}

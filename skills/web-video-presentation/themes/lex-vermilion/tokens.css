@@ -1,0 +1,68 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · lex-vermilion  —— 宣纸朱印
+ *   律师 / 法律自媒体的「中式文书」版。宣纸暖白 + 墨字 + 一枚朱砂红，
+ *   红只出现在最该盖章的地方 —— 像一份盖了印的法律文书。
+ *   朱砂方向取自 BairesDev AIColors 榜单的 #c21d03 一组，压深到印泥色。
+ *
+ *   气质：法条、判例、条文对照。明亮但不轻浮，庄重但不压抑，
+ *   白天拍摄、需要清晰读条文的内容最合适。
+ *
+ *   character knobs:
+ *     • signature  —— 宣纸纤维纹理（multiply 叠加，唯一装饰）
+ *     • hero num   —— Playfair Display italic 400，条文编号感
+ *     • rule       —— 1px 实线，公文分隔线
+ *     • card       —— 0 圆角（公文不圆角）+ 纸张浮起投影
+ *     • motion     —— 安静的印刷节奏
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette ─── */
+  --shell:        #e5e0d5;             /* 略灰的桌面，衬托宣纸 */
+  --surface:      #f4f1e8;             /* 宣纸暖白 */
+  --surface-2:    #faf8f2;             /* 卡片 —— 更白的一张纸 */
+  --surface-3:    #eae5d9;             /* 内嵌 —— 压深的一层 */
+  --text:         #1c1a16;             /* 墨，微暖不死黑 */
+  --text-2:       #3d3a33;
+  --text-mute:    #6f6a5e;
+  --text-faint:   #9a9488;
+  --rule:         #d4cec0;
+  --accent:       #a8321e;             /* SIGNATURE —— 朱砂印泥 */
+  --accent-soft:  rgba(168, 50, 30, 0.10);
+  --accent-glow:  rgba(168, 50, 30, 0.28);
+
+  /* ─── fonts —— 全衬线，正文也是衬线，读起来就是一份文书 ─── */
+  --font-display-cn: "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-display-en: "Playfair Display", "Times New Roman", serif;
+  --font-body:       "Source Serif 4", "Noto Serif SC", Georgia, serif;
+  --font-mono:       "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+  --font-features:   "tnum", "lnum", "kern";
+
+  /* ─── motion: 安静的印刷节奏 ─── */
+  --dur-base:       660ms;
+  --dur-slow:       1020ms;
+  --dur-cinematic:  1520ms;
+
+  /* ─── design identity ─── */
+  --r-card:        var(--r-flat);      /* 0 —— 公文不圆角 */
+  --r-stage:       0;
+  --rule-w:        1px;
+  --rule-style:    solid;
+  --hero-num-font:    var(--font-display-en);
+  --hero-num-style:   italic;
+  --hero-num-weight:  400;
+  --hero-num-track:   -0.03em;
+  --stage-pad-x:   132px;
+  --stage-pad-y:   92px;
+  --card-shadow:
+    0 1px 0 var(--rule),
+    0 16px 40px rgba(28, 26, 22, 0.10);
+  --shadow-stage:
+    0 60px 160px rgba(28, 26, 22, 0.24),
+    0 0 0 1px rgba(28, 26, 22, 0.05);
+
+  /* SIGNATURE —— 宣纸纤维：细密噪声 multiply 上去，只在近处才看得出 */
+  --surface-pattern:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23p)'/%3E%3C/svg%3E");
+  --surface-pattern-size:    220px 220px;
+  --surface-pattern-blend:   multiply;
+  --surface-pattern-opacity: 0.055;
+}

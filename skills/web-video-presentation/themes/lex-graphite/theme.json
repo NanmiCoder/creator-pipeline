@@ -1,0 +1,21 @@
+{
+  "id": "lex-graphite",
+  "name": "Lex Graphite",
+  "nameZh": "暖石墨",
+  "description": "Warm white paper with graphite-blue ink (softer than black) and a calm deep-teal accent. Noto Sans SC + Manrope, 16px rounded cards on double soft shadows. The lawyer sitting across the table from you, not across the courtroom — built for everyday Q&A and plain-language explainers.",
+  "descriptionZh": "暖白纸 + 石墨蓝墨（比纯黑少一分攻击性）+ 沉静松石绿。黑体中文 + Manrope，16px 圆角卡片配柔和纸浮阴影 —— 温度来自形状，不靠暖色堆。像坐在对面把事说清楚的律师，适合日常答疑、普法小课堂。",
+  "mood": ["light", "approachable", "modern", "calm", "clean", "conversational"],
+  "bestFor": [
+    "日常法律答疑 / 粉丝提问",
+    "面向普通人的普法小课堂",
+    "维权步骤 / 办事流程指引",
+    "轻量咨询与避坑清单",
+    "需要亲和力而非威慑感的内容"
+  ],
+  "preview": {
+    "shell": "#e4e0da",
+    "surface": "#f7f5f1",
+    "text": "#26333f",
+    "accent": "#2f6f68"
+  }
+}

@@ -1,0 +1,15 @@
+.pi-root { position:absolute; inset:0; color:var(--text); }
+.pi-eyebrow { position:absolute; left:140px; top:95px; font:500 22px var(--font-mono); letter-spacing:6px; color:var(--text-mute); }
+.pi-title { position:absolute; left:140px; top:146px; margin:0; font:700 72px var(--font-display-cn); letter-spacing:-2px; z-index:1; }
+.pi-diagram { position:absolute; inset:0; width:1920px; height:1080px; }
+.pi-paper { fill:var(--surface-2); stroke:var(--text); stroke-width:2; }
+.pi-screen { fill:var(--surface-2); stroke:var(--text); stroke-width:3; }
+.pi-mini { fill:var(--surface); stroke:var(--rule); stroke-width:2; }
+.pi-line { fill:none; stroke:var(--rule); stroke-width:4; stroke-linecap:round; }
+.pi-wire { fill:none; stroke:var(--accent); stroke-width:5; stroke-linecap:round; }
+.pi-accent { fill:var(--accent); }
+.pi-label { fill:var(--text); font:600 42px var(--font-body); }
+.pi-time { fill:var(--text-mute); font:500 25px var(--font-mono); }
+.pi-local { fill:var(--accent); font:500 30px var(--font-body); }
+.pi-window-title { fill:var(--text-mute); font:500 20px var(--font-mono); letter-spacing:2px; }
+.pi-screen-title { fill:var(--text); font:700 76px var(--font-display-cn); }

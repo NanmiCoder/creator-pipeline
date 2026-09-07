@@ -1,0 +1,25 @@
+{
+  "visibility": "visible",
+  "count": 306,
+  "steps": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "last": {
+    "scene": 28.386,
+    "step": 5,
+    "audio": 28.386,
+    "paused": true,
+    "ended": false,
+    "duration": 28.386,
+    "error": null
+  },
+  "maxClockDifference": 0.012819999999999998,
+  "errors": [],
+  "captured_frames": 684,
+  "method": "Ego Lite Chromium, visible page, CDP screencast, muted audio clock"
+}

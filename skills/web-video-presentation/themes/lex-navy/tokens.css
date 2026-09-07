@@ -1,0 +1,70 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * Theme · lex-navy  —— 案卷藏青
+ *   律师 / 法律自媒体的「权威深色」版。底色取自 BairesDev AIColors
+ *   榜单的 Dark Sapphire Blue (#0F1C2E / #1F3A5F / #3D5A80 / #CEE8FF)，
+ *   补一枚黄铜金 accent —— 卷宗烫金、法槌与天平的金属感。
+ *
+ *   气质：深夜律所里唯一被照亮的证物台。庄重、可信、有分量，
+ *   适合重磅新规解读这类需要「压得住」的内容。
+ *
+ *   character knobs:
+ *     • signature  —— 暗角聚光 vignette（法庭定向光，唯一装饰）
+ *     • hero num   —— Playfair Display italic 500，烫金编号感
+ *     • rule       —— 1px 实线，深蓝发丝
+ *     • card       —— 4px 精炼圆角 + 冷调投影（卷宗纸页浮起）
+ *     • motion     —— 慢速庄重（法庭节奏，不抢戏）
+ * ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* ─── palette ─── */
+  --shell:        #070e18;             /* 比 surface 更深，舞台外退后 */
+  --surface:      #0f1c2e;             /* Dark Sapphire —— 榜单原色 */
+  --surface-2:    #16273e;             /* 卡片 / 嵌入面板 */
+  --surface-3:    #1f3a5f;             /* 榜单原色，最内层 */
+  --text:         #e8eff8;
+  --text-2:       #cee8ff;             /* 榜单原色，冷调高光 */
+  --text-mute:    #8ca3bf;
+  --text-faint:   #6b83a0;
+  --rule:         #24395a;
+  --accent:       #c9a227;             /* SIGNATURE —— 黄铜金 / 卷宗烫金 */
+  --accent-soft:  rgba(201, 162, 39, 0.12);
+  --accent-glow:  rgba(201, 162, 39, 0.32);
+
+  /* ─── fonts —— 衬线中文压场，Plex Sans 正文带一点事务所的技术味 ─── */
+  --font-display-cn: "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-display-en: "Playfair Display", "Times New Roman", serif;
+  --font-body:       "IBM Plex Sans", "Noto Sans SC", -apple-system, sans-serif;
+  --font-mono:       "IBM Plex Mono", "JetBrains Mono", ui-monospace, monospace;
+  --font-features:   "tnum", "lnum", "kern";
+
+  /* ─── motion: 庄重法庭节奏 ─── */
+  --dur-base:       620ms;
+  --dur-slow:       980ms;
+  --dur-cinematic:  1480ms;
+
+  /* ─── design identity ─── */
+  --r-card:        var(--r-xs);        /* 4px —— 庄重不圆润 */
+  --r-stage:       0;
+  --rule-w:        1px;
+  --rule-style:    solid;
+  --hero-num-font:    var(--font-display-en);
+  --hero-num-style:   italic;
+  --hero-num-weight:  500;
+  --hero-num-track:   -0.03em;
+  --stage-pad-x:   120px;
+  --stage-pad-y:   88px;
+  --card-shadow:
+    0 1px 0 rgba(206, 232, 255, 0.06),
+    0 22px 56px rgba(3, 8, 15, 0.55);
+  --card-glass-bg:     rgba(206, 232, 255, 0.05);
+  --card-glass-border: rgba(206, 232, 255, 0.13);
+  --shadow-stage:
+    0 60px 160px rgba(3, 8, 15, 0.72),
+    0 0 0 1px rgba(206, 232, 255, 0.05);
+
+  /* SIGNATURE —— 暗角聚光：舞台中上偏亮，四角沉入案卷阴影 */
+  --surface-vignette:
+    radial-gradient(118% 88% at 50% 40%,
+      transparent 38%,
+      rgba(3, 8, 15, 0.30) 74%,
+      rgba(3, 8, 15, 0.62) 100%);
+}
