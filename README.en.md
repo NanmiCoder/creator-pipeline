@@ -46,13 +46,15 @@ Voice generation requires Python 3.12, uv and FFmpeg. The skill's setup script c
 
 <a href="https://nanmicoder.github.io/creator-pipeline/"><img src="assets/demo.png" alt="Watch the live demo; screenshot shows audio and subtitle tracks aligning across 21 action beats" width="100%"></a>
 
+<img src="assets/preview-stage.png" alt="16:9 stage preview: voiceover timeline, waveforms and cards advancing with narration" width="100%">
+
 The example contains **21 editorial action beats within six original SRT cues**, with forward, back and replay controls. See the [runnable example](examples/first-video/README.md) and [same-audio comparison](docs/VALIDATION.md).
 
 SRT timing comes from actual PCM sample frames for each synthesized segment. It is segment-level timing, not word-level forced alignment. Structural checks cannot prove correct pronunciation or voice similarity.
 
-The output is an **HTML presentation, not a `.pptx` file**. After review, the preview page exports 1K / 2K / 4K MP4 from the top-right **导出** button. Screen recording remains a fallback; see [export notes](skills/web-video-presentation/references/RECORDING.md).
+The output is an **HTML presentation, not a `.pptx` file**. Export comes after review — see **Export the film** below.
 
-Preview, autoplay and frame review keep the same framed **16:9 capture area**, with guides outside the content. Browser QA uses the user's chosen or locally available browser skill—Ego, agent-browser or another real browser tool. No specific browser product is required.
+Preview, autoplay and frame review keep the same framed **16:9 stage**. Browser QA uses the user's chosen or locally available browser skill—Ego, agent-browser or another real browser tool. No specific browser product is required.
 
 ## Backends and evidence
 
@@ -64,6 +66,20 @@ Preview, autoplay and frame review keep the same framed **16:9 capture area**, w
 One Nano first pass produced ASR discrepancies. Targeted seed overrides allow retrying only an affected sentence while keeping the other cached segments. We keep these failures in the evaluation rather than claiming perfect audio from a valid WAV file.
 
 See [validation](docs/VALIDATION.md), [backend selection](docs/TTS-BACKENDS.md) and [third-party notices](THIRD_PARTY_NOTICES.md) for measured results, pinned versions, licenses and limitations. Initial downloads, disk space and RAM are still required. The single-listener preference and speaker-embedding comparison are not a controlled double-blind study or a cross-device speed guarantee.
+
+## Export the film
+
+After the visuals look right, click **导出** at the top-right of the preview, pick 1K / 2K / 4K, and download an MP4. Only the 16:9 stage is captured — progress, guides and letterbox stay out. Chrome / Edge will ask to share a tab: choose **this tab**, not the whole screen. Capture runs at 1× the film length; keep the tab in the foreground.
+
+<img src="assets/export-modal.png" alt="Export dialog: choose 1K, 2K or 4K" width="100%">
+
+| Preset | Resolution |
+|---|---|
+| 1K | 1920×1080 |
+| 2K | 2560×1440 |
+| 4K | 3840×2160 |
+
+Audio comes from the imported voiceover, not system loopback. If tab capture is unavailable, crop the stage in OBS or another recorder. Details: [export notes](skills/web-video-presentation/references/RECORDING.md).
 
 ## Development
 

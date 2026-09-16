@@ -56,7 +56,7 @@ npx skills add NanmiCoder/creator-pipeline --list
 | Skill | 输入 | 输出 |
 |---|---|---|
 | [voice-clone-tts](skills/voice-clone-tts/SKILL.md) | 文案 + 本人/已授权参考录音 | WAV、MP3、SRT、可验证的 `voiceover.json` |
-| [web-video-presentation](skills/web-video-presentation/SKILL.md) | 最终配音、SRT 与内容素材 | Vite + React + TypeScript 网页演示，可自动播放、点击推进，并在预览页导出 1K/2K/4K MP4 |
+| [web-video-presentation](skills/web-video-presentation/SKILL.md) | 最终配音、SRT 与内容素材 | Vite + React + TypeScript 16:9 网页演示，可自动播放、点击推进 |
 
 音频先定下来，画面才有可靠的节奏。`voiceover.json` 连接两步：导入时核验音频采样帧、字幕和文件哈希，改稿或缺段后不会继续拼接旧结果。SRT 按实际合成段的采样帧计时，**属于句段级时间轴，不是字级强制对齐**。
 
@@ -64,13 +64,15 @@ npx skills add NanmiCoder/creator-pipeline --list
 
 <p><a href="https://nanmicoder.github.io/creator-pipeline/"><img src="assets/demo.png" alt="点击体验有声演示；截图展示 21 个动作拍中的声轨与字幕对齐" width="100%"></a></p>
 
+<p><img src="assets/preview-stage.png" alt="16:9 舞台预览：口播时间轴、波形与卡片随声音推进" width="100%"></p>
+
 **这版现已成为默认模板**，随 `npx skills add` 一起安装。新建项目首页即可逐拍体验，无需生成配音；自动播放提供明确标注的无声演示。它在六段口播内设计了 **21 个动作拍**，支持逐步播放、回退与重播；从波形拆分、时间标记到卡片关系持续推进。见[默认模板用法](skills/web-video-presentation/templates/STARTER.md)、[真实配音示例](examples/first-video/README.md)和[同配音对照记录](docs/VALIDATION.md)。
 
 <sub>截图来自六句文案的实际运行，保留预览外框。振幅概览取自最终配音，窗口是制作流程示意。已公开的成品配音随 Demo 提供，原始参考录音和私人音色 ID 不包含在仓库中。</sub>
 
-预览、自动播放与验帧都保留清晰的 **16:9 框选区**，录屏时只选舞台内容。验收兼容用户指定或本机可用的 `ego-browser`、`agent-browser` 及其他真实浏览器 skill，不要求安装某个品牌的浏览器。
+预览、自动播放与验帧都保留清晰的 **16:9 舞台**。验收兼容用户指定或本机可用的 `ego-browser`、`agent-browser` 及其他真实浏览器 skill，不要求安装某个品牌的浏览器。
 
-输出是 **HTML 网页演示，不是 `.pptx`**。审核后在预览页右上角点 **导出**，选择 1K / 2K / 4K 下载 MP4；安装 skills 不会自动替你生成或上传视频。录屏软件作为备选，见 [导出说明](skills/web-video-presentation/references/RECORDING.md)。
+输出是 **HTML 网页演示，不是 `.pptx`**。安装 skills 不会自动替你生成或上传视频。审核通过后再导出，见下方「导出成片」。
 
 ## MiniMax 默认，保留免费本地方案
 
@@ -95,6 +97,20 @@ npx skills add NanmiCoder/creator-pipeline --list
 - **网页质量**：真实 TypeScript 检查、时间轴校验、构建与浏览器播放；文案密度、构图和动作含义仍需要视觉审查。
 
 数字、范围、失败与修复记录见 [验证报告](docs/VALIDATION.md)。目前有单人三段试听选择与两轮声纹辅助对照，没有跨机器速度基准、受控双盲研究或大样本返工率结论。
+
+## 导出成片
+
+画面审核没问题后，在预览页右上角点 **导出**，选 1K / 2K / 4K，下载 MP4。只捕获 16:9 舞台，进度条、角标和外框不进成片。Chrome / Edge 会再问一次「分享标签页」——选**当前这个标签页**，不要选整个屏幕。捕获按片长 1 倍速进行，请保持标签在前台。
+
+<p><img src="assets/export-modal.png" alt="导出弹窗：选择 1K、2K 或 4K 分辨率" width="100%"></p>
+
+| 选项 | 分辨率 |
+|---|---|
+| 1K | 1920×1080 |
+| 2K | 2560×1440 |
+| 4K | 3840×2160 |
+
+音轨来自导入的配音文件，不依赖系统回环。旧浏览器或不支持标签页捕获时，仍可用 OBS 等录屏软件框选舞台，见 [导出说明](skills/web-video-presentation/references/RECORDING.md)。
 
 ## 开发与贡献
 
