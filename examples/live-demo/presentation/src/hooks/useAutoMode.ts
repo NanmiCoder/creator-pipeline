@@ -53,6 +53,7 @@ export function useAutoMode() {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement) return;
+      if (document.documentElement.dataset.exporting === "1") return;
       if (e.key === "m" || e.key === "M") {
         e.preventDefault();
         cycleMode();

@@ -108,7 +108,7 @@ cat <<EOF
 开发入口：$SKILL_DIR/references/CRAFT.md
 连续 MG：$SKILL_DIR/references/MOTION.md
 验帧：?review=1&t=<绝对秒>&mute=1（VO-First 采样动画）
-录制：?auto=1；自动验证加 &mute=1。
+看片：?auto=1；自动验证加 &mute=1。成片点预览页右上角「导出」，选 1K / 2K / 4K。
 默认已带 Creator Pipeline 连续场景：6 段、21 个动作拍，首页可逐拍播放。
 ?auto=1 无声连播；?manual=1 按口播步骤推进；16:9 外框始终保留。
 此时波形和时间区间为示意。接入真实音频/SRT 后运行 gen，由音频时钟驱动。

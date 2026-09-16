@@ -4,6 +4,8 @@ import { useStageScale } from "../hooks/useStageScale";
 interface Props {
   onAdvance(): void;
   children: ReactNode;
+  /** Hide capture guides so they never enter an exported frame. */
+  quiet?: boolean;
 }
 
 /**
@@ -19,7 +21,7 @@ interface Props {
  * Surface colors come from the active theme's CSS custom properties
  * (var(--shell), var(--surface)) — see themes/<id>/tokens.css.
  */
-export function Stage({ onAdvance, children }: Props) {
+export function Stage({ onAdvance, children, quiet = false }: Props) {
   const scale = useStageScale();
   const fitterStyle: CSSProperties = {
     width: 1920 * scale,
@@ -31,13 +33,15 @@ export function Stage({ onAdvance, children }: Props) {
   return (
     <div className="app-shell">
       <div className="stage-fitter" style={fitterStyle}>
-        <div className="stage-guide" aria-hidden="true">
-          <span className="stage-guide-label">16:9</span>
-          <i className="stage-guide-corner stage-guide-tl" />
-          <i className="stage-guide-corner stage-guide-tr" />
-          <i className="stage-guide-corner stage-guide-bl" />
-          <i className="stage-guide-corner stage-guide-br" />
-        </div>
+        {!quiet && (
+          <div className="stage-guide" aria-hidden="true">
+            <span className="stage-guide-label">16:9</span>
+            <i className="stage-guide-corner stage-guide-tl" />
+            <i className="stage-guide-corner stage-guide-tr" />
+            <i className="stage-guide-corner stage-guide-bl" />
+            <i className="stage-guide-corner stage-guide-br" />
+          </div>
+        )}
         <div
           className="stage-frame"
           style={frameStyle}

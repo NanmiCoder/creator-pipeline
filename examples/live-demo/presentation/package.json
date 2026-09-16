@@ -16,6 +16,8 @@
     "deploy": "npm run check && npm run build && npm run prepare:vercel && vercel deploy --prebuilt --prod"
   },
   "dependencies": {
+    "mediabunny": "^1.56.3",
+    "modern-screenshot": "^4.7.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },

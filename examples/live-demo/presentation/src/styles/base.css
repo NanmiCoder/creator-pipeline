@@ -128,6 +128,8 @@ body {
   position: relative;
   /* width / height are set inline by Stage.tsx (1920*scale × 1080*scale) */
   isolation: isolate;
+  overflow: hidden;
+  background: var(--surface);
 }
 .stage-frame {
   position: absolute;

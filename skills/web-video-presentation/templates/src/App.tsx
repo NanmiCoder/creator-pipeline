@@ -3,10 +3,13 @@ import "./styles/base.css";
 import "./styles/tokens.css"; // active theme — MUST load AFTER base so theme :root overrides base defaults (hero-num / motion / radius personality knobs). See THEMES.md
 import "./styles/animations.css";
 
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AutoStartGate } from "./components/AutoStartGate";
 import { AutoToggle } from "./components/AutoToggle";
 import { AvatarSafeZone, type AvatarCorner } from "./components/AvatarSafeZone";
+import { ExportButton } from "./components/ExportButton";
+import { ExportModal } from "./components/ExportModal";
+import { ExportProgress } from "./components/ExportProgress";
 import { ProgressBar } from "./components/ProgressBar";
 import { PreviewNotice } from "./components/PreviewNotice";
 import { Stage } from "./components/Stage";
@@ -14,12 +17,14 @@ import { SubtitleSafeZone } from "./components/SubtitleSafeZone";
 import { useAudioPlayer } from "./hooks/useAudioPlayer";
 import { useAutoMode } from "./hooks/useAutoMode";
 import { useChapterTime, useReviewTime } from "./hooks/useChapterTime";
+import { useExport } from "./hooks/useExport";
 import { indexAt } from "./motion/sample";
 import { useStepper } from "./hooks/useStepper";
 import { useTimelineAuto } from "./hooks/useTimelineAuto";
 import { useSilentPreview } from "./hooks/useSilentPreview";
 import { CHAPTERS } from "./registry/chapters";
 import {
+  PARTS,
   readPart,
   TIMELINE,
   TIMELINE_GENERATED,
@@ -76,24 +81,44 @@ export default function App() {
   const query = new URLSearchParams(window.location.search);
   const defaultReview = !!preview && !['auto', 'audio', 'manual', 'review'].some(key => query.has(key));
   const reviewTime = useReviewTime(duration, defaultReview);
+  const [exportTime, setExportTime] = useState<number | null>(null);
+  const parts = useMemo(() => Object.values(PARTS), []);
+  const part = useMemo(() => readPart(), []);
+  const jumpToGlobal = stepper.jumpToGlobal;
+  const seekExport = useCallback((t: number) => {
+    setExportTime(t);
+    if (timeline.length > 0) jumpToGlobal(indexAt(t, timeline));
+  }, [jumpToGlobal, timeline]);
+  const exporter = useExport({
+    enabled: voFirst,
+    parts,
+    currentPart: part,
+    duration,
+    audioUrl: voFirst ? `${import.meta.env.BASE_URL}${VO_FULL_SRC}` : null,
+    seek: seekExport,
+  });
+  useEffect(() => {
+    if (!exporter.encoding || exporter.armed) setExportTime(null);
+    document.documentElement.dataset.exporting = exporter.encoding ? "1" : "";
+    return () => { delete document.documentElement.dataset.exporting; };
+  }, [exporter.encoding, exporter.armed]);
+  const clockTime = exporter.armed ? null : (exportTime ?? reviewTime);
   const offsets = CHAPTERS.map((_, i) => CHAPTERS.slice(0, i).reduce((n, c) => n + c.narrations.length, 0));
-  const reviewIndex = reviewTime !== null ? indexAt(reviewTime, timeline) : stepper.globalIndex;
-  const chapterIndex = reviewTime !== null ? indexAt(reviewIndex, offsets) : stepper.cursor.chapter;
-  const step = reviewTime !== null ? reviewIndex - offsets[chapterIndex]! : stepper.cursor.step;
+  const clockIndex = clockTime !== null ? indexAt(clockTime, timeline) : stepper.globalIndex;
+  const chapterIndex = clockTime !== null ? indexAt(clockIndex, offsets) : stepper.cursor.chapter;
+  const step = clockTime !== null ? clockIndex - offsets[chapterIndex]! : stepper.cursor.step;
   const ch = CHAPTERS[chapterIndex]!;
   const Cmp = ch.Component;
   const stepText = ch.narrations[step] ?? "";
 
   const { mode, cycleMode, autoStarted, setAutoStarted } = useAutoMode();
-
-  // 录制区间（`?part=<id>`）。单区间全片时就是默认 part；多区间补拍时
-  // 在 plan.md 的 parts 里声明，gen 写进 timeline.ts 的 PARTS。
-  const part = useMemo(() => readPart(), []);
   const muted = useMemo(() => readMuted(), []);
+  const live = !exporter.encoding && reviewTime === null;
+  const exportLive = exporter.armed;
 
   // VO-First 的 auto 交给 useTimelineAuto —— 每步切片播放退化为 manual
   // （切片有段间断点 + ended→next→play 的累积漂移）。TTS 项目 auto 不受影响。
-  const playerMode = preview || reviewTime !== null || (mode === "auto" && voFirst) ? "manual" : mode;
+  const playerMode = preview || !live || (mode === "auto" && voFirst) ? "manual" : mode;
 
   // Audio path follows the convention: /audio/<chapter-id>/<step+1>.mp3
   // (1-indexed file names match what `extract-narrations.ts` outputs.)
@@ -116,33 +141,38 @@ export default function App() {
   });
 
   const audioTime = useTimelineAuto({
-    enabled: mode === "auto" && voFirst && reviewTime === null,
+    enabled: voFirst && ((mode === "auto" && live) || exportLive),
     src: `${import.meta.env.BASE_URL}${VO_FULL_SRC}`,
     timeline: TIMELINE,
-    autoStarted,
+    autoStarted: autoStarted || exportLive,
     jumpToGlobal: stepper.jumpToGlobal,
-    startAt: part.start,
-    endAt: part.end,
-    muted,
+    startAt: exportLive ? exporter.selectedPart.start : part.start,
+    endAt: exportLive ? exporter.selectedPart.end : part.end,
+    muted: muted || exporter.encoding,
   });
 
-  const previewTime = useSilentPreview(!!preview && mode === "auto" && reviewTime === null, autoStarted, timeline, duration, stepper.jumpToGlobal);
+  const previewTime = useSilentPreview(!!preview && mode === "auto" && live, autoStarted, timeline, duration, stepper.jumpToGlobal);
   const chapterStart = voFirst || preview ? timeline[offsets[chapterIndex]!]! : 0;
   const stepStart = voFirst || preview ? timeline[offsets[chapterIndex]! + step]! - chapterStart
     : ch.narrations.slice(0, step).reduce((n, text) => n + estimateMs(text) / 1000, 0);
-  const time = useChapterTime(reviewTime ?? (mode === "auto" ? (voFirst ? audioTime : preview ? previewTime : null) : null), chapterStart, stepStart);
+  const time = useChapterTime(
+    exportTime ?? reviewTime ?? ((mode === "auto" && live) || exportLive ? (voFirst ? audioTime : preview ? previewTime : null) : null),
+    chapterStart,
+    stepStart,
+  );
+  const chromeHidden = exporter.encoding;
 
   return (
     <>
-      {preview && <PreviewNotice />}
-      <Stage onAdvance={stepper.next}>
+      {preview && !chromeHidden && <PreviewNotice />}
+      <Stage onAdvance={chromeHidden ? () => undefined : stepper.next} quiet={chromeHidden}>
         <div key={ch.id} className="scene" data-time={(time + chapterStart).toFixed(3)} data-step={step} data-chapter={ch.id}>
-          <Cmp step={step} time={time} stepReview={reviewTime !== null && (defaultReview || query.get('steps') === '1')} />
+          <Cmp step={step} time={time} stepReview={!chromeHidden && reviewTime !== null && (defaultReview || query.get('steps') === '1')} />
         </div>
-        {reviewTime === null && <AvatarSafeZone corner={AVATAR_CORNER} />}
-        {reviewTime === null && <SubtitleSafeZone enabled={SUBTITLE_SAFE} />}
+        {!chromeHidden && reviewTime === null && <AvatarSafeZone corner={AVATAR_CORNER} />}
+        {!chromeHidden && reviewTime === null && <SubtitleSafeZone enabled={SUBTITLE_SAFE} />}
       </Stage>
-      {reviewTime === null && <>
+      {reviewTime === null && !chromeHidden && <>
       <ProgressBar
         chapters={CHAPTERS}
         cursor={stepper.cursor}
@@ -150,7 +180,7 @@ export default function App() {
       />
       <AutoToggle mode={mode} onCycle={cycleMode} />
       <AutoStartGate
-        visible={mode === "auto" && !autoStarted}
+        visible={mode === "auto" && !autoStarted && exporter.phase === "idle"}
         onStart={() => setAutoStarted(true)}
         label={
           preview ? "播放模板演示（无声）" : voFirst
@@ -168,6 +198,34 @@ export default function App() {
         }
       />
       </>}
+      {!chromeHidden && (
+        <ExportButton
+          disabled={!exporter.enabled}
+          title={exporter.enabled ? "导出 MP4" : "先导入配音与 SRT"}
+          onClick={exporter.openPicker}
+        />
+      )}
+      <ExportModal
+        visible={exporter.phase === "picking"}
+        presetId={exporter.presetId}
+        partId={exporter.partId}
+        parts={parts}
+        duration={duration}
+        hasAudio={voFirst}
+        onPreset={exporter.setPreset}
+        onPart={exporter.setPartId}
+        onCancel={exporter.closePicker}
+        onConfirm={() => void exporter.start()}
+      />
+      <ExportProgress
+        phase={exporter.phase}
+        ratio={exporter.ratio}
+        time={exporter.time}
+        duration={(exporter.selectedPart.end || duration) - exporter.selectedPart.start}
+        error={exporter.error}
+        onCancel={exporter.cancel}
+        onDismiss={exporter.dismiss}
+      />
     </>
   );
 }

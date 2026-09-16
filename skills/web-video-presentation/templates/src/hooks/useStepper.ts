@@ -139,6 +139,7 @@ export function useStepper(chapters: ChapterDef[]): StepperState {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement) return;
+      if (document.documentElement.dataset.exporting === "1") return;
       if (e.key === "ArrowRight" || e.key === " ") {
         // AutoStartGate 在场时，首个 SPACE 只用来解锁 auto 起播，不能同时翻页
         // —— 否则录制时开场第一步会被跳过（useAutoMode 监听同一个按键）。

@@ -1,6 +1,6 @@
 ---
 name: web-video-presentation
-description: 将口播稿、文章或已有音频与 SRT 制作为可录屏的 16:9 网页视频演示（Vite + React + TypeScript）。用连续视觉场景、证据画面、卡片状态变化与 MG 动画解释内容；支持点击推进、整段原声驱动、分段录制和按绝对时间验帧。适用于 B 站、YouTube、视频号口播配画面与产品演示。
+description: 将口播稿、文章或已有音频与 SRT 制作为可自动播放的 16:9 网页视频演示（Vite + React + TypeScript）。用连续视觉场景、证据画面、卡片状态变化与 MG 动画解释内容；支持点击推进、整段原声驱动、按绝对时间验帧，以及预览页一键导出 1K/2K/4K MP4。适用于 B 站、YouTube、视频号口播配画面与产品演示。
 ---
 
 # Web Video Presentation
@@ -81,7 +81,7 @@ npm run dev   # 立即体验默认模板；准备好 ../plan.md 后再 npm run g
 2. 按 [EVALUATION.md](references/EVALUATION.md) 使用用户指定或本机可用的真实浏览器 skill（如 ego-browser、agent-browser 或其他浏览器工具），不绑定平台或品牌。查看每种镜头起/中/末帧和转场；新时钟镜头可用 `?review=1&t=<绝对秒>&mute=1` 精确复现。
 3. `?auto=1&mute=1` 按 part 连续播放，确认声音时钟推进、cue 落点、无黑场/错位/截断。静态验帧不能代替播放。
 4. 复查上屏事实、缺失素材与安全区。修最小镜头，再复查它的相邻转场。
-5. 交付可运行目录、播放链接、录制方式和实测证据。用户录制链接去掉 `mute=1` 和 `review=1`。没有量过的速度/返工改善不要写成结论。
+5. 交付可运行目录、播放链接和实测证据。用户看片去掉 `mute=1`。预览页右上角 **导出** 可选 1K / 2K / 4K，编码时保持标签打开；滤镜失真或旧浏览器再按 [RECORDING.md](references/RECORDING.md) 用录屏软件。没有量过的速度/返工改善不要写成结论。
 
 ## 保留的工程底线
 

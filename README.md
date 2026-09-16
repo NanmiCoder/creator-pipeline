@@ -56,7 +56,7 @@ npx skills add NanmiCoder/creator-pipeline --list
 | Skill | 输入 | 输出 |
 |---|---|---|
 | [voice-clone-tts](skills/voice-clone-tts/SKILL.md) | 文案 + 本人/已授权参考录音 | WAV、MP3、SRT、可验证的 `voiceover.json` |
-| [web-video-presentation](skills/web-video-presentation/SKILL.md) | 最终配音、SRT 与内容素材 | Vite + React + TypeScript 网页演示，可自动播放、点击推进与录屏 |
+| [web-video-presentation](skills/web-video-presentation/SKILL.md) | 最终配音、SRT 与内容素材 | Vite + React + TypeScript 网页演示，可自动播放、点击推进，并在预览页导出 1K/2K/4K MP4 |
 
 音频先定下来，画面才有可靠的节奏。`voiceover.json` 连接两步：导入时核验音频采样帧、字幕和文件哈希，改稿或缺段后不会继续拼接旧结果。SRT 按实际合成段的采样帧计时，**属于句段级时间轴，不是字级强制对齐**。
 
@@ -70,7 +70,7 @@ npx skills add NanmiCoder/creator-pipeline --list
 
 预览、自动播放与验帧都保留清晰的 **16:9 框选区**，录屏时只选舞台内容。验收兼容用户指定或本机可用的 `ego-browser`、`agent-browser` 及其他真实浏览器 skill，不要求安装某个品牌的浏览器。
 
-输出是 **HTML 网页演示，不是 `.pptx`**。导出 MP4 需要按 [录制说明](skills/web-video-presentation/references/RECORDING.md) 完成录制；安装 skills 不会自动替你生成或上传视频。
+输出是 **HTML 网页演示，不是 `.pptx`**。审核后在预览页右上角点 **导出**，选择 1K / 2K / 4K 下载 MP4；安装 skills 不会自动替你生成或上传视频。录屏软件作为备选，见 [导出说明](skills/web-video-presentation/references/RECORDING.md)。
 
 ## MiniMax 默认，保留免费本地方案
 

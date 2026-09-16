@@ -1,0 +1,46 @@
+.ex-btn-wrap {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 110;
+  pointer-events: auto;
+}
+.ex-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--text, #f7f2e8);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(247, 242, 232, 0.14);
+  cursor: pointer;
+}
+.ex-btn:hover:not(:disabled) {
+  border-color: var(--accent, #c9ff3a);
+  color: var(--accent, #c9ff3a);
+}
+.ex-btn:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+.ex-btn-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent, #c9ff3a);
+  box-shadow: 0 0 8px var(--accent-glow, rgba(201, 255, 58, 0.5));
+}
+.ex-btn:disabled .ex-btn-dot {
+  background: #888;
+  box-shadow: none;
+}
+@media (max-height: 250px) {
+  .ex-btn-wrap { display: none; }
+}

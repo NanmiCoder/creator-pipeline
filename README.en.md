@@ -50,7 +50,7 @@ The example contains **21 editorial action beats within six original SRT cues**,
 
 SRT timing comes from actual PCM sample frames for each synthesized segment. It is segment-level timing, not word-level forced alignment. Structural checks cannot prove correct pronunciation or voice similarity.
 
-The output is an **HTML presentation, not a `.pptx` file**. MP4 output requires the separate [recording workflow](skills/web-video-presentation/references/RECORDING.md).
+The output is an **HTML presentation, not a `.pptx` file**. After review, the preview page exports 1K / 2K / 4K MP4 from the top-right **导出** button. Screen recording remains a fallback; see [export notes](skills/web-video-presentation/references/RECORDING.md).
 
 Preview, autoplay and frame review keep the same framed **16:9 capture area**, with guides outside the content. Browser QA uses the user's chosen or locally available browser skill—Ego, agent-browser or another real browser tool. No specific browser product is required.
 

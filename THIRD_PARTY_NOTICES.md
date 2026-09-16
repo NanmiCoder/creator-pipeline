@@ -13,5 +13,7 @@ Model weights and inference libraries are downloaded separately and retain their
 | MLX Audio conversion/runtime | [Blaizzy/mlx-audio](https://github.com/Blaizzy/mlx-audio), MIT; converted model card terms also apply |
 | MiniMax CLI | [MiniMax-AI/cli](https://github.com/MiniMax-AI/cli), upstream license and service terms |
 | Vercel Skills CLI | [vercel-labs/skills](https://github.com/vercel-labs/skills), external installer |
+| Mediabunny | [Vanilagy/mediabunny](https://github.com/Vanilagy/mediabunny), MPL-2.0; in-page MP4 mux |
+| modern-screenshot | [qq15725/modern-screenshot](https://github.com/qq15725/modern-screenshot), MIT; DOM rasterizer |
 
 Presentation themes reference Google Fonts through CSS. The font files are not vendored; fonts fall back to available local fonts if those requests fail. For fully offline rendering, provision appropriate licensed fonts and remove external imports in the generated project.

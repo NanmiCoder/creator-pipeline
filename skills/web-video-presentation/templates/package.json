@@ -14,6 +14,8 @@
     "test": "tsx --test scripts/*.test.mjs scripts/*.test.ts"
   },
   "dependencies": {
+    "mediabunny": "^1.56.3",
+    "modern-screenshot": "^4.7.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },

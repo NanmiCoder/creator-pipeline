@@ -8,6 +8,6 @@ For script + reference voice, install `voice-clone-tts` too. See the [Creator Pi
 
 The default scaffold ships the approved Creator Pipeline scene: six narration steps, 21 action beats, card transformations, timeline assembly, focus changes, and continuous transitions. Its home page opens in step review; autoplay runs an explicitly labeled silent preview until real audio/SRT is generated. See [STARTER.md](templates/STARTER.md).
 
-It also includes theme tokens, React/TypeScript, exact-time frame review, timeline/SRT generation, and the verified voiceover importer. A coding agent designs the actual scenes. This produces web presentations, not a `.pptx` file. Recording/export is a separate final step.
+It also includes theme tokens, React/TypeScript, exact-time frame review, timeline/SRT generation, and the verified voiceover importer. A coding agent designs the actual scenes. This produces web presentations, not a `.pptx` file. After review, the preview page can export 1K / 2K / 4K MP4 from the top-right **导出** button. Screen recording remains a fallback.
 
 Based on [ConardLi/garden-skills](https://github.com/ConardLi/garden-skills/tree/main/skills/web-video-presentation), with subsequent workflow, motion, SRT and validation changes. The upstream MIT notice is retained in [LICENSE](LICENSE).
