@@ -92,6 +92,8 @@ fi
 echo "▸ 创建演示项目：${TARGET}（锁定依赖，主题 ${THEME}）"
 mkdir -p "$TARGET/public/audio"
 cp -R "$TEMPLATES/." "$TARGET/"
+# 开发机上的模板可能残留 node_modules/.DS_Store；npm ci 会重建依赖，先清掉免得白拷上百 MB
+rm -rf "$TARGET/node_modules" "$TARGET/.DS_Store"
 cp "$THEME_TOKENS" "$TARGET/src/styles/tokens.css"
 printf '%s\n' "$THEME" > "$TARGET/.theme"
 cd "$TARGET"
@@ -112,5 +114,7 @@ cat <<EOF
 默认已带 Creator Pipeline 连续场景：6 段、21 个动作拍，首页可逐拍播放。
 ?auto=1 无声连播；?manual=1 按口播步骤推进；16:9 外框始终保留。
 此时波形和时间区间为示意。接入真实音频/SRT 后运行 gen，由音频时钟驱动。
-定制自己的内容见 STARTER.md；准备实际章节后同步注册，再移除示例。
+定制自己的内容见 STARTER.md。准备实际章节后：同步注册 src/registry/chapters.ts、移除 previewTiming。
+卡片质感用共享原语 src/styles/base.css 的 .card + 主题 token（--r-card/--card-shadow/--rule），不要各章自创。
+01-pipeline/ 目录保留作视觉参照，不要删除。
 EOF

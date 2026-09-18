@@ -5,6 +5,8 @@ description: 将口播稿、文章或已有音频与 SRT 制作为可自动播�
 
 # Web Video Presentation
 
+> 技能版本 **2.6.1**（同步自 `manifest.json`）。开始任务时先向用户报出版本号 —— skills CLI 不提供更新提示，用户只能靠这个判断手上是哪一版、要不要重装。
+
 声音讲细节，画面让观众看见关系与变化。**先设计“什么东西发生了什么”，再排文字。**
 高级感来自清楚的主次、可信的素材、连贯的空间与精确的运动；动画数量、卡片数量和代码量不等于质量。
 
@@ -50,13 +52,18 @@ npm run dev   # 立即体验默认模板；准备好 ../plan.md 后再 npm run g
 ```
 
 - **默认模板就是 `01-pipeline` 的完整连续场景**：creator-dark 主题、6 段口播、21 个动作拍，含对象配对/汇合、波形拆轨、时间戳落位、卡片生成、关系传递、焦点推进和交付转场。首页直接逐拍交互，`?auto=1` 无声连播；用法与替换路径见 [STARTER.md](templates/STARTER.md)。主题可用 `--theme=<id>` 改选。
-- 新项目延续这套对象连续性、动作密度与转场质量；按内容重写镜头和动作谱，不把六段文案或 21 拍当固定配额。默认示意波形/时间不能作为实测证据。
-- 删除示例前先准备实际章节，并同步 `src/registry/chapters.ts` 注册，避免空列表崩溃。
+- **分清两层，写法相反，不要混为一谈**：
+  - **内容层 —— 必须重写**：六段文案、21 拍的具体编排、`01-pipeline` 的镜头与素材都属于这个演示自己的内容，按你的口播重写，不照搬、不当固定配额。默认示意波形/时间不能作为实测证据。
+  - **视觉语言层 —— 必须继承**：对象身份与交接方式、卡片质感、焦点推进手法、句内动作密度、转场质量。新章节和模板看不出同源，就是没做完。
+  - 边界拿不准时按 [CRAFT 的镜头选择表](references/CRAFT.md) 判断：**手法**（怎么让关系可见）继承，**题材**（这次讲什么、用什么素材）重写。
+- **`01-pipeline/` 保留作视觉参照，不要删目录**。同步 `src/registry/chapters.ts` 注册新章节、移除 `previewTiming` 就行 —— **移除的是注册，不是这份实现**。它是唯一的同源参照物，删了就没有第二份可对照。具体怎么继承见 [STARTER.md](templates/STARTER.md)（**不是**通读 `chapter.tsx` 手抄）。
 - **旧项目先查版本**：旧 gen 不认识 srt/scene/screen，旧 App 也不传 time；按 [MOTION 的旧项目迁移](references/MOTION.md#旧项目迁移) 在副本中升级后再用新字段。
 - `gen` 默认读 `../plan.md`；生成 timeline、章节 narrations、BRIEF。有 `srt:` 时同时生成准确 cue 数据 `timing.ts`，不再每章重复抄时间。
 - `narrations.ts` 已存在会保留；改 step 数需同步文件或备份后重新生成。别假设重跑 gen 会覆盖它。
 - 在 `App.tsx` 设置 `AVATAR_CORNER` 与 `SUBTITLE_SAFE`，并把配置写到计划的全片约定中。
 - 优先复用 `src/motion/` 的时间采样函数与原生 SVG/CSS；复杂形变确有收益时再引入库。共享组件放 `src/components/`，不要从其他章节导入。
+- **卡片质感走共享原语，不要重画**：`src/styles/base.css` 已有 `.card` 原语（`--surface-2` / `--bw-1 solid var(--rule)` / `--r-card` / `--card-shadow`），由 `App.tsx` 全局导入 —— **任何章节直接可用，不需要 import，也不受「章节 CSS 有前缀」「不跨章 import」两条约定约束**（`check.mjs` 的前缀检查与跨章检查都不扫描 `src/components` 与 base 原语）。新章节的卡片复用它加主题 token。
+- **用 token，不要用像素值**：各主题 `--r-card` 从 4px 到 32px 不等，写死 `border-radius:16px` 换主题就破。反复出现的卡片再由主线程抽象进 `src/components/`。`01-pipeline` 自己尚未接上 `.card`（硬编码 16px），属历史遗留，**不要照抄它的字面值**。
 
 ## 3. 按镜头完成章节
 
