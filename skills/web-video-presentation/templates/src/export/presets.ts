@@ -24,19 +24,17 @@ export interface FramePlan {
   duration: number;
 }
 
-/** Inclusive range `[start, end]` snapped to `fps`, last frame fills the remainder. */
+/** Constant memory frame scheduling, including a positive final partial frame. */
+export function frameCountFor(start: number, end: number, fps = EXPORT_FPS): number {
+  if (![start, end, fps].every(Number.isFinite) || start < 0 || end <= start || fps <= 0) throw new Error("无效的导出区间或帧率");
+  return Math.max(1, Math.ceil((end - start) * fps - 1e-9));
+}
+export function frameAt(index: number, start: number, end: number, fps = EXPORT_FPS): FramePlan {
+  const timestamp = start + index / fps;
+  return { timestamp, duration: Math.min(1 / fps, end - timestamp) };
+}
 export function framePlan(start: number, end: number, fps = EXPORT_FPS): FramePlan[] {
-  const lo = Math.max(0, start);
-  const hi = Math.max(lo, end);
-  const span = hi - lo;
-  const count = Math.max(1, Math.round(span * fps));
-  const frames: FramePlan[] = [];
-  for (let i = 0; i < count; i++) {
-    const timestamp = lo + i / fps;
-    const next = i === count - 1 ? hi : lo + (i + 1) / fps;
-    frames.push({ timestamp, duration: next - timestamp });
-  }
-  return frames;
+  return Array.from({ length: frameCountFor(start, end, fps) }, (_, i) => frameAt(i, start, end, fps));
 }
 
 export function formatClock(sec: number): string {

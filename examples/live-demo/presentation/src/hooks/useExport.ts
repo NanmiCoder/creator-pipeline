@@ -1,7 +1,6 @@
-import { useCallback, useMemo, useRef, useState } from "react";
-import { ExportCanceledError, requestTabCapture, stopStream } from "../export/capture";
-import { encodePresentation } from "../export/encode";
-import { EXPORT_FPS, EXPORT_PRESETS, type ExportPresetId } from "../export/presets";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { downloadBlob, exportFilename } from "../export/download";
+import { EXPORT_PRESETS, frameCountFor, type ExportPresetId } from "../export/presets";
 import type { PartDef } from "../registry/timeline";
 
 export type ExportPhase = "idle" | "picking" | "encoding" | "done" | "error";
@@ -13,8 +12,6 @@ export interface ExportState {
   ratio: number;
   time: number;
   error: string | null;
-  /** True after capture is cropped and 1x playback should run. */
-  armed: boolean;
 }
 
 export interface UseExportOptions {
@@ -33,7 +30,6 @@ const idle: ExportState = {
   ratio: 0,
   time: 0,
   error: null,
-  armed: false,
 };
 
 export function useExport({
@@ -46,7 +42,9 @@ export function useExport({
 }: UseExportOptions) {
   const [state, setState] = useState<ExportState>(idle);
   const abortRef = useRef<AbortController | null>(null);
+  useEffect(() => () => abortRef.current?.abort(), []);
   const encoding = state.phase === "encoding";
+  const busyRef = useRef(false);
 
   const selectedPart = useMemo(() => {
     return parts.find((p) => p.id === state.partId) ?? currentPart;
@@ -61,7 +59,6 @@ export function useExport({
       ratio: 0,
       time: currentPart.start,
       error: null,
-      armed: false,
     });
   }, [enabled, encoding, currentPart]);
 
@@ -82,43 +79,27 @@ export function useExport({
   }, []);
 
   const start = useCallback(async () => {
-    if (!enabled) return;
+    if (!enabled || busyRef.current) return;
+    busyRef.current = true;
     const preset = EXPORT_PRESETS[state.presetId];
     const part = parts.find((p) => p.id === state.partId) ?? currentPart;
-    let stream: MediaStream | null = null;
-    try {
-      stream = await requestTabCapture();
-    } catch (err) {
-      if (err instanceof ExportCanceledError) {
-        setState(idle);
-        return;
-      }
-      const message = err instanceof Error ? err.message : "无法开始捕获";
-      setState({ ...idle, phase: "error", error: message });
-      return;
-    }
-
     const controller = new AbortController();
     abortRef.current = controller;
-    const stopOnAbort = () => stopStream(stream);
-    controller.signal.addEventListener("abort", stopOnAbort, { once: true });
     setState({
       phase: "encoding",
       presetId: preset.id,
       partId: part.id,
       ratio: 0,
-      time: part.start,
+      time: 0,
       error: null,
-      armed: false,
     });
     try {
-      await encodePresentation({
+      const { encodePresentation } = await import("../export/encode");
+      const result = await encodePresentation({
         preset,
         range: { start: part.start, end: part.end || duration, partId: part.id },
         audioUrl,
-        stream,
         seek,
-        onArmed: () => setState((s) => (s.phase === "encoding" ? { ...s, armed: true } : s)),
         signal: controller.signal,
         onProgress: (ratio, time) => {
           setState((s) =>
@@ -126,26 +107,28 @@ export function useExport({
           );
         },
       });
-      setState((s) => ({ ...s, phase: "done", ratio: 1, armed: false }));
+      downloadBlob(result.file, exportFilename(preset.id, part.id));
+      // The Blob URL must outlive the download's handoff to the browser.
+      window.setTimeout(() => { void result.dispose(); }, 60_000);
+      setState((s) => ({ ...s, phase: "done", ratio: 1 }));
     } catch (err) {
-      stopStream(stream);
-      if (err instanceof ExportCanceledError || controller.signal.aborted) {
+      if (controller.signal.aborted) {
         setState(idle);
         return;
       }
       const message = err instanceof Error ? err.message : "导出失败";
-      setState((s) => ({ ...s, phase: "error", error: message, armed: false }));
+      setState((s) => ({ ...s, phase: "error", error: message }));
     } finally {
       abortRef.current = null;
+      busyRef.current = false;
     }
   }, [enabled, state.presetId, state.partId, parts, currentPart, duration, audioUrl, seek]);
 
   const dismiss = useCallback(() => setState(idle), []);
 
-  const frameCount = Math.max(
-    1,
-    Math.round(((selectedPart.end || duration) - selectedPart.start) * EXPORT_FPS),
-  );
+  const frameCount = duration > selectedPart.start
+    ? frameCountFor(selectedPart.start, selectedPart.end || duration)
+    : 0;
 
   return {
     ...state,

@@ -14,8 +14,8 @@
     "test": "tsx --test scripts/*.test.mjs scripts/*.test.ts"
   },
   "dependencies": {
+    "@mediabunny/aac-encoder": "1.58.1",
     "mediabunny": "^1.56.3",
-    "modern-screenshot": "^4.7.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },

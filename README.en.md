@@ -69,7 +69,7 @@ See [validation](docs/VALIDATION.md), [backend selection](docs/TTS-BACKENDS.md) 
 
 ## Export the film
 
-After the visuals look right, click **导出** at the top-right of the preview, pick 1K / 2K / 4K, and download an MP4. Only the 16:9 stage is captured — progress, guides and letterbox stay out. Chrome / Edge will ask to share a tab: choose **this tab**, not the whole screen. Capture runs at 1× the film length; keep the tab in the foreground.
+After reviewing the visuals, click **导出** at the top-right, choose 1K / 2K / 4K, and download an MP4. The 16:9 stage is rendered frame by frame on the same timeline as the voiceover; controls and guides stay out. No tab-sharing permission is needed. Export speed depends on the device and scene complexity, with encoding backpressure instead of dropped frames. Keep the page open.
 
 <img src="assets/export-modal.png" alt="Export dialog: choose 1K, 2K or 4K" width="100%">
 
@@ -79,7 +79,7 @@ After the visuals look right, click **导出** at the top-right of the preview, 
 | 2K | 2560×1440 |
 | 4K | 3840×2160 |
 
-Audio comes from the imported voiceover, not system loopback. If tab capture is unavailable, crop the stage in OBS or another recorder. Details: [export notes](skills/web-video-presentation/references/RECORDING.md).
+Audio comes from the imported voiceover, not system loopback. For unsupported browsers or live media, crop the stage in OBS or another recorder. Details: [export notes](skills/web-video-presentation/references/RECORDING.md).
 
 ## Development
 

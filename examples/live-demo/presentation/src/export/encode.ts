@@ -1,165 +1,117 @@
-import {
-  AudioBufferSource,
-  BufferTarget,
-  MediaStreamVideoTrackSource,
-  Mp4OutputFormat,
-  Output,
-  Quality,
-} from "mediabunny";
-import { decodeAudio, sliceAudioBuffer } from "./audio";
-import { captureTarget, ExportCanceledError, restrictToStage, stopStream } from "./capture";
-import { downloadBlob, exportFilename } from "./download";
+import { ALL_FORMATS, AudioBufferSink, AudioBufferSource, CanvasSource, Input, Mp4OutputFormat, Output, Quality, StreamTarget, UrlSource } from "mediabunny";
+import { audioWindow } from "./audio";
+import { createRasterizer } from "./raster";
 import { waitForSceneTime } from "./paint";
-import type { ExportPreset } from "./presets";
+import { EXPORT_FPS, frameCountFor, frameAt, type ExportPreset } from "./presets";
 import { checkExportSupport } from "./support";
 
-export { ExportCanceledError } from "./capture";
-
-export interface EncodeRange {
-  start: number;
-  end: number;
-  partId: string;
-}
-
+export interface EncodeRange { start: number; end: number; partId: string; }
 export interface EncodeOptions {
   preset: ExportPreset;
   range: EncodeRange;
   audioUrl: string | null;
-  stream: MediaStream;
   seek: (time: number) => void;
-  onArmed: () => void;
   signal: AbortSignal;
   onProgress: (ratio: number, time: number) => void;
 }
 
-function throwIfAborted(signal: AbortSignal): void {
-  if (signal.aborted) throw new ExportCanceledError();
-}
-
-function sleep(ms: number, signal: AbortSignal): Promise<void> {
-  return new Promise((resolve, reject) => {
-    if (signal.aborted) {
-      reject(new ExportCanceledError());
-      return;
-    }
-    const timer = window.setTimeout(() => {
-      signal.removeEventListener("abort", onAbort);
-      resolve();
-    }, ms);
-    const onAbort = () => {
-      window.clearTimeout(timer);
-      reject(new ExportCanceledError());
-    };
-    signal.addEventListener("abort", onAbort, { once: true });
-  });
-}
-
-async function waitPaint(): Promise<void> {
-  await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-  await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-}
-
-export async function encodePresentation(opts: EncodeOptions): Promise<void> {
-  const support = await checkExportSupport(opts.preset);
+/** Offline frames and audio use the same zero point. Wall time never enters the media timeline. */
+export async function encodePresentation(opts: EncodeOptions) {
+  const { signal, range, preset } = opts;
+  const count = frameCountFor(range.start, range.end);
+  const support = await checkExportSupport(preset);
   if (!support.ok) throw new Error(support.reason);
-  throwIfAborted(opts.signal);
-
-  const track = opts.stream.getVideoTracks()[0];
-  if (!track) throw new Error("没有捕获到画面轨道");
-  const surface = track.getSettings().displaySurface;
-  if (surface && surface !== "browser") {
-    stopStream(opts.stream);
-    throw new Error("请选择「当前标签页」，不要选整个屏幕或窗口。");
-  }
-
-  await waitPaint();
-  throwIfAborted(opts.signal);
-  const stage = captureTarget();
-  if ("fonts" in document) await document.fonts.ready.catch(() => undefined);
-  await restrictToStage(track, stage);
-  await waitPaint();
-
-  opts.seek(opts.range.start);
-  await waitForSceneTime(opts.range.start);
-  throwIfAborted(opts.signal);
-
-  const quality = new Quality("high");
-  const output = new Output({
-    format: new Mp4OutputFormat(),
-    target: new BufferTarget(),
-  });
-  const video = new MediaStreamVideoTrackSource(
-    track,
-    {
-      codec: "avc",
-      quality,
-      latencyMode: "realtime",
-      hardwareAcceleration: "prefer-hardware",
-      contentHint: "detail",
-      sizeChangeBehavior: "cover",
-      transform: {
-        width: opts.preset.width,
-        height: opts.preset.height,
-        fit: "cover",
-        alpha: "discard",
-      },
-    },
-    { frameRate: 30, timestampBase: "zero" },
-  );
-  output.addVideoTrack(video, { frameRate: 30 });
-
-  let audio: AudioBufferSource | null = null;
-  if (opts.audioUrl) {
-    audio = new AudioBufferSource({ codec: "aac", quality });
-    output.addAudioTrack(audio);
-  }
-
-  let videoError: unknown = null;
-  const fail = video.errorPromise.then(
-    () => undefined,
-    (err: unknown) => {
-      videoError = err instanceof Error ? err : new Error("画面编码失败");
-    },
-  );
-
-  await output.start();
+  signal.throwIfAborted();
+  const dir = await navigator.storage.getDirectory();
+  const name = `presentation-${crypto.randomUUID()}.mp4`;
+  const handle = await dir.getFileHandle(name, { create: true });
+  let output: Output | undefined;
+  let input: Input | undefined;
+  let raster: Awaited<ReturnType<typeof createRasterizer>> | undefined;
+  let audioIterator: ReturnType<AudioBufferSink["buffers"]> | undefined;
+  const remove = () => dir.removeEntry(name).catch(() => undefined);
+  const stopInput = () => input?.dispose();
+  signal.addEventListener("abort", stopInput, { once: true });
   try {
-    if (audio && opts.audioUrl) {
-      const full = await decodeAudio(opts.audioUrl);
-      throwIfAborted(opts.signal);
-      const ctx = new OfflineAudioContext(full.numberOfChannels, 1, full.sampleRate);
-      await audio.add(sliceAudioBuffer(ctx, full, opts.range.start, opts.range.end));
+    raster = await createRasterizer(preset, signal);
+    output = new Output({
+      format: new Mp4OutputFormat({ fastStart: "fragmented", minimumFragmentDuration: 2 }),
+      target: new StreamTarget(await handle.createWritable(), { chunked: true, chunkSize: 1024 * 1024 }),
+    });
+    const video = new CanvasSource(raster.canvas, {
+      codec: "avc", quality: new Quality("high"), latencyMode: "quality",
+      hardwareAcceleration: "prefer-hardware", keyFrameInterval: 2,
+    });
+    // Do not snap the final partial frame's duration to a full frame.
+    output.addVideoTrack(video);
+    let audio: AudioBufferSource | undefined;
+    if (opts.audioUrl) {
+      input = new Input({ formats: ALL_FORMATS, source: new UrlSource(opts.audioUrl, { maxCacheSize: 8 * 1024 * 1024, getRetryDelay: () => null }) });
+      const track = await input.getPrimaryAudioTrack();
+      if (!track || !(await track.canDecode())) throw new Error("配音无法解码");
+      const duration = await track.computeDuration();
+      if (duration + 1 / 1000 < range.end) throw new Error("配音长度不足，无法覆盖导出区间");
+      // The pinned FFmpeg AAC-LC encoder has exactly 1024 priming samples.
+      // A negative start writes an MP4 edit list; do not guess native encoder delay per platform.
+      audio = new AudioBufferSource({ codec: "aac", quality: new Quality("high") }, { startTimestamp: -1024 / await track.getSampleRate() });
+      output.addAudioTrack(audio);
+      audioIterator = new AudioBufferSink(track).buffers(range.start, range.end);
     }
-
-    opts.seek(opts.range.start);
-    await waitForSceneTime(opts.range.start);
-    throwIfAborted(opts.signal);
-    opts.onArmed();
-
-    const span = Math.max(0.05, opts.range.end - opts.range.start);
-    const t0 = performance.now();
-    while (!opts.signal.aborted) {
-      if (videoError) throw videoError;
-      const elapsed = (performance.now() - t0) / 1000;
-      opts.onProgress(Math.min(1, elapsed / span), opts.range.start + Math.min(span, elapsed));
-      if (elapsed >= span) break;
-      await Promise.race([sleep(80, opts.signal), fail]);
+    await output.start();
+    let nextAudio = await audioIterator?.next();
+    let audioSamples = 0;
+    let sampleRate = 0;
+    const addAudioUntil = async (until: number) => {
+      while (nextAudio && !nextAudio.done && nextAudio.value.timestamp < until) {
+        signal.throwIfAborted();
+        const { buffer, timestamp } = nextAudio.value;
+        sampleRate ||= buffer.sampleRate;
+        if (sampleRate !== buffer.sampleRate) throw new Error("配音采样率在区间内变化");
+        const { from, to } = audioWindow(timestamp, buffer.length, sampleRate, range.start, range.end, audioSamples);
+        if (to > from) {
+          const slice = new AudioBuffer({ length: to - from, numberOfChannels: buffer.numberOfChannels, sampleRate });
+          for (let c = 0; c < buffer.numberOfChannels; c++) slice.copyToChannel(buffer.getChannelData(c).subarray(from, to), c);
+          await audio!.add(slice);
+          audioSamples += to - from;
+        }
+        nextAudio = await audioIterator!.next();
+      }
+    };
+    const timings = { seekMs: 0, rasterMs: 0, videoMs: 0, audioMs: 0 };
+    for (let i = 0; i < count; i++) {
+      signal.throwIfAborted();
+      const frame = frameAt(i, range.start, range.end);
+      const t0 = performance.now();
+      opts.seek(frame.timestamp);
+      await waitForSceneTime(frame.timestamp, signal);
+      const t1 = performance.now();
+      await raster.draw(frame.timestamp);
+      const t2 = performance.now();
+      await video.add(i / EXPORT_FPS, frame.duration);
+      const t3 = performance.now();
+      await addAudioUntil(frame.timestamp + frame.duration);
+      timings.seekMs += t1 - t0; timings.rasterMs += t2 - t1;
+      timings.videoMs += t3 - t2; timings.audioMs += performance.now() - t3;
+      if (i % 10 === 0 || i === count - 1) opts.onProgress((i + 1) / count, frame.timestamp + frame.duration - range.start);
     }
-    if (videoError) throw videoError;
-
-    video.close();
-    audio?.close();
+    await addAudioUntil(range.end);
+    if (audio && Math.abs(audioSamples - (Math.round(range.end * sampleRate) - Math.round(range.start * sampleRate))) > 1) {
+      throw new Error("配音采样不完整，导出已停止");
+    }
+    signal.throwIfAborted();
+    video.close(); audio?.close();
     await output.finalize();
-  } catch (err) {
-    await output.cancel().catch(() => undefined);
-    throw err;
+    signal.throwIfAborted();
+    const file = await handle.getFile();
+    if (!file.size) throw new Error("导出文件为空");
+    return { file, dispose: remove, frames: count, audioSamples, sampleRate, timings };
+  } catch (error) {
+    await output?.cancel().catch(() => undefined);
+    await remove();
+    throw error;
   } finally {
-    stopStream(opts.stream);
+    signal.removeEventListener("abort", stopInput);
+    await audioIterator?.return(undefined).catch(() => undefined);
+    input?.dispose(); raster?.dispose();
   }
-
-  const buffer = output.target.buffer;
-  if (!buffer) throw new Error("导出完成但没有得到文件");
-  const blob = new Blob([new Uint8Array(buffer)], { type: "video/mp4" });
-  if (blob.size < 64 * 1024) throw new Error("导出文件过小，画面轨道可能为空。请重试并选择当前标签页。");
-  downloadBlob(blob, exportFilename(opts.preset.id, opts.range.partId));
 }

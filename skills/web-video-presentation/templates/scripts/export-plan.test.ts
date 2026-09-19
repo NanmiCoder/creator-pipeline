@@ -28,3 +28,12 @@ test('clock label is m:ss.t', () => {
   assert.equal(formatClock(25.0678), '0:25.1');
   assert.equal(formatClock(75), '1:15.0');
 });
+
+test('a short fractional tail never produces a zero or negative duration', () => {
+  for (const end of [0.0001, 1.001, 1.016, 1.034, 600.001]) {
+    const frames=framePlan(0,end);
+    assert.ok(frames.every(f=>f.duration>0));
+    const last=frames.at(-1)!;
+    assert.ok(Math.abs(last.timestamp+last.duration-end)<1e-10);
+  }
+});

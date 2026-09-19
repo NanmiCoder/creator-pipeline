@@ -3,6 +3,7 @@ import "./styles/base.css";
 import "./styles/tokens.css"; // active theme — MUST load AFTER base so theme :root overrides base defaults (hero-num / motion / radius personality knobs). See THEMES.md
 import "./styles/animations.css";
 
+import { flushSync } from "react-dom";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AutoStartGate } from "./components/AutoStartGate";
 import { AutoToggle } from "./components/AutoToggle";
@@ -86,8 +87,10 @@ export default function App() {
   const part = useMemo(() => readPart(), []);
   const jumpToGlobal = stepper.jumpToGlobal;
   const seekExport = useCallback((t: number) => {
-    setExportTime(t);
-    if (timeline.length > 0) jumpToGlobal(indexAt(t, timeline));
+    flushSync(() => {
+      setExportTime(t);
+      if (timeline.length > 0) jumpToGlobal(indexAt(t, timeline));
+    });
   }, [jumpToGlobal, timeline]);
   const exporter = useExport({
     enabled: voFirst,
@@ -98,11 +101,11 @@ export default function App() {
     seek: seekExport,
   });
   useEffect(() => {
-    if (!exporter.encoding || exporter.armed) setExportTime(null);
+    if (!exporter.encoding) setExportTime(null);
     document.documentElement.dataset.exporting = exporter.encoding ? "1" : "";
     return () => { delete document.documentElement.dataset.exporting; };
-  }, [exporter.encoding, exporter.armed]);
-  const clockTime = exporter.armed ? null : (exportTime ?? reviewTime);
+  }, [exporter.encoding]);
+  const clockTime = exportTime ?? reviewTime;
   const offsets = CHAPTERS.map((_, i) => CHAPTERS.slice(0, i).reduce((n, c) => n + c.narrations.length, 0));
   const clockIndex = clockTime !== null ? indexAt(clockTime, timeline) : stepper.globalIndex;
   const chapterIndex = clockTime !== null ? indexAt(clockIndex, offsets) : stepper.cursor.chapter;
@@ -114,7 +117,6 @@ export default function App() {
   const { mode, cycleMode, autoStarted, setAutoStarted } = useAutoMode();
   const muted = useMemo(() => readMuted(), []);
   const live = !exporter.encoding && reviewTime === null;
-  const exportLive = exporter.armed;
 
   // VO-First 的 auto 交给 useTimelineAuto —— 每步切片播放退化为 manual
   // （切片有段间断点 + ended→next→play 的累积漂移）。TTS 项目 auto 不受影响。
@@ -141,13 +143,13 @@ export default function App() {
   });
 
   const audioTime = useTimelineAuto({
-    enabled: voFirst && ((mode === "auto" && live) || exportLive),
+    enabled: voFirst && (mode === "auto" && live),
     src: `${import.meta.env.BASE_URL}${VO_FULL_SRC}`,
     timeline: TIMELINE,
-    autoStarted: autoStarted || exportLive,
+    autoStarted,
     jumpToGlobal: stepper.jumpToGlobal,
-    startAt: exportLive ? exporter.selectedPart.start : part.start,
-    endAt: exportLive ? exporter.selectedPart.end : part.end,
+    startAt: part.start,
+    endAt: part.end,
     muted: muted || exporter.encoding,
   });
 
@@ -156,7 +158,7 @@ export default function App() {
   const stepStart = voFirst || preview ? timeline[offsets[chapterIndex]! + step]! - chapterStart
     : ch.narrations.slice(0, step).reduce((n, text) => n + estimateMs(text) / 1000, 0);
   const time = useChapterTime(
-    exportTime ?? reviewTime ?? ((mode === "auto" && live) || exportLive ? (voFirst ? audioTime : preview ? previewTime : null) : null),
+    exportTime ?? reviewTime ?? ((mode === "auto" && live) ? (voFirst ? audioTime : preview ? previewTime : null) : null),
     chapterStart,
     stepStart,
   );

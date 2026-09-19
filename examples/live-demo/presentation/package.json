@@ -13,11 +13,13 @@
     "check": "node scripts/check-media.mjs && node scripts/check.mjs",
     "test": "tsx --test scripts/*.test.mjs scripts/*.test.ts",
     "prepare:vercel": "node scripts/prepare-vercel.mjs",
-    "deploy": "npm run check && npm run build && npm run prepare:vercel && vercel deploy --prebuilt --prod"
+    "deploy": "npm run check && npm run build && npm run prepare:vercel && vercel deploy --prebuilt --prod",
+    "test:export:prepare": "node scripts/prepare-export-fixture.mjs",
+    "test:export:verify": "python3 scripts/verify-export.py"
   },
   "dependencies": {
+    "@mediabunny/aac-encoder": "1.58.1",
     "mediabunny": "^1.56.3",
-    "modern-screenshot": "^4.7.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },

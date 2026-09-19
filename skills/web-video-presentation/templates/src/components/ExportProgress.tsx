@@ -35,7 +35,7 @@ export function ExportProgress({
         <div className="ex-progress-fill" style={{ width: `${pct}%` }} />
       </div>
       {phase === "encoding" && (
-        <div className="ex-progress-msg">只录 16:9 舞台，进度条在画面外。请保持本标签在前台。</div>
+        <div className="ex-progress-msg">正在逐帧生成 16:9 画面，耗时不会影响成片帧率。请勿关闭页面。</div>
       )}
       {phase === "done" && (
         <div className="ex-progress-msg">MP4 已开始下载。若浏览器拦截，请允许本页下载文件。</div>

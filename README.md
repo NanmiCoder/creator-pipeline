@@ -100,7 +100,7 @@ npx skills add NanmiCoder/creator-pipeline --list
 
 ## 导出成片
 
-画面审核没问题后，在预览页右上角点 **导出**，选 1K / 2K / 4K，下载 MP4。只捕获 16:9 舞台，进度条、角标和外框不进成片。Chrome / Edge 会再问一次「分享标签页」——选**当前这个标签页**，不要选整个屏幕。捕获按片长 1 倍速进行，请保持标签在前台。
+画面审核没问题后，在预览页右上角点 **导出**，选 1K / 2K / 4K，下载 MP4。按同一时间轴逐帧生成 16:9 舞台与配音，进度条、角标和外框不进成片，无需分享标签页。导出耗时取决于设备和画面复杂度；处理慢不会通过跳帧来追赶。请保持页面打开。
 
 <p><img src="assets/export-modal.png" alt="导出弹窗：选择 1K、2K 或 4K 分辨率" width="100%"></p>
 
@@ -110,7 +110,7 @@ npx skills add NanmiCoder/creator-pipeline --list
 | 2K | 2560×1440 |
 | 4K | 3840×2160 |
 
-音轨来自导入的配音文件，不依赖系统回环。旧浏览器或不支持标签页捕获时，仍可用 OBS 等录屏软件框选舞台，见 [导出说明](skills/web-video-presentation/references/RECORDING.md)。
+音轨来自导入的配音文件，不依赖系统回环。旧浏览器或画面包含不支持的实时媒体时，仍可用 OBS 等录屏软件框选舞台，见 [导出说明](skills/web-video-presentation/references/RECORDING.md)。
 
 ## 开发与贡献
 

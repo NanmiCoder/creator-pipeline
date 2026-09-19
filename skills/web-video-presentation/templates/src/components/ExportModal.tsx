@@ -74,10 +74,10 @@ export function ExportModal({
           </div>
         )}
         <div className="ex-meta">
-          时长 {formatClock(span)} · 实时捕获约 {formatClock(span)}
+          时长 {formatClock(span)} · 30 帧/秒逐帧渲染
           {hasAudio ? " · 叠入口播原声" : " · 当前无配音，导出无声画面"}
         </div>
-        <div className="ex-warn">下一步会弹出「分享标签页」。请选<strong>这个标签页</strong>。捕获按片长 1 倍速进行，请保持标签打开。</div>
+        <div className="ex-warn">每一帧与配音按同一时间轴生成。导出速度取决于画面复杂度和设备性能，请保持页面打开。</div>
         <div className="ex-actions">
           <button type="button" className="ex-ghost" onClick={onCancel}>取消</button>
           <button type="button" className="ex-primary" onClick={onConfirm}>开始导出</button>

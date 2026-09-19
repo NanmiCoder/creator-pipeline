@@ -14,6 +14,6 @@ Model weights and inference libraries are downloaded separately and retain their
 | MiniMax CLI | [MiniMax-AI/cli](https://github.com/MiniMax-AI/cli), upstream license and service terms |
 | Vercel Skills CLI | [vercel-labs/skills](https://github.com/vercel-labs/skills), external installer |
 | Mediabunny | [Vanilagy/mediabunny](https://github.com/Vanilagy/mediabunny), MPL-2.0; in-page MP4 mux |
-| modern-screenshot | [qq15725/modern-screenshot](https://github.com/qq15725/modern-screenshot), MIT; DOM rasterizer |
+| @mediabunny/aac-encoder 1.58.1 | [Vanilagy/mediabunny](https://github.com/Vanilagy/mediabunny/tree/v1.58.1/packages/aac-encoder), MPL-2.0 wrapper; bundled FFmpeg AAC WASM retains FFmpeg LGPL terms; build instructions and upstream source are included in the package README |
 
 Presentation themes reference Google Fonts through CSS. The font files are not vendored; fonts fall back to available local fonts if those requests fail. For fully offline rendering, provision appropriate licensed fonts and remove external imports in the generated project.
